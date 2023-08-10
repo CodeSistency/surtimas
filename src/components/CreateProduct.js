@@ -269,7 +269,7 @@ useEffect(() => {
       <section className="login">
           <h1>Exito!</h1>
           <p>
-              <Link to={'/'}>crear producto</Link>
+              <Link to={'/admin/createProduct'}>crear producto</Link>
           </p>
       </section>
   </main> 
