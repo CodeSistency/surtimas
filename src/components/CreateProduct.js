@@ -5,6 +5,7 @@ import {BsFillPlusCircleFill} from "react-icons/bs"
 import {SketchPicker} from "react-color"
 import AdminNav from './AdminNav';
 import ColorPicker from './ColorPicker';
+import { Link } from 'react-router-dom';
 
 const CreateProduct = () => {
 
@@ -24,6 +25,8 @@ const CreateProduct = () => {
   const [imagen, setImage] = useState("")
   const [images, setImages] = useState([])
   const [selectedImages, setSelectedImages] = useState([]);
+
+  const [success, setSuccess] = useState(false)
   
 
   const [quantity, setQuantity] = useState({
@@ -240,8 +243,9 @@ useEffect(() => {
         });
         console.log(JSON.stringify(response?.data));
         isMounted && setData(response.data);
+        setSuccess(true)
         // navigate("/admin", { state: {from: location}, replace: true });
-        // navigate(-1);
+        
     } catch (err) {
         console.error(err);
         // navigate('/login', { state: { from: location }, replace: true });
@@ -257,6 +261,19 @@ useEffect(() => {
 
 
   return (
+
+    <>
+    {success ? 
+      <main className="App">
+      <section className="login">
+          <h1>Exito!</h1>
+          <p>
+              <Link to={'/'}>crear producto</Link>
+          </p>
+      </section>
+  </main> 
+  
+  :
     <main className='dashboard admin-container'>
     <AdminNav/>
     <div className='create-container'>
@@ -528,7 +545,8 @@ useEffect(() => {
       <button className='btn'>Crear producto</button>
     </form>
     </div>
-    </main>
+    </main>}
+    </>
   );
 };
 
