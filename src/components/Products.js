@@ -110,7 +110,7 @@ const Products = () => {
                             width: "30", borderRadius: "50"}} alt="imagen"/> 
                                 
                                 <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline/></Link>
-                                <div><MdDeleteForever  onClick={() => handleDelete(product._id)}/></div>
+                                <div style={{cursor: 'pointer'}}><MdDeleteForever  onClick={() => handleDelete(product._id)}/></div>
                                 
                             </li>)}
                     </ul>
