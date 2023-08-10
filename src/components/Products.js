@@ -106,7 +106,7 @@ const Products = () => {
                                 <p>{product?.titulo}</p>
                                 <p>{product?.precio}</p>
                                 <p>{product?.cantidad}</p>
-                                <img src={product?.imagen} style={{height: "30",
+                                <img src={product?.imagenes[0]} style={{height: "30",
                             width: "30", borderRadius: "50"}} alt="imagen"/> 
                                 
                                 <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline/></Link>
