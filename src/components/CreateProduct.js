@@ -259,6 +259,54 @@ useEffect(() => {
     }
 }
 
+function reset (){
+  setData({})
+  setTipo('camisa')
+  setCodigo('')
+  setTitulo('')
+  setDescripcion('')
+  setPrecio(0)
+  setPrecioAlMayor(0)
+  setImage('')
+  setSelectedImages([])
+  setQuantityShoe({
+    '25': [{ color: "#fff", quantity: 0 }],
+    '26': [{ color: "#fff", quantity: 0 }],
+    '27': [{ color: "#fff", quantity: 0 }],
+    '28': [{ color: "#fff", quantity: 0 }],
+    '29': [{ color: "#fff", quantity: 0 }],
+    '30': [{ color: "#fff", quantity: 0 }],
+    '31': [{ color: "#fff", quantity: 0 }],
+    '32': [{ color: "#fff", quantity: 0 }],
+    '33': [{ color: "#fff", quantity: 0 }],
+    '34': [{ color: "#fff", quantity: 0 }],
+    '35': [{ color: "#fff", quantity: 0 }],
+    '36': [{ color: "#fff", quantity: 0 }],
+    '37': [{ color: "#fff", quantity: 0 }],
+    '38': [{ color: "#fff", quantity: 0 }],
+    '39': [{ color: "#fff", quantity: 0 }],
+    '40': [{ color: "#fff", quantity: 0 }],
+    '42': [{ color: "#fff", quantity: 0 }],
+    '43': [{ color: "#fff", quantity: 0 }],
+    '44': [{ color: "#fff", quantity: 0 }],
+    
+  })
+
+  setQuantity({
+    S: [{ color: "#fff", quantity: 0 }],
+    M: [{ color: "#fff", quantity: 0 }],
+    L: [{ color: "#fff", quantity: 0 }],
+    XL: [{ color: "#fff", quantity: 0 }],
+    '0XL': [{ color: "#fff", quantity: 0 }],
+    '2XL': [{ color: "#fff", quantity: 0 }],
+    '3XL': [{ color: "#fff", quantity: 0 }],
+    '4XL': [{ color: "#fff", quantity: 0 }],
+    '5XL': [{ color: "#fff", quantity: 0 }],
+    FIT: [{ color: "#fff", quantity: 0 }],
+  })
+  setSuccess(false)
+}
+
 
 
   return (
@@ -269,7 +317,7 @@ useEffect(() => {
       <section className="login">
           <h1>Exito!</h1>
           <p>
-              <Link to={'admin/createProduct'}>crear producto</Link>
+              <button className='create' onClick={reset}>Crear producto</button>
           </p>
       </section>
   </main> 
