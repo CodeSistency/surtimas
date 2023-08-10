@@ -76,6 +76,8 @@ const Products = () => {
                 signal: controller.signal
             });
             console.log(JSON.stringify(response?.data));
+            console.log(JSON.stringify(response?.data[4].imagenes[0]));
+            
             
             navigate("/admin", { state: {from: location}, replace: true });
             navigate(-1);
