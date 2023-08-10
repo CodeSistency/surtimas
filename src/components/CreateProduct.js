@@ -244,6 +244,7 @@ useEffect(() => {
         console.log(JSON.stringify(response?.data));
         isMounted && setData(response.data);
         setSuccess(true)
+        console.log(success)
         // navigate("/admin", { state: {from: location}, replace: true });
         
     } catch (err) {
@@ -263,7 +264,7 @@ useEffect(() => {
   return (
 
     <>
-    {success ? 
+    {success === true ? 
       <main className="App">
       <section className="login">
           <h1>Exito!</h1>
