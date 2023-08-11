@@ -856,13 +856,24 @@ function reset (){
 
       <div className='select'>
         <label className='prenda' style={{display: 'flex'}}>
-          Tipo de prenda:
+          Categorias:
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="camisa">Camisa</option>
-            <option value="pantalon">Pantalon</option>
+            <option value="franela">Franela</option>
+            <option value="blusa">Blusa</option>
+            <option value="chaqueta">Chaqueta</option>
+            <option value="blazer">Blazer</option>
+            <option value="camisa">Camisa</option>
             <option value="body">Body</option>
+            <option value="crop top">Crop top</option>
+            <option value="pantalon">Pantalon</option>
+            <option value="short">Short</option>
+            <option value="leggins">Leggins</option>
+            <option value="pijama">Pijama</option>
+            <option value="playa">Playa</option>
             <option value="mono">Mono</option>
             <option value="zapato">Zapato</option>
+            <option value="liquidacion">Liquidacion</option>
             
             
           </select>

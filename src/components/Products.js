@@ -116,7 +116,7 @@ const Products = () => {
                                 
                             </li>)}
                     </ul>
-                ) : <p>No hay productos</p>
+                ) : <div class="lds-dual-ring"></div>
             }
         </article>
     );
