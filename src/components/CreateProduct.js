@@ -392,8 +392,7 @@ uploadTask5.on('state_changed',
      setUrl5(downloadURL);
     //  setUrls(prev => [...prev, downloadURL])
     //  console.log(urls)
-     setNext(true)
-     setUrls([url, url2, url3, url4, url5])
+     
    });
  }
 );
@@ -429,7 +428,10 @@ setUrls(downloadURLs);
    } catch (err) {
      console.error(err)
    }
-   
+   finally{
+    setNext(true)
+     setUrls([url, url2, url3, url4, url5])
+   }
    
  }
 
