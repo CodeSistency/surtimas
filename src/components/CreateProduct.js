@@ -833,7 +833,7 @@ function reset (){
         
       </div>
 
-      {next ? <div style={{width: '120px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color:'white', borderRadius:'10px'}}>Guardado</div> : <div onClick={uploadImage} style={{padding: '5px 10px', border: '1px solid black', borderRadius:'10px', width: '120px', margin: '10px 0', cursor:'pointer'}} >Guardar</div>}
+      {next ? <div style={{width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color:'white', borderRadius:'10px'}}>Guardado</div> : <div onClick={uploadImage} style={{padding: '5px 10px', border: '1px solid black', borderRadius:'10px', width: '120px', margin: '10px 0', cursor:'pointer'}} >Guardar</div>}
 
       {/* <div className="input-container">
         <p>Imagenes:</p>
