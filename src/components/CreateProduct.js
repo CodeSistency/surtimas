@@ -218,7 +218,7 @@ useEffect(() => {
       console.log(imagen, imagen2, imagen3, imagen4, imagen5)
     }, [imagen, imagen2, imagen3, imagen4, imagen5])
 
-  function uploadImage(){
+async function uploadImage(){
  
    try{
      const fileName = new Date().getTime() + imagen.name;
@@ -398,17 +398,39 @@ uploadTask5.on('state_changed',
  }
 );
 
-setUrls([url, url2, url3, url4, url5])
+await Promise.all([
+  uploadTask,
+  uploadTask2,
+  uploadTask3,
+  uploadTask4,
+  uploadTask5,
+]);
+
+// Get and set download URLs
+const downloadURLs = await Promise.all([
+  getDownloadURL(uploadTask.snapshot.ref),
+  getDownloadURL(uploadTask2.snapshot.ref),
+  getDownloadURL(uploadTask3.snapshot.ref),
+  getDownloadURL(uploadTask4.snapshot.ref),
+  getDownloadURL(uploadTask5.snapshot.ref),
+]);
+
+// Set the URLs in the state
+setUrl(downloadURLs[0]);
+setUrl2(downloadURLs[1]);
+setUrl3(downloadURLs[2]);
+setUrl4(downloadURLs[3]);
+setUrl5(downloadURLs[4]);
+
+// Combine all URLs into a single array and set it in the state
+setUrls(downloadURLs);
 
 
    } catch (err) {
      console.error(err)
    }
    
-   finally{
-    setUrls([url, url2, url3, url4, url5])
-    console.log(urls)
-   }
+   
  }
 
   const handleSubmit = async (e) => {
@@ -902,7 +924,7 @@ function reset (){
         </label>
         </div>
 
-        <hr />
+        <hr style={{marginTop: '20px'}} />
 
 
       {/* <div className="input-container">
