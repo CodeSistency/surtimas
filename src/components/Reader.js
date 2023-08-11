@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import {MdDeleteForever} from "react-icons/md"
 import {BsFillPlusCircleFill} from "react-icons/bs"
 import { QrReader } from 'react-qr-reader';
+import {IoCartOutline, IoCartSharp} from "react-icons/io5"
+import { BsQrCodeScan } from 'react-icons/bs'
 
 import React from 'react'
 import AdminNav from "./AdminNav";
@@ -22,6 +24,15 @@ function Reader() {
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
+    
+
+    const windowWidth = useRef(window.innerWidth);
+  const windowHeight = useRef(window.innerHeight);
+  const [ancho, setAncho] = useState(false)
+
+  // if(windowWidth.current > 600){
+  //   setAncho(true)
+  // }
   
     useEffect(() => {
       let isMounted = true;
@@ -378,6 +389,7 @@ function Reader() {
     return (
       <div className="dashboard-reader admin-container">
         <AdminNav />
+        
         <div className="grid-productos">
 
             <div className="productos">
@@ -424,9 +436,33 @@ function Reader() {
           </div>: <p></p>}
         </div>
     
-        <section className="qr-reader">
+        {windowWidth.current > 600 ?<section className="qr-reader">
+          
+          <div className="lector">
           <h2>Lector QR</h2>
-          {qrReaderActive && ( // Render the QR reader only if qrReaderActive is true
+          <hr style={{margin: '15px 0'}}/>
+          <div className="search">
+    <form name="search search-relative" className="form search-relative">
+        <input value={searchInput}
+            onChange={handleSearchInputChange} type="text" className="input-search " name="txt" />
+        <IoCartOutline className="search-button" />
+    </form>
+    
+     </div>
+          </div>
+          
+     <ul style={{marginTop:'65px'}} className="add-productos">
+          {filterProductsByTitle().map((product) => (
+            <li key={product._id} className="add-producto">
+              <p><strong>Producto:</strong> {product.titulo}</p>
+              <BsFillPlusCircleFill onClick={() => addProductToResults(product)} fontSize={30}/>
+
+            </li>
+          ))}
+        </ul>
+
+        
+        {/*  {qrReaderActive && ( // Render the QR reader only if qrReaderActive is true
           <QrReader
             onResult={(result, error) => {
               if (!!result) {
@@ -464,7 +500,7 @@ function Reader() {
 
             </li>
           ))}
-        </ul>
+        </ul> */}
 
         {/* <ul>
                 {results?.map((result, index) => (
@@ -474,7 +510,13 @@ function Reader() {
                   </li>
                 ))}
               </ul> */}
+              <div className="scan">
+                {/* <p>Scanner</p> */}
+              <BsQrCodeScan fontSize={50}/>
+              </div>
+             
         </section>
+        : <div className="qr-reader">It works {windowWidth.current}</div>}
          </div>
     );
   }

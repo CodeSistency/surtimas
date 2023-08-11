@@ -825,7 +825,7 @@ function reset (){
           onChange={handleImageChange}
           className="input-imagen"
           accept='image/*'
-          required
+          
           
         />
         <input
@@ -834,7 +834,7 @@ function reset (){
           onChange={e => setImage2(e.target.files[0])}
           className="input-imagen"
           accept='image/*'
-          required
+          
           
         />
         <input
@@ -843,7 +843,7 @@ function reset (){
           onChange={e => setImage3(e.target.files[0])}
           className="input-imagen"
           accept='image/*'
-          required
+          
           
         />
         <input
@@ -852,7 +852,7 @@ function reset (){
           onChange={e => setImage4(e.target.files[0])}
           className="input-imagen"
           accept='image/*'
-          required
+          
           
         />
         <input
@@ -861,7 +861,7 @@ function reset (){
           onChange={e => setImage5(e.target.files[0])}
           className="input-imagen"
           accept='image/*'
-          required
+          
           
         />
         
