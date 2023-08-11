@@ -44,6 +44,7 @@ const CreateProduct = () => {
 
   const [quantity, setQuantity] = useState({
     'U': [{ color: "#fff", quantity: 0 }],
+    'XS': [{ color: "#fff", quantity: 0 }],
     'S': [{ color: "#fff", quantity: 0 }],
     'M': [{ color: "#fff", quantity: 0 }],
     'L': [{ color: "#fff", quantity: 0 }],
@@ -687,6 +688,7 @@ function reset (){
 
   setQuantity({
     'U': [{ color: "#fff", quantity: 0 }],
+    'XS': [{ color: "#fff", quantity: 0 }],
     'S': [{ color: "#fff", quantity: 0 }],
     'M': [{ color: "#fff", quantity: 0 }],
     'L': [{ color: "#fff", quantity: 0 }],
