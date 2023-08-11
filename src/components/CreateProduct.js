@@ -391,6 +391,7 @@ uploadTask5.on('state_changed',
      console.log('File available at', downloadURL);
      setUrl5(downloadURL);
      setUrls(prev => [...prev, downloadURL])
+     setNext(true)
     //  console.log(urls)
      
    });
@@ -429,7 +430,7 @@ uploadTask5.on('state_changed',
      console.error(err)
    }
    finally{
-    setNext(true)
+    
     //  setUrls([url, url2, url3, url4, url5])
    }
    
