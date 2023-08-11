@@ -634,7 +634,7 @@ formData.append('imagenes', urls);
           isMounted && setData(response.data);
           setSuccess(true)
           console.log(success)
-          // navigate("/admin", { state: {from: location}, replace: true });
+          navigate("/admin", { state: {from: location}, replace: true });
           
       } catch (err) {
           console.error(err);
