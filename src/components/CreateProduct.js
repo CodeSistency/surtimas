@@ -246,9 +246,10 @@ const uploadTask3 = uploadBytesResumable(storageRef3, imagen3);
 const uploadTask4 = uploadBytesResumable(storageRef4, imagen4);
 const uploadTask5 = uploadBytesResumable(storageRef5, imagen5);
 
+if(imagen){
 
-uploadTask.on('state_changed', 
- (snapshot) => {
+  uploadTask.on('state_changed', 
+  (snapshot) => {
    
    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
    console.log('Upload is ' + progress + '% done');
@@ -260,143 +261,160 @@ uploadTask.on('state_changed',
        console.log('Upload is running');
        break;
    }
- }, 
- (error) => {
+  }, 
+  (error) => {
    // Handle unsuccessful uploads
- }, 
- () => {
+  }, 
+  () => {
    // Handle successful uploads on complete
    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
      console.log('File available at', downloadURL);
      setUrl(downloadURL);
      setUrls(prev => [...prev, downloadURL])
-    //  console.log(urls)
-     
-   });
- }
-);
-
-uploadTask2.on('state_changed', 
- (snapshot) => {
-   
-   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-   console.log('Upload is ' + progress + '% done');
-   switch (snapshot.state) {
-     case 'paused':
-       console.log('Upload is paused');
-       break;
-     case 'running':
-       console.log('Upload is running');
-       break;
-   }
- }, 
- (error) => {
-   // Handle unsuccessful uploads
- }, 
- () => {
-   // Handle successful uploads on complete
-   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-   getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
-     console.log('File available at', downloadURL);
-     setUrl2(downloadURL);
-     setUrls(prev => [...prev, downloadURL])
-    //  console.log(urls)
-     
-   });
- }
-);
-
-uploadTask3.on('state_changed', 
- (snapshot) => {
-   
-   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-   console.log('Upload is ' + progress + '% done');
-   switch (snapshot.state) {
-     case 'paused':
-       console.log('Upload is paused');
-       break;
-     case 'running':
-       console.log('Upload is running');
-       break;
-   }
- }, 
- (error) => {
-   // Handle unsuccessful uploads
- }, 
- () => {
-   // Handle successful uploads on complete
-   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-   getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
-     console.log('File available at', downloadURL);
-     setUrl3(downloadURL);
-     setUrls(prev => [...prev, downloadURL])
-    //  console.log(urls)
-     
-   });
- }
-);
-
-uploadTask4.on('state_changed', 
- (snapshot) => {
-   
-   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-   console.log('Upload is ' + progress + '% done');
-   switch (snapshot.state) {
-     case 'paused':
-       console.log('Upload is paused');
-       break;
-     case 'running':
-       console.log('Upload is running');
-       break;
-   }
- }, 
- (error) => {
-   // Handle unsuccessful uploads
- }, 
- () => {
-   // Handle successful uploads on complete
-   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-   getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
-     console.log('File available at', downloadURL);
-     setUrl4(downloadURL);
-     setUrls(prev => [...prev, downloadURL])
-    //  console.log(urls)
-     
-   });
- }
-);
-
-uploadTask5.on('state_changed', 
- (snapshot) => {
-   
-   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-   console.log('Upload is ' + progress + '% done');
-   switch (snapshot.state) {
-     case 'paused':
-       console.log('Upload is paused');
-       break;
-     case 'running':
-       console.log('Upload is running');
-       break;
-   }
- }, 
- (error) => {
-   // Handle unsuccessful uploads
- }, 
- () => {
-   // Handle successful uploads on complete
-   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-   getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
-     console.log('File available at', downloadURL);
-     setUrl5(downloadURL);
-     setUrls(prev => [...prev, downloadURL])
      setNext(true)
     //  console.log(urls)
      
    });
- }
-);
+  }
+  );
+}
+
+if(imagen2){
+
+  uploadTask2.on('state_changed', 
+   (snapshot) => {
+     
+     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+     console.log('Upload is ' + progress + '% done');
+     switch (snapshot.state) {
+       case 'paused':
+         console.log('Upload is paused');
+         break;
+       case 'running':
+         console.log('Upload is running');
+         break;
+     }
+   }, 
+   (error) => {
+     // Handle unsuccessful uploads
+   }, 
+   () => {
+     // Handle successful uploads on complete
+     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+     getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
+       console.log('File available at', downloadURL);
+       setUrl2(downloadURL);
+       setUrls(prev => [...prev, downloadURL])
+       setNext(true)
+      //  console.log(urls)
+       
+     });
+   }
+  );
+}
+
+if(imagen3) {
+
+  uploadTask3.on('state_changed', 
+   (snapshot) => {
+     
+     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+     console.log('Upload is ' + progress + '% done');
+     switch (snapshot.state) {
+       case 'paused':
+         console.log('Upload is paused');
+         break;
+       case 'running':
+         console.log('Upload is running');
+         break;
+     }
+   }, 
+   (error) => {
+     // Handle unsuccessful uploads
+   }, 
+   () => {
+     // Handle successful uploads on complete
+     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+     getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
+       console.log('File available at', downloadURL);
+       setUrl3(downloadURL);
+       setUrls(prev => [...prev, downloadURL])
+       setNext(true)
+      //  console.log(urls)
+       
+     });
+   }
+  );
+}
+
+if(imagen4) {
+
+  uploadTask4.on('state_changed', 
+   (snapshot) => {
+     
+     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+     console.log('Upload is ' + progress + '% done');
+     switch (snapshot.state) {
+       case 'paused':
+         console.log('Upload is paused');
+         break;
+       case 'running':
+         console.log('Upload is running');
+         break;
+     }
+   }, 
+   (error) => {
+     // Handle unsuccessful uploads
+   }, 
+   () => {
+     // Handle successful uploads on complete
+     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+     getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
+       console.log('File available at', downloadURL);
+       setUrl4(downloadURL);
+       setUrls(prev => [...prev, downloadURL])
+       setNext(true)
+      //  console.log(urls)
+       
+     });
+   }
+  );
+}
+
+if(imagen5){
+
+  uploadTask5.on('state_changed', 
+   (snapshot) => {
+     
+     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+     console.log('Upload is ' + progress + '% done');
+     switch (snapshot.state) {
+       case 'paused':
+         console.log('Upload is paused');
+         break;
+       case 'running':
+         console.log('Upload is running');
+         break;
+     }
+   }, 
+   (error) => {
+     // Handle unsuccessful uploads
+   }, 
+   () => {
+     // Handle successful uploads on complete
+     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+     getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
+       console.log('File available at', downloadURL);
+       setUrl5(downloadURL);
+       setUrls(prev => [...prev, downloadURL])
+       setNext(true)
+      //  console.log(urls)
+       
+     });
+   }
+  );
+}
 
 // await Promise.all([
 //   uploadTask,
