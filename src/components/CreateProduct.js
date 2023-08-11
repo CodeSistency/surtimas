@@ -270,7 +270,7 @@ uploadTask.on('state_changed',
    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
      console.log('File available at', downloadURL);
      setUrl(downloadURL);
-    //  setUrls(prev => [...prev, downloadURL])
+     setUrls(prev => [...prev, downloadURL])
     //  console.log(urls)
      
    });
@@ -300,7 +300,7 @@ uploadTask2.on('state_changed',
    getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
      console.log('File available at', downloadURL);
      setUrl2(downloadURL);
-    //  setUrls(prev => [...prev, downloadURL])
+     setUrls(prev => [...prev, downloadURL])
     //  console.log(urls)
      
    });
@@ -330,7 +330,7 @@ uploadTask3.on('state_changed',
    getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
      console.log('File available at', downloadURL);
      setUrl3(downloadURL);
-    //  setUrls(prev => [...prev, downloadURL])
+     setUrls(prev => [...prev, downloadURL])
     //  console.log(urls)
      
    });
@@ -360,7 +360,7 @@ uploadTask4.on('state_changed',
    getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
      console.log('File available at', downloadURL);
      setUrl4(downloadURL);
-    //  setUrls(prev => [...prev, downloadURL])
+     setUrls(prev => [...prev, downloadURL])
     //  console.log(urls)
      
    });
@@ -390,39 +390,39 @@ uploadTask5.on('state_changed',
    getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
      console.log('File available at', downloadURL);
      setUrl5(downloadURL);
-    //  setUrls(prev => [...prev, downloadURL])
+     setUrls(prev => [...prev, downloadURL])
     //  console.log(urls)
      
    });
  }
 );
 
-await Promise.all([
-  uploadTask,
-  uploadTask2,
-  uploadTask3,
-  uploadTask4,
-  uploadTask5,
-]);
+// await Promise.all([
+//   uploadTask,
+//   uploadTask2,
+//   uploadTask3,
+//   uploadTask4,
+//   uploadTask5,
+// ]);
 
-// Get and set download URLs
-const downloadURLs = await Promise.all([
-  getDownloadURL(uploadTask.snapshot.ref),
-  getDownloadURL(uploadTask2.snapshot.ref),
-  getDownloadURL(uploadTask3.snapshot.ref),
-  getDownloadURL(uploadTask4.snapshot.ref),
-  getDownloadURL(uploadTask5.snapshot.ref),
-]);
+// // Get and set download URLs
+// const downloadURLs = await Promise.all([
+//   getDownloadURL(uploadTask.snapshot.ref),
+//   getDownloadURL(uploadTask2.snapshot.ref),
+//   getDownloadURL(uploadTask3.snapshot.ref),
+//   getDownloadURL(uploadTask4.snapshot.ref),
+//   getDownloadURL(uploadTask5.snapshot.ref),
+// ]);
 
-// Set the URLs in the state
-setUrl(downloadURLs[0]);
-setUrl2(downloadURLs[1]);
-setUrl3(downloadURLs[2]);
-setUrl4(downloadURLs[3]);
-setUrl5(downloadURLs[4]);
+// // Set the URLs in the state
+// setUrl(downloadURLs[0]);
+// setUrl2(downloadURLs[1]);
+// setUrl3(downloadURLs[2]);
+// setUrl4(downloadURLs[3]);
+// setUrl5(downloadURLs[4]);
 
-// Combine all URLs into a single array and set it in the state
-setUrls(downloadURLs);
+// // Combine all URLs into a single array and set it in the state
+// setUrls(downloadURLs);
 
 
    } catch (err) {
@@ -430,7 +430,7 @@ setUrls(downloadURLs);
    }
    finally{
     setNext(true)
-     setUrls([url, url2, url3, url4, url5])
+    //  setUrls([url, url2, url3, url4, url5])
    }
    
  }
@@ -632,7 +632,7 @@ let isMounted = true;
 
 
 
-setUrls([url, url2, url3, url4, url5])
+// setUrls([url, url2, url3, url4, url5])
 
 
 console.log(urls, url, url2, url3, url4, url5)
