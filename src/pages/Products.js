@@ -1,6 +1,7 @@
 import React from 'react'
 import {useContext} from 'react'
 import CartContext from "../context/CartProvider";
+import axios from '../api/axios';
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -20,7 +21,7 @@ function Products() {
 
         const getProducts = async () => {
             try {
-                const response = await axiosPrivate.get('/products', {
+                const response = await axios.get('/products', {
                     signal: controller.signal
                 });
                 console.log(response.data);
