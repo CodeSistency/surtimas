@@ -11,7 +11,7 @@ import Card from './Card';
 function Products() {
 
     const [products, setProducts] = useState();
-    const axiosPrivate = useAxiosPrivate();
+    // const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
     

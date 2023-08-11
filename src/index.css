@@ -648,6 +648,7 @@ li {
   .card {
     position: relative;
     min-width: 150px;
+    max-width: 150px;
     height: 260px;
     background: var(--primary-color);
     border-radius: 20px;
