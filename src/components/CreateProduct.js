@@ -218,243 +218,305 @@ useEffect(() => {
       console.log(imagen, imagen2, imagen3, imagen4, imagen5)
     }, [imagen, imagen2, imagen3, imagen4, imagen5])
 
-async function uploadImage(){
- 
-   try{
-     const fileName = new Date().getTime() + imagen.name;
-const fileName2 = new Date().getTime() + imagen2.name;
-const fileName3 = new Date().getTime() + imagen3.name;
-const fileName4 = new Date().getTime() + imagen4.name;
-const fileName5 = new Date().getTime() + imagen5.name;
-
-const storage = getStorage(app);
-const storageRef = ref(storage, fileName);
-const storageRef2 = ref(storage, fileName2);
-const storageRef3 = ref(storage, fileName3);
-const storageRef4 = ref(storage, fileName4);
-const storageRef5 = ref(storage, fileName5);
-
-const metadata = {
- cacheControl: 'public,max-age=300',
- contentType: imagen.type
-};
-
-
-const uploadTask = uploadBytesResumable(storageRef, imagen);
-const uploadTask2 = uploadBytesResumable(storageRef2, imagen2);
-const uploadTask3 = uploadBytesResumable(storageRef3, imagen3);
-const uploadTask4 = uploadBytesResumable(storageRef4, imagen4);
-const uploadTask5 = uploadBytesResumable(storageRef5, imagen5);
-
-if(imagen != ''){
-
-  uploadTask.on('state_changed', 
-  (snapshot) => {
-   
-   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-   console.log('Upload is ' + progress + '% done');
-   switch (snapshot.state) {
-     case 'paused':
-       console.log('Upload is paused');
-       break;
-     case 'running':
-       console.log('Upload is running');
-       break;
-   }
-  }, 
-  (error) => {
-   // Handle unsuccessful uploads
-  }, 
-  () => {
-   // Handle successful uploads on complete
-   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-   getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-     console.log('File available at', downloadURL);
-     setUrl(downloadURL);
-     setUrls(prev => [...prev, downloadURL])
-     setNext(true)
-    //  console.log(urls)
-     
-   });
-  }
-  );
-}
-
-if(imagen2 != ''){
-
-  uploadTask2.on('state_changed', 
-   (snapshot) => {
-     
-     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-     console.log('Upload is ' + progress + '% done');
-     switch (snapshot.state) {
-       case 'paused':
-         console.log('Upload is paused');
-         break;
-       case 'running':
-         console.log('Upload is running');
-         break;
-     }
-   }, 
-   (error) => {
-     // Handle unsuccessful uploads
-   }, 
-   () => {
-     // Handle successful uploads on complete
-     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-     getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
-       console.log('File available at', downloadURL);
-       setUrl2(downloadURL);
-       setUrls(prev => [...prev, downloadURL])
-       setNext(true)
-      //  console.log(urls)
-       
-     });
-   }
-  );
-} else{
-  console.log('no image')
-}
-
-if( imagen3 != '') {
-
-  uploadTask3.on('state_changed', 
-   (snapshot) => {
-     
-     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-     console.log('Upload is ' + progress + '% done');
-     switch (snapshot.state) {
-       case 'paused':
-         console.log('Upload is paused');
-         break;
-       case 'running':
-         console.log('Upload is running');
-         break;
-     }
-   }, 
-   (error) => {
-     // Handle unsuccessful uploads
-   }, 
-   () => {
-     // Handle successful uploads on complete
-     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-     getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
-       console.log('File available at', downloadURL);
-       setUrl3(downloadURL);
-       setUrls(prev => [...prev, downloadURL])
-       setNext(true)
-      //  console.log(urls)
-       
-     });
-   }
-  );
-}
-
-if(imagen4 != '') {
-
-  uploadTask4.on('state_changed', 
-   (snapshot) => {
-     
-     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-     console.log('Upload is ' + progress + '% done');
-     switch (snapshot.state) {
-       case 'paused':
-         console.log('Upload is paused');
-         break;
-       case 'running':
-         console.log('Upload is running');
-         break;
-     }
-   }, 
-   (error) => {
-     // Handle unsuccessful uploads
-   }, 
-   () => {
-     // Handle successful uploads on complete
-     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-     getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
-       console.log('File available at', downloadURL);
-       setUrl4(downloadURL);
-       setUrls(prev => [...prev, downloadURL])
-       setNext(true)
-      //  console.log(urls)
-       
-     });
-   }
-  );
-}
-
-if(imagen5 != ''){
-
-  uploadTask5.on('state_changed', 
-   (snapshot) => {
-     
-     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-     console.log('Upload is ' + progress + '% done');
-     switch (snapshot.state) {
-       case 'paused':
-         console.log('Upload is paused');
-         break;
-       case 'running':
-         console.log('Upload is running');
-         break;
-     }
-   }, 
-   (error) => {
-     // Handle unsuccessful uploads
-   }, 
-   () => {
-     // Handle successful uploads on complete
-     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-     getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
-       console.log('File available at', downloadURL);
-       setUrl5(downloadURL);
-       setUrls(prev => [...prev, downloadURL])
-       setNext(true)
-      //  console.log(urls)
-       
-     });
-   }
-  );
-}
-
-// await Promise.all([
-//   uploadTask,
-//   uploadTask2,
-//   uploadTask3,
-//   uploadTask4,
-//   uploadTask5,
-// ]);
-
-// // Get and set download URLs
-// const downloadURLs = await Promise.all([
-//   getDownloadURL(uploadTask.snapshot.ref),
-//   getDownloadURL(uploadTask2.snapshot.ref),
-//   getDownloadURL(uploadTask3.snapshot.ref),
-//   getDownloadURL(uploadTask4.snapshot.ref),
-//   getDownloadURL(uploadTask5.snapshot.ref),
-// ]);
-
-// // Set the URLs in the state
-// setUrl(downloadURLs[0]);
-// setUrl2(downloadURLs[1]);
-// setUrl3(downloadURLs[2]);
-// setUrl4(downloadURLs[3]);
-// setUrl5(downloadURLs[4]);
-
-// // Combine all URLs into a single array and set it in the state
-// setUrls(downloadURLs);
-
-
-   } catch (err) {
-     console.error(err)
-   }
-   finally{
+    async function uploadImage(image, index) {
+      if (!image) {
+        console.log(`No image at index ${index}`);
+        return;
+      }
     
-    //  setUrls([url, url2, url3, url4, url5])
-   }
+      const fileName = new Date().getTime() + image.name;
+      const storage = getStorage(app);
+      const storageRef = ref(storage, fileName);
+    
+      const uploadTask = uploadBytesResumable(storageRef, image);
+    
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload at index ${index} is ${progress}% done`);
+          switch (snapshot.state) {
+            case 'paused':
+              console.log(`Upload at index ${index} is paused`);
+              break;
+            case 'running':
+              console.log(`Upload at index ${index} is running`);
+              break;
+          }
+        }, 
+        (error) => {
+          // Handle unsuccessful uploads
+        }, 
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log(`File at index ${index} available at`, downloadURL);
+            setUrl2(downloadURL);
+            
+            setUrls(prev => [...prev, downloadURL])
+            console.log(urls)
+            setNext(true)
+            // Handle the download URL as needed (e.g., set it in the state)
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      );
+    }
+    
+    async function uploadImages() {
+      try {
+        const images = [imagen, imagen2, imagen3, imagen4, imagen5];
+        
+        for (let i = 0; i < images.length; i++) {
+          await uploadImage(images[i], i + 1);
+        }
+        
+        // Here you can do additional processing if needed
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    
+    
+    
+
+// async function uploadImage(){
+ 
+//    try{
+//      const fileName = new Date().getTime() + imagen.name;
+// const fileName2 = new Date().getTime() + imagen2.name;
+// const fileName3 = new Date().getTime() + imagen3.name;
+// const fileName4 = new Date().getTime() + imagen4.name;
+// const fileName5 = new Date().getTime() + imagen5.name;
+
+// const storage = getStorage(app);
+// const storageRef = ref(storage, fileName);
+// const storageRef2 = ref(storage, fileName2);
+// const storageRef3 = ref(storage, fileName3);
+// const storageRef4 = ref(storage, fileName4);
+// const storageRef5 = ref(storage, fileName5);
+
+// const metadata = {
+//  cacheControl: 'public,max-age=300',
+//  contentType: imagen.type
+// };
+
+
+// const uploadTask = uploadBytesResumable(storageRef, imagen);
+// const uploadTask2 = uploadBytesResumable(storageRef2, imagen2);
+// const uploadTask3 = uploadBytesResumable(storageRef3, imagen3);
+// const uploadTask4 = uploadBytesResumable(storageRef4, imagen4);
+// const uploadTask5 = uploadBytesResumable(storageRef5, imagen5);
+
+// if(imagen != ''){
+
+//   uploadTask.on('state_changed', 
+//   (snapshot) => {
    
- }
+//    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//    console.log('Upload is ' + progress + '% done');
+//    switch (snapshot.state) {
+//      case 'paused':
+//        console.log('Upload is paused');
+//        break;
+//      case 'running':
+//        console.log('Upload is running');
+//        break;
+//    }
+//   }, 
+//   (error) => {
+//    // Handle unsuccessful uploads
+//   }, 
+//   () => {
+//    // Handle successful uploads on complete
+//    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+//      console.log('File available at', downloadURL);
+//      setUrl(downloadURL);
+//      setUrls(prev => [...prev, downloadURL])
+//      setNext(true)
+//     //  console.log(urls)
+     
+//    });
+//   }
+//   );
+// }
+
+// if(imagen2 != ''){
+
+//   uploadTask2.on('state_changed', 
+//    (snapshot) => {
+     
+//      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//      console.log('Upload is ' + progress + '% done');
+//      switch (snapshot.state) {
+//        case 'paused':
+//          console.log('Upload is paused');
+//          break;
+//        case 'running':
+//          console.log('Upload is running');
+//          break;
+//      }
+//    }, 
+//    (error) => {
+//      // Handle unsuccessful uploads
+//    }, 
+//    () => {
+//      // Handle successful uploads on complete
+//      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//      getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
+//        console.log('File available at', downloadURL);
+//        setUrl2(downloadURL);
+//        setUrls(prev => [...prev, downloadURL])
+//        setNext(true)
+//       //  console.log(urls)
+       
+//      });
+//    }
+//   );
+// } else{
+//   console.log('no image')
+// }
+
+// if( imagen3 != '') {
+
+//   uploadTask3.on('state_changed', 
+//    (snapshot) => {
+     
+//      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//      console.log('Upload is ' + progress + '% done');
+//      switch (snapshot.state) {
+//        case 'paused':
+//          console.log('Upload is paused');
+//          break;
+//        case 'running':
+//          console.log('Upload is running');
+//          break;
+//      }
+//    }, 
+//    (error) => {
+//      // Handle unsuccessful uploads
+//    }, 
+//    () => {
+//      // Handle successful uploads on complete
+//      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//      getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
+//        console.log('File available at', downloadURL);
+//        setUrl3(downloadURL);
+//        setUrls(prev => [...prev, downloadURL])
+//        setNext(true)
+//       //  console.log(urls)
+       
+//      });
+//    }
+//   );
+// }
+
+// if(imagen4 != '') {
+
+//   uploadTask4.on('state_changed', 
+//    (snapshot) => {
+     
+//      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//      console.log('Upload is ' + progress + '% done');
+//      switch (snapshot.state) {
+//        case 'paused':
+//          console.log('Upload is paused');
+//          break;
+//        case 'running':
+//          console.log('Upload is running');
+//          break;
+//      }
+//    }, 
+//    (error) => {
+//      // Handle unsuccessful uploads
+//    }, 
+//    () => {
+//      // Handle successful uploads on complete
+//      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//      getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
+//        console.log('File available at', downloadURL);
+//        setUrl4(downloadURL);
+//        setUrls(prev => [...prev, downloadURL])
+//        setNext(true)
+//       //  console.log(urls)
+       
+//      });
+//    }
+//   );
+// }
+
+// if(imagen5 != ''){
+
+//   uploadTask5.on('state_changed', 
+//    (snapshot) => {
+     
+//      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//      console.log('Upload is ' + progress + '% done');
+//      switch (snapshot.state) {
+//        case 'paused':
+//          console.log('Upload is paused');
+//          break;
+//        case 'running':
+//          console.log('Upload is running');
+//          break;
+//      }
+//    }, 
+//    (error) => {
+//      // Handle unsuccessful uploads
+//    }, 
+//    () => {
+//      // Handle successful uploads on complete
+//      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//      getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
+//        console.log('File available at', downloadURL);
+//        setUrl5(downloadURL);
+//        setUrls(prev => [...prev, downloadURL])
+//        setNext(true)
+//       //  console.log(urls)
+       
+//      });
+//    }
+//   );
+// }
+
+// // await Promise.all([
+// //   uploadTask,
+// //   uploadTask2,
+// //   uploadTask3,
+// //   uploadTask4,
+// //   uploadTask5,
+// // ]);
+
+// // // Get and set download URLs
+// // const downloadURLs = await Promise.all([
+// //   getDownloadURL(uploadTask.snapshot.ref),
+// //   getDownloadURL(uploadTask2.snapshot.ref),
+// //   getDownloadURL(uploadTask3.snapshot.ref),
+// //   getDownloadURL(uploadTask4.snapshot.ref),
+// //   getDownloadURL(uploadTask5.snapshot.ref),
+// // ]);
+
+// // // Set the URLs in the state
+// // setUrl(downloadURLs[0]);
+// // setUrl2(downloadURLs[1]);
+// // setUrl3(downloadURLs[2]);
+// // setUrl4(downloadURLs[3]);
+// // setUrl5(downloadURLs[4]);
+
+// // // Combine all URLs into a single array and set it in the state
+// // setUrls(downloadURLs);
+
+
+//    } catch (err) {
+//      console.error(err)
+//    }
+//    finally{
+    
+//     //  setUrls([url, url2, url3, url4, url5])
+//    }
+   
+//  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -657,6 +719,7 @@ let isMounted = true;
 
 
 console.log(urls, url, url2, url3, url4, url5)
+console.log(urls)
 
 const formData = new FormData();
 formData.append('titulo', titulo);
@@ -888,7 +951,7 @@ function reset (){
         
       </div>
 
-      {next ? <div style={{width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color:'white', borderRadius:'10px'}}>Guardado</div> : <div onClick={uploadImage} style={{padding: '5px 10px', border: '1px solid black', borderRadius:'10px', width: '120px', margin: '10px 0', cursor:'pointer'}} >Guardar</div>}
+      {next ? <div style={{width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color:'white', borderRadius:'10px'}}>Guardado</div> : <div onClick={uploadImages} style={{padding: '5px 10px', border: '1px solid black', borderRadius:'10px', width: '120px', margin: '10px 0', cursor:'pointer'}} >Guardar</div>}
 
       {/* <div className="input-container">
         <p>Imagenes:</p>
