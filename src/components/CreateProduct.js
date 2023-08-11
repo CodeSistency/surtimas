@@ -897,6 +897,8 @@ function reset (){
         </label>
         </div>
 
+        <hr />
+
 
       {/* <div className="input-container">
         <p>Fotos Secundarias</p>
@@ -1030,7 +1032,7 @@ function reset (){
               </label>
             </div>
           ))}
-          <div className='divider'></div>
+          
         </div>
         
         {/* <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
