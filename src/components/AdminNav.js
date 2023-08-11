@@ -30,7 +30,7 @@ function AdminNav() {
   return (
     <div className='admin-nav'>
         <ul className='admin-nav-icons' >
-            {icon1 ? <Link style={{marginTop: '10px'}} to={"/admin"}><LuShirt  fontSize={"50"} color='white' style={{padding: '10px', backgroundColor: 'black'}}/></Link> : <Link onClick={handleIcon1} style={{marginTop: '10px'}} to={"/admin"}><LuShirt  fontSize={"50"} color='#f0efef3a' /></Link>}
+            <Link style={{marginTop: '10px'}} to={"/admin"}><LuShirt  fontSize={"50"} color='white' /></Link>
             <Link style={{marginTop: '10px'}} to={"/admin/qr"}><BiPrinter className='icon' fontSize={"50"} color='#f0efef3a'/></Link> 
             <Link style={{marginTop: '10px'}} to={"/admin/reader"}><BsQrCodeScan className='icon' fontSize={"50"} color='#f0efef3a'/></Link>
         </ul>

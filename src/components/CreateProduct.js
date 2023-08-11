@@ -43,16 +43,17 @@ const CreateProduct = () => {
   
 
   const [quantity, setQuantity] = useState({
-    S: [{ color: "#fff", quantity: 0 }],
-    M: [{ color: "#fff", quantity: 0 }],
-    L: [{ color: "#fff", quantity: 0 }],
-    XL: [{ color: "#fff", quantity: 0 }],
+    'U': [{ color: "#fff", quantity: 0 }],
+    'S': [{ color: "#fff", quantity: 0 }],
+    'M': [{ color: "#fff", quantity: 0 }],
+    'L': [{ color: "#fff", quantity: 0 }],
+    'XL': [{ color: "#fff", quantity: 0 }],
     '0XL': [{ color: "#fff", quantity: 0 }],
     '2XL': [{ color: "#fff", quantity: 0 }],
     '3XL': [{ color: "#fff", quantity: 0 }],
     '4XL': [{ color: "#fff", quantity: 0 }],
     '5XL': [{ color: "#fff", quantity: 0 }],
-    FIT: [{ color: "#fff", quantity: 0 }],
+    'FIT': [{ color: "#fff", quantity: 0 }],
   });
 
   const [quantityShoe, setQuantityShoe] = useState({
@@ -178,8 +179,8 @@ const handleQuantityChangeShoe = (sizeIndex, colorIndex, event) => {
 const handleAddColorShoe = () => {
   setQuantityShoe((prevQuantity) => {
     const updatedQuantity = { ...prevQuantity };
-    updatedQuantity[selectedSize] = [
-      ...updatedQuantity[selectedSize],
+    updatedQuantity[selectedSizeShoe] = [
+      ...updatedQuantity[selectedSizeShoe],
       { color: "#fff", quantity: 0 },
     ];
     return updatedQuantity;
@@ -650,6 +651,7 @@ formData.append('imagenes', urls);
     
 }
 
+
 function reset (){
   setData({})
   setTipo('camisa')
@@ -684,16 +686,17 @@ function reset (){
   })
 
   setQuantity({
-    S: [{ color: "#fff", quantity: 0 }],
-    M: [{ color: "#fff", quantity: 0 }],
-    L: [{ color: "#fff", quantity: 0 }],
-    XL: [{ color: "#fff", quantity: 0 }],
+    'U': [{ color: "#fff", quantity: 0 }],
+    'S': [{ color: "#fff", quantity: 0 }],
+    'M': [{ color: "#fff", quantity: 0 }],
+    'L': [{ color: "#fff", quantity: 0 }],
+    'XL': [{ color: "#fff", quantity: 0 }],
     '0XL': [{ color: "#fff", quantity: 0 }],
     '2XL': [{ color: "#fff", quantity: 0 }],
     '3XL': [{ color: "#fff", quantity: 0 }],
     '4XL': [{ color: "#fff", quantity: 0 }],
     '5XL': [{ color: "#fff", quantity: 0 }],
-    FIT: [{ color: "#fff", quantity: 0 }],
+    'FIT': [{ color: "#fff", quantity: 0 }],
   })
   setSuccess(false)
   setNext(false)
