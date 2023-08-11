@@ -108,8 +108,8 @@ const Products = () => {
                                 <p>{product?.titulo}</p>
                                 <p>{product?.precio}</p>
                                 <p>{product?.cantidad}</p>
-                                <img src={product?.imagenes[0]} style={{height: "30px",
-                            width: "30px", borderRadius: "50%"}} alt="imagen"/> 
+                                {/* <img src={product?.imagenes[0]} style={{height: "30px", */}
+                            {/* width: "30px", borderRadius: "50%"}} alt="imagen"/>  */}
                                 
                                 <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline/></Link>
                                 <div style={{cursor: 'pointer'}}><MdDeleteForever  onClick={() => handleDelete(product._id)}/></div>
