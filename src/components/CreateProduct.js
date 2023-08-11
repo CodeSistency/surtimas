@@ -246,7 +246,7 @@ const uploadTask3 = uploadBytesResumable(storageRef3, imagen3);
 const uploadTask4 = uploadBytesResumable(storageRef4, imagen4);
 const uploadTask5 = uploadBytesResumable(storageRef5, imagen5);
 
-if(imagen){
+if(imagen != ''){
 
   uploadTask.on('state_changed', 
   (snapshot) => {
@@ -280,7 +280,7 @@ if(imagen){
   );
 }
 
-if(imagen2){
+if(imagen2 != ''){
 
   uploadTask2.on('state_changed', 
    (snapshot) => {
@@ -312,9 +312,11 @@ if(imagen2){
      });
    }
   );
+} else{
+  console.log('no image')
 }
 
-if(imagen3) {
+if( imagen3 != '') {
 
   uploadTask3.on('state_changed', 
    (snapshot) => {
@@ -348,7 +350,7 @@ if(imagen3) {
   );
 }
 
-if(imagen4) {
+if(imagen4 != '') {
 
   uploadTask4.on('state_changed', 
    (snapshot) => {
@@ -382,7 +384,7 @@ if(imagen4) {
   );
 }
 
-if(imagen5){
+if(imagen5 != ''){
 
   uploadTask5.on('state_changed', 
    (snapshot) => {
