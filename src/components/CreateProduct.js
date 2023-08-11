@@ -404,6 +404,11 @@ setUrls([url, url2, url3, url4, url5])
    } catch (err) {
      console.error(err)
    }
+   
+   finally{
+    setUrls([url, url2, url3, url4, url5])
+    console.log(urls)
+   }
  }
 
   const handleSubmit = async (e) => {
