@@ -632,10 +632,10 @@ let isMounted = true;
 
 
 
-  // setUrls([url, url2, url3, url4, url5])
+setUrls([url, url2, url3, url4, url5])
 
 
-console.log(urls)
+console.log(urls, url, url2, url3, url4, url5)
 
 const formData = new FormData();
 formData.append('titulo', titulo);
