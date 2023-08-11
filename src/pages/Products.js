@@ -48,7 +48,7 @@ function Products() {
                     <div className='card-container'>
                         {products.map((product, i) =>
                             // <Link to={`/productos/${product._id}`}>
-                            <Card key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} product={product}/>
+                            <Card key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
                             // </Link>
                             )}
                     </div>

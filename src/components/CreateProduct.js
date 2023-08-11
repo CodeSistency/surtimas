@@ -5,7 +5,9 @@ import {BsFillPlusCircleFill} from "react-icons/bs"
 import {SketchPicker} from "react-color"
 import AdminNav from './AdminNav';
 import ColorPicker from './ColorPicker';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, updateMetadata  } from "firebase/storage";
 import { Link } from 'react-router-dom';
+import app from '../firebase';
 
 const CreateProduct = () => {
 
@@ -21,12 +23,23 @@ const CreateProduct = () => {
   const [precioAlMayor, setPrecioAlMayor] = useState(0);
   const [codigo, setCodigo] = useState('');
   const [tipo, setTipo] = useState('camisa')
+  const [url, setUrl] = useState('')
+  const [url2, setUrl2] = useState('')
+  const [url3, setUrl3] = useState('')
+  const [url4, setUrl4] = useState('')
+  const [url5, setUrl5] = useState('')
+  const [urls, setUrls] = useState([])
  
   const [imagen, setImage] = useState("")
+  const [imagen2, setImage2] = useState("")
+  const [imagen3, setImage3] = useState("")
+  const [imagen4, setImage4] = useState("")
+  const [imagen5, setImage5] = useState("")
   const [images, setImages] = useState([])
   const [selectedImages, setSelectedImages] = useState([]);
 
   const [success, setSuccess] = useState(false)
+  const [next, setNext] = useState(false)
   
 
   const [quantity, setQuantity] = useState({
@@ -175,7 +188,9 @@ const handleAddColorShoe = () => {
 
 const handleImageChange = (e) => {
   const file = e.target.files[0];
+  
   setImage(file);
+  
 };
 
  // State for storing selected image files
@@ -198,65 +213,441 @@ useEffect(() => {
 
     useEffect(() => {
       
-      console.log(imagen)
-    }, [imagen])
+      console.log(imagen, imagen2, imagen3, imagen4, imagen5)
+    }, [imagen, imagen2, imagen3, imagen4, imagen5])
+
+  function uploadImage(){
+ 
+   try{
+     const fileName = new Date().getTime() + imagen.name;
+const fileName2 = new Date().getTime() + imagen2.name;
+const fileName3 = new Date().getTime() + imagen3.name;
+const fileName4 = new Date().getTime() + imagen4.name;
+const fileName5 = new Date().getTime() + imagen5.name;
+
+const storage = getStorage(app);
+const storageRef = ref(storage, fileName);
+const storageRef2 = ref(storage, fileName2);
+const storageRef3 = ref(storage, fileName3);
+const storageRef4 = ref(storage, fileName4);
+const storageRef5 = ref(storage, fileName5);
+
+const metadata = {
+ cacheControl: 'public,max-age=300',
+ contentType: imagen.type
+};
+
+
+const uploadTask = uploadBytesResumable(storageRef, imagen);
+const uploadTask2 = uploadBytesResumable(storageRef2, imagen2);
+const uploadTask3 = uploadBytesResumable(storageRef3, imagen3);
+const uploadTask4 = uploadBytesResumable(storageRef4, imagen4);
+const uploadTask5 = uploadBytesResumable(storageRef5, imagen5);
+
+
+uploadTask.on('state_changed', 
+ (snapshot) => {
+   
+   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+   console.log('Upload is ' + progress + '% done');
+   switch (snapshot.state) {
+     case 'paused':
+       console.log('Upload is paused');
+       break;
+     case 'running':
+       console.log('Upload is running');
+       break;
+   }
+ }, 
+ (error) => {
+   // Handle unsuccessful uploads
+ }, 
+ () => {
+   // Handle successful uploads on complete
+   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+   getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+     console.log('File available at', downloadURL);
+     setUrl(downloadURL);
+    //  setUrls(prev => [...prev, downloadURL])
+    //  console.log(urls)
+     
+   });
+ }
+);
+
+uploadTask2.on('state_changed', 
+ (snapshot) => {
+   
+   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+   console.log('Upload is ' + progress + '% done');
+   switch (snapshot.state) {
+     case 'paused':
+       console.log('Upload is paused');
+       break;
+     case 'running':
+       console.log('Upload is running');
+       break;
+   }
+ }, 
+ (error) => {
+   // Handle unsuccessful uploads
+ }, 
+ () => {
+   // Handle successful uploads on complete
+   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+   getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
+     console.log('File available at', downloadURL);
+     setUrl2(downloadURL);
+    //  setUrls(prev => [...prev, downloadURL])
+    //  console.log(urls)
+     
+   });
+ }
+);
+
+uploadTask3.on('state_changed', 
+ (snapshot) => {
+   
+   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+   console.log('Upload is ' + progress + '% done');
+   switch (snapshot.state) {
+     case 'paused':
+       console.log('Upload is paused');
+       break;
+     case 'running':
+       console.log('Upload is running');
+       break;
+   }
+ }, 
+ (error) => {
+   // Handle unsuccessful uploads
+ }, 
+ () => {
+   // Handle successful uploads on complete
+   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+   getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
+     console.log('File available at', downloadURL);
+     setUrl3(downloadURL);
+    //  setUrls(prev => [...prev, downloadURL])
+    //  console.log(urls)
+     
+   });
+ }
+);
+
+uploadTask4.on('state_changed', 
+ (snapshot) => {
+   
+   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+   console.log('Upload is ' + progress + '% done');
+   switch (snapshot.state) {
+     case 'paused':
+       console.log('Upload is paused');
+       break;
+     case 'running':
+       console.log('Upload is running');
+       break;
+   }
+ }, 
+ (error) => {
+   // Handle unsuccessful uploads
+ }, 
+ () => {
+   // Handle successful uploads on complete
+   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+   getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
+     console.log('File available at', downloadURL);
+     setUrl4(downloadURL);
+    //  setUrls(prev => [...prev, downloadURL])
+    //  console.log(urls)
+     
+   });
+ }
+);
+
+uploadTask5.on('state_changed', 
+ (snapshot) => {
+   
+   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+   console.log('Upload is ' + progress + '% done');
+   switch (snapshot.state) {
+     case 'paused':
+       console.log('Upload is paused');
+       break;
+     case 'running':
+       console.log('Upload is running');
+       break;
+   }
+ }, 
+ (error) => {
+   // Handle unsuccessful uploads
+ }, 
+ () => {
+   // Handle successful uploads on complete
+   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+   getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
+     console.log('File available at', downloadURL);
+     setUrl5(downloadURL);
+    //  setUrls(prev => [...prev, downloadURL])
+    //  console.log(urls)
+     setNext(true)
+     setUrls([url, url2, url3, url4, url5])
+   });
+ }
+);
+
+setUrls([url, url2, url3, url4, url5])
+
+
+   } catch (err) {
+     console.error(err)
+   }
+ }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    let isMounted = true;
-    const controller = new AbortController();
+    
+    
+    
+    // for (const imageFile of selectedImages) {
+    //   formData.append('imagenes', imageFile);
+    // }
+//   try{
+//       const fileName = new Date().getTime() + imagen.name;
+// const fileName2 = new Date().getTime() + imagen2.name;
+// const fileName3 = new Date().getTime() + imagen3.name;
+// const fileName4 = new Date().getTime() + imagen4.name;
+// const fileName5 = new Date().getTime() + imagen5.name;
 
-    const formData = new FormData();
-    formData.append('titulo', titulo);
-    formData.append('descripcion', descripcion);
-    formData.append('precio', precio);
-    formData.append('precio_mayor', precioAlMayor);
-    formData.append('codigo', codigo);
-    formData.append('tipo', tipo);
-    formData.append('sexo', sexo);
-    formData.append('tallas', JSON.stringify(quantity));
-    formData.append('tallas_zapatos', JSON.stringify(quantityShoe));
+// const storage = getStorage(app);
+// const storageRef = ref(storage, fileName);
+// const storageRef2 = ref(storage, fileName2);
+// const storageRef3 = ref(storage, fileName3);
+// const storageRef4 = ref(storage, fileName4);
+// const storageRef5 = ref(storage, fileName5);
+
+// const metadata = {
+//   cacheControl: 'public,max-age=300',
+//   contentType: imagen.type
+// };
+
+
+// const uploadTask = uploadBytesResumable(storageRef, imagen);
+// const uploadTask2 = uploadBytesResumable(storageRef2, imagen2);
+// const uploadTask3 = uploadBytesResumable(storageRef3, imagen3);
+// const uploadTask4 = uploadBytesResumable(storageRef4, imagen4);
+// const uploadTask5 = uploadBytesResumable(storageRef5, imagen5);
+
+
+// uploadTask.on('state_changed', 
+//   (snapshot) => {
+    
+//     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     console.log('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case 'paused':
+//         console.log('Upload is paused');
+//         break;
+//       case 'running':
+//         console.log('Upload is running');
+//         break;
+//     }
+//   }, 
+//   (error) => {
+//     // Handle unsuccessful uploads
+//   }, 
+//   () => {
+//     // Handle successful uploads on complete
+//     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+//       console.log('File available at', downloadURL);
+//       setUrl(downloadURL);
+//       setUrls(prev => [...prev, downloadURL])
+//       console.log(urls)
+      
+//     });
+//   }
+// );
+
+// uploadTask2.on('state_changed', 
+//   (snapshot) => {
+    
+//     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     console.log('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case 'paused':
+//         console.log('Upload is paused');
+//         break;
+//       case 'running':
+//         console.log('Upload is running');
+//         break;
+//     }
+//   }, 
+//   (error) => {
+//     // Handle unsuccessful uploads
+//   }, 
+//   () => {
+//     // Handle successful uploads on complete
+//     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//     getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
+//       console.log('File available at', downloadURL);
+//       setUrl2(downloadURL);
+//       setUrls(prev => [...prev, downloadURL])
+//       console.log(urls)
+      
+//     });
+//   }
+// );
+
+// uploadTask3.on('state_changed', 
+//   (snapshot) => {
+    
+//     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     console.log('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case 'paused':
+//         console.log('Upload is paused');
+//         break;
+//       case 'running':
+//         console.log('Upload is running');
+//         break;
+//     }
+//   }, 
+//   (error) => {
+//     // Handle unsuccessful uploads
+//   }, 
+//   () => {
+//     // Handle successful uploads on complete
+//     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//     getDownloadURL(uploadTask3.snapshot.ref).then((downloadURL) => {
+//       console.log('File available at', downloadURL);
+//       setUrl3(downloadURL);
+//       setUrls(prev => [...prev, downloadURL])
+//       console.log(urls)
+      
+//     });
+//   }
+// );
+
+// uploadTask4.on('state_changed', 
+//   (snapshot) => {
+    
+//     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     console.log('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case 'paused':
+//         console.log('Upload is paused');
+//         break;
+//       case 'running':
+//         console.log('Upload is running');
+//         break;
+//     }
+//   }, 
+//   (error) => {
+//     // Handle unsuccessful uploads
+//   }, 
+//   () => {
+//     // Handle successful uploads on complete
+//     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//     getDownloadURL(uploadTask4.snapshot.ref).then((downloadURL) => {
+//       console.log('File available at', downloadURL);
+//       setUrl4(downloadURL);
+//       setUrls(prev => [...prev, downloadURL])
+//       console.log(urls)
+      
+//     });
+//   }
+// );
+
+// uploadTask5.on('state_changed', 
+//   (snapshot) => {
+    
+//     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     console.log('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case 'paused':
+//         console.log('Upload is paused');
+//         break;
+//       case 'running':
+//         console.log('Upload is running');
+//         break;
+//     }
+//   }, 
+//   (error) => {
+//     // Handle unsuccessful uploads
+//   }, 
+//   () => {
+//     // Handle successful uploads on complete
+//     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//     getDownloadURL(uploadTask5.snapshot.ref).then((downloadURL) => {
+//       console.log('File available at', downloadURL);
+//       setUrl5(downloadURL);
+//       setUrls(prev => [...prev, downloadURL])
+//       console.log(urls)
+      
+//     });
+//   }
+// );
+
+
+//     } catch (err) {
+//       console.error(err)
+//     }
+
+let isMounted = true;
+      const controller = new AbortController();
+
+
+
+
+  // setUrls([url, url2, url3, url4, url5])
+
+
+console.log(urls)
+
+const formData = new FormData();
+formData.append('titulo', titulo);
+formData.append('descripcion', descripcion);
+formData.append('precio', precio);
+formData.append('precio_mayor', precioAlMayor);
+formData.append('codigo', codigo);
+formData.append('tipo', tipo);
+formData.append('sexo', sexo);
+formData.append('tallas', JSON.stringify(quantity));
+formData.append('tallas_zapatos', JSON.stringify(quantityShoe));
+formData.append('imagen', url);
+formData.append('imagenes', urls);
+  
+      
+  
+      try {
+          const response = await axiosPrivate.post('products', formData,
+          // JSON.stringify({titulo, descripcion, precio, codigo, tallas: quantity, imagen}),
+      
+          { 
+              signal: controller.signal,
+              
+              
+          });
+          console.log(JSON.stringify(response?.data));
+          isMounted && setData(response.data);
+          setSuccess(true)
+          console.log(success)
+          // navigate("/admin", { state: {from: location}, replace: true });
+          
+      } catch (err) {
+          console.error(err);
+          // navigate('/login', { state: { from: location }, replace: true });
+          
+      }
+  
+      return () => {
+          isMounted = false;
+          controller.abort();
+      }
 
     
-    for (const imageFile of selectedImages) {
-      formData.append('imagenes', imageFile);
-    }
-
-    
-      // console.log(formData.getAll("tallas"))
-      // console.log(formData.getAll("file"))
-      // console.log(formData.getAll("titulo"))
-      // console.log(formData.getAll("precio"))
-      // console.log(formData.getAll("descripcion"))
-   
-    
-
-    try {
-        const response = await axiosPrivate.post('products', formData,
-        // JSON.stringify({titulo, descripcion, precio, codigo, tallas: quantity, imagen}),
-    
-        { 
-            signal: controller.signal,
-            
-            
-        });
-        console.log(JSON.stringify(response?.data));
-        isMounted && setData(response.data);
-        setSuccess(true)
-        console.log(success)
-        // navigate("/admin", { state: {from: location}, replace: true });
-        
-    } catch (err) {
-        console.error(err);
-        // navigate('/login', { state: { from: location }, replace: true });
-        
-    }
-
-    return () => {
-        isMounted = false;
-        controller.abort();
-    }
 }
 
 function reset (){
@@ -305,6 +696,7 @@ function reset (){
     FIT: [{ color: "#fff", quantity: 0 }],
   })
   setSuccess(false)
+  setNext(false)
 }
 
 
@@ -326,7 +718,7 @@ function reset (){
     <main className='dashboard admin-container'>
     <AdminNav/>
     <div className='create-container'>
-    <form onSubmit={handleSubmit} className="mi-formulario" encType='multipart/form-data'>
+    <form onSubmit={handleSubmit} className="mi-formulario" >
       <div className="input-container">
         <p>Titulo</p>
         <label htmlFor="titulo"></label>
@@ -336,6 +728,7 @@ function reset (){
           value={titulo}
           onChange={handleTituloChange}
           className="input-titulo"
+          required
         />
       </div>
       <div className="input-container">
@@ -347,6 +740,7 @@ function reset (){
           value={descripcion}
           onChange={handleDescripcionChange}
           className="input-descripcion"
+          required
         />
       </div>
         
@@ -359,6 +753,7 @@ function reset (){
           value={precio}
           onChange={handlePrecioChange}
           className="input-precio"
+          required
         />
       </div>
       <div className="input-container">
@@ -370,6 +765,7 @@ function reset (){
           value={precioAlMayor}
           onChange={handlePrecioAlMayorChange}
           className="input-precio"
+          required
         />
       </div>
       
@@ -382,26 +778,64 @@ function reset (){
           value={codigo}
           onChange={handleCodigoChange}
           className="input-descripcion"
+          required
         />
       </div>
-      {/* <div className="input-container">
+      <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
         <p>Foto Primaria</p>
-        <label htmlFor="imagen"></label>
+        {/* <label style={{marginTop:'0'}}htmlFor="imagen"></label> */}
         <input
           type="file"
           id="imagen"
           onChange={handleImageChange}
           className="input-imagen"
           accept='image/*'
+          required
           
         />
-        {
-          imagen == "" || imagen == null ? "" : <img src={imagen} width={100} height={100}/>
-        }
+        <input
+          type="file"
+          id="imagen"
+          onChange={e => setImage2(e.target.files[0])}
+          className="input-imagen"
+          accept='image/*'
+          required
+          
+        />
+        <input
+          type="file"
+          id="imagen"
+          onChange={e => setImage3(e.target.files[0])}
+          className="input-imagen"
+          accept='image/*'
+          required
+          
+        />
+        <input
+          type="file"
+          id="imagen"
+          onChange={e => setImage4(e.target.files[0])}
+          className="input-imagen"
+          accept='image/*'
+          required
+          
+        />
+        <input
+          type="file"
+          id="imagen"
+          onChange={e => setImage5(e.target.files[0])}
+          className="input-imagen"
+          accept='image/*'
+          required
+          
+        />
         
-      </div> */}
+        
+      </div>
 
-      <div className="input-container">
+      {next ? <div style={{width: '120px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color:'white', borderRadius:'10px'}}>Guardado</div> : <div onClick={uploadImage} style={{padding: '5px 10px', border: '1px solid black', borderRadius:'10px', width: '120px', margin: '10px 0', cursor:'pointer'}} >Guardar</div>}
+
+      {/* <div className="input-container">
         <p>Imagenes:</p>
         <label htmlFor="imagen" className='custom-file-input'>
         <input
@@ -416,7 +850,7 @@ function reset (){
         </label>
         
         
-      </div>
+      </div> */}
 
       
 
