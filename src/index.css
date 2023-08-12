@@ -1036,8 +1036,8 @@ li {
 /* YouTube icon */
 
 .product-card {
-  min-width: 120px;
-  max-width: 120px;
+  min-width: 160px;
+  max-width: 160px;
   height: 250px;
   background-color: #ffffff;
   border-radius: 10px;
