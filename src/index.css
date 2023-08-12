@@ -1035,6 +1035,12 @@ li {
 }
 /* YouTube icon */
 
+@media (max-width: 410px){
+  .product-card {
+    max-width: 100% !important;
+  }
+}
+
 .product-card {
   min-width: 160px;
   max-width: 160px;
