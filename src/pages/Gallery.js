@@ -3,22 +3,39 @@ import {useContext} from 'react'
 import CartContext from "../context/CartProvider";
 import { axiosPrivate } from '../api/axios';
 import axios from '../api/axios';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import Card from './Card';
 import Card2 from './Card2';
+import PriceFilter from './PriceFilter';
+import FilterCategory from './FilterCategory';
+import GenderRadioFilter from './GenderFilter';
 
-function Products() {
+function Gallery() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [selectedSexo, setSelectedSexo] = useState('all');
     // const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
     
+    const componentRef = useRef(null);
+
     const handleFilter = filteredProducts => {
         setFilteredProducts(filteredProducts);
+      };
+    function handleReset(){
+      setFilteredProducts([])
+    }
+
+      const handleGenderFilter = (selectedSexo) => {
+        setSelectedSexo(selectedSexo);
+        const updatedProducts = objetos.filter(
+          obj => selectedSexo === 'all' || obj.sexo === selectedSexo
+        );
+        setFilteredProducts(updatedProducts);
       };
 
     useEffect(() => {
@@ -93,7 +110,7 @@ function Products() {
           },
           {
             titulo: 'card',
-            precio: 10,
+            precio: 8,
             tipo: 'camisa',
             sexo: 'mujer',
             tallas: {
@@ -136,7 +153,7 @@ function Products() {
           },
           {
             titulo: 'card',
-            precio: 10,
+            precio: 5,
             tipo: 'camisa',
             sexo: 'mujer',
             tallas: {
@@ -179,7 +196,7 @@ function Products() {
           },
           {
             titulo: 'card',
-            precio: 10,
+            precio: 7,
             tipo: 'camisa',
             sexo: 'mujer',
             tallas: {
@@ -222,7 +239,7 @@ function Products() {
           },
           {
             titulo: 'card',
-            precio: 10,
+            precio: 15,
             tipo: 'camisa',
             sexo: 'mujer',
             tallas: {
@@ -265,9 +282,9 @@ function Products() {
           },
           {
             titulo: 'card',
-            precio: 10,
-            tipo: 'camisa',
-            sexo: 'mujer',
+            precio: 13,
+            tipo: 'pantalon',
+            sexo: 'hombre',
             tallas: {
               'U': [{ color: "#fff", quantity: 0 }],
               'XS': [{ color: "#fff", quantity: 0 }],
@@ -308,9 +325,9 @@ function Products() {
           },
           {
             titulo: 'card',
-            precio: 10,
+            precio: 20,
             tipo: 'camisa',
-            sexo: 'mujer',
+            sexo: 'hombre',
             tallas: {
               'U': [{ color: "#fff", quantity: 0 }],
               'XS': [{ color: "#fff", quantity: 0 }],
@@ -351,9 +368,9 @@ function Products() {
           },
         {
           titulo: 'card',
-          precio: 10,
+          precio: 12,
           tipo: 'camisa',
-          sexo: 'mujer',
+          sexo: 'hombre',
           tallas: {
             'U': [{ color: "#fff", quantity: 0 }],
             'XS': [{ color: "#fff", quantity: 0 }],
@@ -394,8 +411,46 @@ function Products() {
         },
       ];
 
+      const [isPriceOpen, setPriceOpen] = useState(false);
+  const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [isGenderOpen, setGenderOpen] = useState(false);
+
+      const handlePriceClick = () => {
+        setPriceOpen(!isPriceOpen);
+        setGenderOpen(false);
+        setCategoryOpen(false);
+      };
+    
+      const handleCategoryClick = () => {
+        setCategoryOpen(!isCategoryOpen);
+        setGenderOpen(false);
+        setPriceOpen(false);
+      };
+    
+      const handleGenderClick = () => {
+        setGenderOpen(!isGenderOpen);
+        setCategoryOpen(false);
+        setPriceOpen(false);
+      };
+
+      useEffect(() => {
+        const handleOutsideClick = (event) => {
+          if (componentRef.current && !componentRef.current.contains(event.target)) {
+            setGenderOpen(false);
+            setCategoryOpen(false);
+            setPriceOpen(false);
+          }
+        };
+    
+        window.addEventListener('click', handleOutsideClick);
+    
+        return () => {
+          window.removeEventListener('click', handleOutsideClick);
+        };
+      }, []);
+
   return (
-    <div >
+    <div ref={componentRef}>
         
         {/* {products?.length
                 ? (
@@ -408,21 +463,67 @@ function Products() {
                     </div>
                 ) : <p>No hay productos</p>
             } */}
-
-        {products?.length
+       
+        {filteredProducts?.length
                 ? (
-                    <div className='card-container'>
-                        {products.map((product, i) =>
-                            // <Link to={`/productos/${product._id}`}>
-                            <Card2 key={i} titulo={product.titulo} img={product.imagenes[0]} precio='10' product={product}/>
-                            // </Link>
-                            )}
+                    <div>
+                        <div className='filtros'>
+                          <div className='price-container'>
+                            <p onClick={handlePriceClick}>Precio</p>
+                            {isPriceOpen && <PriceFilter  products={filteredProducts} onFilter={handleFilter} />}
+                                </div>
+                                <div className='price-container'>
+                                  <p onClick={handleCategoryClick}>Categorias</p>
+                                  {isCategoryOpen && <FilterCategory objects={filteredProducts} onFilter={handleFilter} />}
+                                </div>
+                                <div className='price-container'>
+                                  <p onClick={handleGenderClick}>Genero</p>
+                                  {isGenderOpen && <GenderRadioFilter onFilter={handleGenderFilter} />}
+                                </div>
+                                <button onClick={handleReset}>Reset</button>
+                            </div>
+                        
+                    <div className='gallery-container'>
+
+
+                    
+                        {/* Display filtered products here */}
+                        {filteredProducts.map((product, i) => (
+                            <Card2 key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
+                        ))}
+                        
                     </div>
-                ) : <p>No hay productos</p>
+                    </div>
+                ) : 
+                <div>
+                    
+                    <div className='filtros'>
+                          <div className='price-container'>
+                            <p onClick={handlePriceClick}>Precio</p>
+                            {isPriceOpen && <PriceFilter  products={objetos} onFilter={handleFilter} />}
+                                </div>
+                                <div className='price-container'>
+                                  <p onClick={handleCategoryClick}>Categorias</p>
+                                  {isCategoryOpen && <FilterCategory objects={objetos} onFilter={handleGenderFilter} />}
+                                </div>
+                                <div className='price-container'>
+                                  <p onClick={handleGenderClick}>Genero</p>
+                                  {isGenderOpen && <GenderRadioFilter onFilter={objetos} />}
+                                </div>
+                                
+                            </div>
+                <div className='gallery-container'>
+                {objetos.map((product, i) =>
+                    // <Link to={`/productos/${product._id}`}>
+                    <Card2 key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
+                    // </Link>
+                    )}
+                </div>
+            </div>
             }
         
     </div>
   )
 }
 
-export default Products
+export default Gallery

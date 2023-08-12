@@ -1,4 +1,5 @@
 
+import Gallery from "../pages/Gallery";
 import Nav from "../pages/Nav";
 import Products from "../pages/Products";
 
@@ -25,6 +26,7 @@ const Home = () => {
                 <button className="content">Botón</button>
             </div>
             <Products />
+            <Gallery />
             
         </div>
     )
