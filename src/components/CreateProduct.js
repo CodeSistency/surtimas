@@ -732,7 +732,7 @@ formData.append('sexo', sexo);
 formData.append('tallas', JSON.stringify(quantity));
 formData.append('tallas_zapatos', JSON.stringify(quantityShoe));
 formData.append('imagen', url);
-formData.append('imagenes', urls);
+formData.append('imagenes', JSON.stringify(urls));
   
       
   

@@ -5,6 +5,8 @@ import useLogout from '../hooks/useLogout'
 import {useContext} from 'react'
 import CartContext from "../context/CartProvider";
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
+import {BiMenu} from 'react-icons/bi'
+import {LiaSearchSolid} from 'react-icons/lia'
 
 function Nav() {
 
@@ -18,13 +20,14 @@ function Nav() {
         navigate('/');
     }
 
-    function iconCart(){
-      if(cart){
-        <Link to={"/carrito"}><IoCartOutline/></Link>
-      }else{
-        <Link to={"/carrito"}><IoCartSharp /></Link>
+    function cartIcon() {
+      
+      if(cart.length) {
+          return <Link className='cart-icon' to={'/carrito'}><IoCartSharp fontSize={40} /></Link>
+      } else {
+          return <Link className='cart-icon' to={'/carrito'}><IoCartOutline fontSize={40} /></Link>
       }
-    }
+  }
 
     const {auth} = useAuth()
     console.log(auth)
@@ -34,22 +37,27 @@ function Nav() {
         <ul className="navbar">
           
             <li><Link to={"/admin"}>Admin</Link></li>
-            <li><Link to={"/admin/reader"}>Ventas</Link></li>
+            <li><Link to={"/productos"}>Productos</Link></li>
             <li><Link to={"/carrito"}>Carrito</Link></li>
+            <li><Link className='login-button' to={"/login"}>Login</Link></li>
+            <li><Link className='login-button' to={"/registro"}>Registro</Link></li>
+            
             {/* {auth 
             ? <li onClick={signOut}>Cerrar sesión</li>
             : <Link>Login</Link>
             } */}
             <li>
-              <div className="search">
-          <form style={{paddingBottom: '0'}} name="search search-relative" className=" search-relative">
-              <input type="text" className="input-search " style={{width: '100%'}} name="txt" onmouseout="this.value = ''; this.blur();" />
-              <IoCartOutline style={{top:'50%'}}className="search-button" />
-          </form>
-          
-          </div>
+              <div className="search-nav">
+                <form style={{paddingBottom: '0'}} name="search search-relative" className=" search-relative-nav">
+                    <input type="text" className="input-search-nav "  name="txt" onmouseout="this.value = ''; this.blur();" />
+                    <LiaSearchSolid style={{top:'50%'}}className="search-button-nav" />
+                </form>
+                
+                </div>
 
           </li>
+          <li className='cart-icon'>{cartIcon()}</li>
+          <BiMenu className='menu' color='white'  fontSize={45} />
         </ul>
     </nav>
   )

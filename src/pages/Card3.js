@@ -5,7 +5,7 @@ import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import { add } from 'date-fns';
 import { Link } from 'react-router-dom';
 
-function Card2 (props) {
+function Card3 (props) {
 
   const { cart, addProductToResults, removeFromCart } = useContext(CartContext);
 
@@ -35,7 +35,7 @@ function Card2 (props) {
   }
 
   return (
-    <div class="product-card">
+    <div class="product-card2">
       <Link to={`/productos/${props.id}`} class="product-image-link">
         <img src={props.img} alt="Product Image" class="product-image" >
           
@@ -51,4 +51,4 @@ function Card2 (props) {
   )
 }
 
-export default Card2
+export default Card3

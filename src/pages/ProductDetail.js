@@ -2,13 +2,22 @@ import {useContext, useState, useEffect} from 'react'
 import CartContext from "../context/CartProvider";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useParams } from 'react-router-dom';
+import {IoCartOutline, IoCartSharp} from "react-icons/io5"
+import Nav from './Nav';
 
 
 function ProductDetail() {
   const { cart, addProductToResults, removeFromCart } = useContext(CartContext);
     const [product, setProduct] = useState()
 
-    
+    function cartIcon() {
+      const alreadyInCart = cart.some(item => item._id === product._id)
+      if(alreadyInCart) {
+          return <IoCartSharp fontSize={20} onClick={() => removeFromCart(product._id)}/>
+      } else {
+          return <IoCartOutline fontSize={20} onClick={() => addProductToResults(product)}/>
+      }
+  }
 
     const axiosPrivate = useAxiosPrivate();
 
@@ -58,40 +67,74 @@ function ProductDetail() {
       };
   return (
     <div >
-      <div className='product-detail'>
-          <img src='../../public/model.jpg' alt='' className='image-detail'/>
-          {product && 
-          <div key={product.codigo} className="producto-info">
-            <h2 className="producto titulo">{product.titulo}</h2>
-            <p className="producto">{product.codigo}</p>
-            <p className="producto precio">{`${product.precio}`}<strong> $</strong></p>
-            {Object.entries(product.tallas).map(([size, colors]) => (
-              <div className="" key={size}>
-                <h4 className="product">Talla {size}</h4>
-                {colors.map((color, index) => (
-                  <div className="lista-productos" key={color._id}>
-                    <div className="producto" style={{backgroundColor: color.color, borderRadius: "50%", border: "1px solid black", height: "5", width: "5"}}></div>
-                    <input
-                      style={{width: "10"}}
-                      className="producto"
-                      type="number"
-                      value={color.quantity}
-                      onChange={(e) =>
-                        handleQuantityChange(product.codigo, size, index, e.target.valueAsNumber)
-                      }
-                    />
-                  </div>
-                ))}
+      <Nav className='nav-detail'/>
+      <div className='product-detail-container' >
+
+        <div className='product-detail'>
+            <img src={product?.imagenes[0]} alt='' className='image-detail'/>
+            {product && 
+            <div key={product.codigo} className="producto-info">
+              <h2 className="producto titulo">{product.titulo}</h2>
+              <hr />
+              {/* <p className="producto">{product.codigo}</p> */}
+              <div className='precios'>
+              <p className="producto precio dollars">{`${product.precio}`}7<span className='dolar'>$</span></p>
+              <p className="producto precio-mayor dollars"><strong>Mayor</strong> {`${product.precio_mayor}`} <span className='dolar'>$</span></p>
               </div>
+              <h4>Tallas</h4>
+              <section className='lista-colores'>
+                {Object.entries(product.tallas).map(([size, colors]) => {
+                  const totalQuantity = colors.reduce((total, color) => total + color.quantity, 0); // Calculate total quantity for the size
+                  if (totalQuantity > 0) {
+                    return (
+                      <div key={size}>
+                                {/* <h4 className="product">Talla {size}</h4> */}
+                                
+                                <div className="producto" style={{ border: "1px solid black", height: "5", width: "5", fontSize:'12px'}}>{size}</div>
+                              </div>
+                    );
+                  }
+                  return null; // Don't render if total quantity is 0
+                })}
+
+
+              </section>
+
+              <h4>Colores</h4>
+              <section className='lista-colores'>
+                {(() => {
+                  const allColors = [];
+
+                  // Collect all colors from all sizes into a single array
+                  Object.values(product.tallas).forEach(colors => {
+                    colors.forEach(colorObj => {
+                      if (!allColors.includes(colorObj.color)) {
+                        allColors.push(colorObj.color);
+                      }
+                    });
+                  });
+
+                  // Render unique colors
+                  return allColors.map((color, index) => (
+                    <div key={index} className="producto" style={{ backgroundColor: color, borderRadius: "50%", border: "1px solid black", height: "5px", width: "5px" }}></div>
+                  ));
+                })()}
+              </section>
+              <article className='ctas'>
               
-            ))}
-            <article className='ctas'>
-            
-              <button >Agregar al carrito</button>
-              <button onClick={()=>addProductToResults()}>Agregar al carrito</button>
-            
-            </article>
-          </div>}
+                <button className='buy-button'>Comprar</button>
+                <div className='addCart'>
+                  <p>Agregar</p>
+                  {cartIcon()}
+                </div>
+                
+                
+              
+              </article>
+                <hr style={{margin:'30px 0 20px'}}/>
+              <p><strong>Descripcion</strong>: {product.descripcion}</p>
+            </div>}
+        </div>
       </div>
     </div>
   )

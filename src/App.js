@@ -22,6 +22,7 @@ import Products from './components/Products';
 import QRcodes from './components/QRcodes';
 import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
+import AllProducts from './pages/AllProducts';
 
 const ROLES = {
   'User': 2001,
@@ -40,6 +41,8 @@ function App() {
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="/" element={<Home />} />
+        <Route path="/productos" element={<AllProducts />} />
+
         
 
         {/* we want to protect these routes */}
