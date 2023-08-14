@@ -40,6 +40,7 @@ const CreateProduct = () => {
 
   const [success, setSuccess] = useState(false)
   const [next, setNext] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   
 
   const [quantity, setQuantity] = useState({
@@ -270,7 +271,7 @@ useEffect(() => {
         for (let i = 0; i < images.length; i++) {
           await uploadImage(images[i], i + 1);
         }
-        
+        setIsLoading(true)
         // Here you can do additional processing if needed
       } catch (err) {
         console.error(err);
@@ -951,7 +952,13 @@ function reset (){
         
       </div>
 
-      {next ? <div style={{width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color:'white', borderRadius:'10px'}}>Guardado</div> : <div onClick={uploadImages} style={{padding: '5px 10px', border: '1px solid black', borderRadius:'10px', width: '120px', margin: '10px 0', cursor:'pointer'}} >Guardar</div>}
+      {next ? (
+        <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
+      ) : (
+        <div onClick={uploadImages} style={{ padding: '5px 15px', border: '1px solid black', borderRadius: '10px', width: '150px', margin: '10px 0', cursor: 'pointer' }}>
+          {isLoading ? 'Cargando...' : 'Guardar'}
+        </div>
+      )}
 
       {/* <div className="input-container">
         <p>Imagenes:</p>

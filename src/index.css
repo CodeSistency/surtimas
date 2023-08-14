@@ -545,6 +545,9 @@ select {
     display: block;
   }
 
+  .login {
+    max-width: 350px !important;
+  }
   
 
   .nav-admin, .nav-products{
@@ -1850,7 +1853,7 @@ right:  0;
 }
 
 .login-container > div{
-  min-width: 400px;
+  /* min-width: 400px; */
   color: white;
 }
 

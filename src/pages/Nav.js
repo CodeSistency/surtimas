@@ -12,10 +12,18 @@ import Menu from './Menu';
  
 function Nav() {
 
+  const ROLES = {
+    'User': 2001,
+    'Editor': 1984,
+    'Admin': 5150
+  }
+
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const totalImages = 4; // Replace with the actual number of images
   const [menuVisible, setMenuVisible] = useState(false);
+
+  const {auth} = useAuth()
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -40,7 +48,13 @@ function Nav() {
         img.removeEventListener('load', handleImageLoad);
       });
     };
+
+    
   }, []);
+
+  useEffect(() => {
+    console.log(auth)
+  }, [])
 
   const { cart, setCart } = useContext(CartContext);
 
@@ -52,6 +66,8 @@ function Nav() {
         navigate('/');
     }
 
+    
+
     function cartIcon() {
       
       if(cart.length) {
@@ -61,8 +77,8 @@ function Nav() {
       }
   }
 
-    const {auth} = useAuth()
-    console.log(auth)
+    // const {auth} = useAuth()
+    // console.log(auth)
   return (
    
      <div>
