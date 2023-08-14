@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const GenderRadioFilter = ({ onFilter }) => {
-  const [selectedSexo, setSelectedSexo] = useState('todos');
+const GenderRadioFilter = ({ onFilter, mujer }) => {
+  const [selectedSexo, setSelectedSexo] = useState(mujer);
 
   const handleSexoChange = (sexo) => {
     setSelectedSexo(sexo);

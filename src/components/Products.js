@@ -102,19 +102,51 @@ const Products = () => {
             </div>
             {products?.length
                 ? (
-                    <ul>
-                        {products.map((product, i) => 
-                            <li className="product-list" key={i}>
-                                <p>{product?.titulo}</p>
-                                <p>{product?.precio}</p>
-                                <p>{product?.cantidad}</p>
+                    // <ul>
+                    //     {products.map((product, i) => 
+                    //         <li className="product-list" key={i}>
+                    //             <p>{product?.titulo}</p>
+                    //             <p>{product?.precio}</p>
+                    //             <p>{product?.cantidad}</p>
 
                                 
-                                <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline/></Link>
-                                <div style={{cursor: 'pointer'}}><MdDeleteForever  onClick={() => handleDelete(product._id)}/></div>
+                    //             <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline/></Link>
+                    //             <div style={{cursor: 'pointer'}}><MdDeleteForever  onClick={() => handleDelete(product._id)}/></div>
                                 
-                            </li>)}
-                    </ul>
+                    //         </li>)}
+                    // </ul>
+                    <div className="table-container">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Precio Mayor</th>
+            <th>Imagen</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product, index) => (
+            <tr key={index}>
+              <td>{product.titulo}</td>
+              <td>{product.precio}</td>
+              <td>{product.precio_mayor}</td>
+              <td>
+                <img src={product.imagenes[0]} style={{width: '25px'}} alt={`Imagen ${index}`} />
+              </td>
+              <td>
+              <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline fontSize={27} style={{marginTop:'7px'}}/></Link>
+              </td>
+              <td>
+              <MdDeleteForever fontSize={27} style={{marginTop:'7px'}} onClick={() => handleDelete(product._id)}/>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
                 ) : <div class="lds-dual-ring"></div>
             }
         </article>

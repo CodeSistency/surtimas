@@ -399,7 +399,7 @@ function AllProducts() {
   return (
     <div >
         <Nav/>
-        <div style={{marginTop:'120px'}}>
+        <div style={{marginTop:'150px'}}>
           <Gallery />
 
       </div>

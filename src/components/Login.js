@@ -22,9 +22,9 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('');
     const [check, toggleCheck] = useToggle('persist', false);
 
-    useEffect(() => {
-        userRef.current.focus();
-    }, [])
+    // useEffect(() => {
+    //     userRef.current.focus();
+    // }, [])
 
     useEffect(() => {
         setErrMsg('');
@@ -65,7 +65,7 @@ const Login = () => {
         <main className='App'>
             <div className='login'>
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                <h1>Sign In</h1>
+                <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="username">Username:</label>
                     <input
@@ -99,7 +99,7 @@ const Login = () => {
                 <p>
                     No tienes cuenta?<br />
                     <span className="line">
-                        <Link to="/register">Regístrate</Link>
+                        <Link to="/registro">Regístrate</Link>
                     </span>
                 </p>
             </div>

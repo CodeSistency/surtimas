@@ -12,12 +12,13 @@ import PriceFilter from './PriceFilter';
 import FilterCategory from './FilterCategory';
 import GenderRadioFilter from './GenderFilter';
 import Card3 from './Card3';
+import {AiOutlineDown} from 'react-icons/ai'
 
-function Gallery() {
+function Gallery(props) {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [selectedSexo, setSelectedSexo] = useState('all');
+    const [selectedSexo, setSelectedSexo] = useState(props.mujer);
     // const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,10 +35,13 @@ function Gallery() {
       const handleGenderFilter = (selectedSexo) => {
         setSelectedSexo(selectedSexo);
         const updatedProducts = objetos.filter(
-          obj => selectedSexo === 'all' || obj.sexo === selectedSexo
+          obj => selectedSexo === 'hombre' || obj.sexo === selectedSexo
         );
         setFilteredProducts(updatedProducts);
       };
+
+      
+      
 
     useEffect(() => {
         let isMounted = true;
@@ -48,6 +52,7 @@ function Gallery() {
                 const response = await axios.get('/productos', {
                     signal: controller.signal
                 });
+                console.log(props.mujer)
                 console.log(response.data);
                 isMounted && setProducts(response.data);
                 console.log(products[2].imagenes)
@@ -450,8 +455,29 @@ function Gallery() {
         };
       }, []);
 
+      
+
+        
+   
+
+      useEffect(() => {
+        if (location.pathname === '/productos/mujer' && props.mujer) {
+
+          const handleGenderFilterNow = () => {
+            const updatedProducts = objetos.filter(obj => selectedSexo === 'mujer' || obj.sexo === 'mujer');
+            setFilteredProducts(updatedProducts);
+          };
+
+          handleGenderFilterNow();
+        }
+
+        console.log(filteredProducts)
+        console.log(location.pathname)
+      }, [location.pathname]);
+
+
   return (
-    <div ref={componentRef}>
+    <div className='gallery-container-container' ref={componentRef}>
         
         {/* {products?.length
                 ? (
@@ -465,23 +491,23 @@ function Gallery() {
                 ) : <p>No hay productos</p>
             } */}
        
-        {filteredProducts?.length
+        {filteredProducts?.length 
                 ? (
                     <div>
                         <div className='filtros'>
                           <div className='price-container'>
-                            <p onClick={handlePriceClick}>Precio</p>
+                            <p onClick={handlePriceClick}>Precio <AiOutlineDown /></p>
                             {isPriceOpen && <PriceFilter  products={filteredProducts} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
-                                  <p onClick={handleCategoryClick}>Categorias</p>
+                                  <p onClick={handleCategoryClick}>Categorias <AiOutlineDown /></p>
                                   {isCategoryOpen && <FilterCategory objects={filteredProducts} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
-                                  <p onClick={handleGenderClick}>Genero</p>
-                                  {isGenderOpen && <GenderRadioFilter onFilter={handleGenderFilter} />}
+                                  <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
+                                  {isGenderOpen && <GenderRadioFilter mujer={props.mujer} onFilter={handleGenderFilter} />}
                                 </div>
-                                <button onClick={handleReset}>Reset</button>
+                                <button style={{fontSize: '15px'}} onClick={handleReset}>Reset</button>
                             </div>
                         
                     <div className='gallery-container'>
@@ -500,16 +526,16 @@ function Gallery() {
                     
                     <div className='filtros'>
                           <div className='price-container'>
-                            <p onClick={handlePriceClick}>Precio</p>
+                            <p onClick={handlePriceClick}>Precio <AiOutlineDown /></p>
                             {isPriceOpen && <PriceFilter  products={objetos} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
-                                  <p onClick={handleCategoryClick}>Categorias</p>
+                                  <p onClick={handleCategoryClick}>Categorias <AiOutlineDown /></p>
                                   {isCategoryOpen && <FilterCategory objects={objetos} onFilter={handleGenderFilter} />}
                                 </div>
                                 <div className='price-container'>
-                                  <p onClick={handleGenderClick}>Genero</p>
-                                  {isGenderOpen && <GenderRadioFilter onFilter={objetos} />}
+                                  <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
+                                  {isGenderOpen && <GenderRadioFilter mujer={props.mujer} onFilter={handleGenderFilter} />}
                                 </div>
                                 
                             </div>

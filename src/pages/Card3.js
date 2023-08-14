@@ -4,6 +4,7 @@ import CartContext from "../context/CartProvider";
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import { add } from 'date-fns';
 import { Link } from 'react-router-dom';
+import ReactWhatsapp from 'react-whatsapp';
 
 function Card3 (props) {
 
@@ -20,19 +21,7 @@ function Card3 (props) {
 
   
 
-  function iconCart(){
-    if(cart){
-      <div className="cart" onClick={addProductToResults(props.product)}>
-        <IoCartOutline  />
-      </div>
-      
-    }else{
-      <div className="cart" onClick={addProductToResults(props.product)}>
-        <IoCartSharp />
-      </div>
-      
-    }
-  }
+
 
   return (
     <div class="product-card2">
@@ -44,9 +33,16 @@ function Card3 (props) {
       </Link>
     <div class="product-details">
       <h2 class="product-title">{props.titulo}</h2>
-      <p class="product-price">{props.precio}</p>
+      <p class="product-price">{props.precio}<small style={{color: 'black'}}>$</small></p>
+      {cartIcon()}
     </div>
-    <button class="buy-button-products">Buy</button>
+    <ReactWhatsapp 
+      class="buy-button-products"
+      number="+58 4121940547" 
+      message={`¡Hola! 👋 ¡Bienvenido a Surtymas! Agradecemos tu interés en nuestro producto "${props.titulo}". Precio:$${props.precio}. Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
+    >
+      Comprar
+    </ReactWhatsapp>
   </div>
   )
 }

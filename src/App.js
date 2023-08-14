@@ -23,6 +23,7 @@ import QRcodes from './components/QRcodes';
 import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import AllProducts from './pages/AllProducts';
+import Mujer from './pages/Mujer';
 
 const ROLES = {
   'User': 2001,
@@ -37,11 +38,12 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="registro" element={<Register />} />
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<AllProducts />} />
+        <Route path="/productos/mujer" element={<Mujer />} />
 
         
 
