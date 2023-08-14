@@ -11,11 +11,11 @@ function Card2 (props) {
   const { cart, addProductToResults, removeFromCart } = useContext(CartContext);
 
   function cartIcon() {
-    const alreadyInCart = cart.some(item => item.id === props.product.id)
+    const alreadyInCart = cart.some(item => item._id === props.id)
     if(alreadyInCart) {
-        return <IoCartSharp className="ri-shopping-cart-fill cart right" onClick={() => removeFromCart(props.product.id)}/>
+        return <IoCartSharp  className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
     } else {
-        return <IoCartOutline className="cart" onClick={() => addProductToResults(props.product)}/>
+        return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
     }
 }
 
@@ -38,7 +38,7 @@ function Card2 (props) {
     </div>
     <ReactWhatsapp 
       class="buy-button-products"
-      number="+58 4121940547" 
+      number="+58 4249670445"
       message={`¡Hola! 👋 ¡Bienvenido a Surtymas! Agradecemos tu interés en nuestro producto "${props.titulo}". Precio:$${props.precio}. Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
     >
       Comprar

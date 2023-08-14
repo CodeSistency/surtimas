@@ -4,6 +4,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useParams } from 'react-router-dom';
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import Nav from './Nav';
+import ReactWhatsapp from 'react-whatsapp';
 
 
 function ProductDetail() {
@@ -122,7 +123,13 @@ function ProductDetail() {
               </section>
               <article className='ctas'>
               
-                <button className='buy-button'>Comprar</button>
+              <ReactWhatsapp 
+      class="buy-button"
+      number="+58 4249670445" 
+      message={`¡Hola! 👋 ¡Bienvenido a Surtymas! Agradecemos tu interés en nuestro producto "${product.titulo}". Precio:$${product.precio}. Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
+    >
+      Comprar
+    </ReactWhatsapp>
                 <div className='addCart'>
                   <p>Agregar</p>
                   {cartIcon()}

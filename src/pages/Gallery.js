@@ -72,6 +72,7 @@ function Gallery(props) {
 
     const objetos = [
         {
+          _id: 6,
             titulo: 'card',
             precio: 10,
             tipo: 'camisa',
@@ -115,6 +116,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
           {
+            _id: 5,
             titulo: 'card',
             precio: 8,
             tipo: 'camisa',
@@ -158,6 +160,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
           {
+            _id: 4,
             titulo: 'card',
             precio: 5,
             tipo: 'camisa',
@@ -201,6 +204,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
           {
+            _id: 3,
             titulo: 'card',
             precio: 7,
             tipo: 'camisa',
@@ -244,6 +248,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
           {
+            _id: 7,
             titulo: 'card',
             precio: 15,
             tipo: 'camisa',
@@ -287,6 +292,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
           {
+            _id: 2,
             titulo: 'card',
             precio: 13,
             tipo: 'pantalon',
@@ -330,6 +336,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
           {
+            _id: 8,
             titulo: 'card',
             precio: 20,
             tipo: 'camisa',
@@ -373,6 +380,7 @@ function Gallery(props) {
             imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
           },
         {
+          _id: 1,
           titulo: 'card',
           precio: 12,
           tipo: 'camisa',
@@ -542,7 +550,7 @@ function Gallery(props) {
                 <div className='gallery-container'>
                 {objetos.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
-                    <Card3 key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
+                    <Card3 key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} id={product._id} product={product}/>
                     // </Link>
                     )}
                 </div>

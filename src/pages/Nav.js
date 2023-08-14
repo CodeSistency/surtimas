@@ -29,28 +29,28 @@ function Nav() {
     setMenuVisible(!menuVisible);
   };
 
-  useEffect(() => {
-    const handleImageLoad = () => {
-      setImagesLoaded((prevLoaded) => prevLoaded + 1);
-    };
+  // useEffect(() => {
+  //   const handleImageLoad = () => {
+  //     setImagesLoaded((prevLoaded) => prevLoaded + 1);
+  //   };
 
-    const images = document.querySelectorAll('img');
-    images.forEach((img) => {
-      img.addEventListener('load', handleImageLoad);
-    });
+  //   const images = document.querySelectorAll('img');
+  //   images.forEach((img) => {
+  //     img.addEventListener('load', handleImageLoad);
+  //   });
 
-    window.addEventListener('load', () => {
-      setLoading(false);
-    });
+  //   window.addEventListener('load', () => {
+  //     setLoading(false);
+  //   });
 
-    return () => {
-      images.forEach((img) => {
-        img.removeEventListener('load', handleImageLoad);
-      });
-    };
+  //   return () => {
+  //     images.forEach((img) => {
+  //       img.removeEventListener('load', handleImageLoad);
+  //     });
+  //   };
 
     
-  }, []);
+  // }, []);
 
   useEffect(() => {
     console.log(auth)
@@ -82,11 +82,7 @@ function Nav() {
   return (
    
      <div>
-     {loading || imagesLoaded < totalImages ? (
-        <div className="nav">
-          
-        </div>
-      ) : ( 
+     
         <nav className='nav'>
         <Link to={'/'}><img src="logo3.svg" alt='logo'/></Link>
         <ul className="navbar">
@@ -117,7 +113,7 @@ function Nav() {
         </ul>
 
         </nav>
-      ) }
+      
       </div>
   )
 }

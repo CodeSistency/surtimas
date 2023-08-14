@@ -44,6 +44,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<AllProducts />} />
         <Route path="/productos/mujer" element={<Mujer />} />
+        <Route path="/carrito" element={<Cart />} />
 
         
 
@@ -51,7 +52,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
-            <Route path="/carrito" element={<Cart />} />
+            {/* <Route path="/carrito" element={<Cart />} /> */}
             <Route path="/productos/:id" element={<ProductDetail />} />
             
           </Route>
