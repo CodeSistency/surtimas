@@ -32,7 +32,7 @@ function Products() {
                 });
                 console.log(response.data);
                 isMounted && setProducts(response.data);
-                console.log(products[2].imagenes)
+                // console.log(products[2].imagenes)
             } catch (err) {
                 console.error(err);
                 // navigate('/login', { state: { from: location }, replace: true });

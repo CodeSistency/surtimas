@@ -524,7 +524,7 @@ function Gallery(props) {
                     
                         {/* Display filtered products here */}
                         {filteredProducts.map((product, i) => (
-                            <Card2 key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
+                            <Card2 key={i}  titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
                         ))}
                         
                     </div>

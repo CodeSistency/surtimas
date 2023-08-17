@@ -71,9 +71,9 @@ function Nav() {
     function cartIcon() {
       
       if(cart.length) {
-          return <Link className='cart-icon' to={'/carrito'}><IoCartSharp fontSize={40} /></Link>
+          return <Link className='cart-icon' to={`/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
       } else {
-          return <Link className='cart-icon' to={'/carrito'}><IoCartOutline fontSize={40} /></Link>
+          return <Link className='cart-icon' to={`/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
       }
   }
 
@@ -84,7 +84,7 @@ function Nav() {
      <div>
      
         <nav className='nav'>
-        <Link to={'/'}><img src="logo3.svg" alt='logo'/></Link>
+        {auth.user ? <Link to={'/home'}><img src="logo3.svg" alt='logo'/></Link> : <Link to={'/'}><img src="logo3.svg" alt='logo'/></Link>}
         <ul className="navbar">
           
             <li className='nav-admin'><Link to={"/admin"}>Admin</Link></li>

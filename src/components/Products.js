@@ -25,6 +25,7 @@ const Products = () => {
                 isMounted && setProducts(response.data);
             } catch (err) {
                 console.error(err);
+                console.log(JSON.stringify(err));
                 navigate('/login', { state: { from: location }, replace: true });
             }
         }
@@ -83,6 +84,7 @@ const Products = () => {
             navigate(-1);
         } catch (err) {
             console.error(err);
+            console.log(JSON.stringify(err));
             // navigate('/login', { state: { from: location }, replace: true });
             
         }
@@ -140,7 +142,7 @@ const Products = () => {
               <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline fontSize={27} style={{marginTop:'7px'}}/></Link>
               </td>
               <td>
-              <MdDeleteForever fontSize={27} style={{marginTop:'7px'}} onClick={() => handleDelete(product._id)}/>
+              <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={() => handleDelete(product._id)}/>
               </td>
             </tr>
           ))}

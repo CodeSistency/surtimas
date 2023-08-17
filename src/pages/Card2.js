@@ -5,17 +5,22 @@ import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import { add } from 'date-fns';
 import { Link } from 'react-router-dom';
 import ReactWhatsapp from 'react-whatsapp';
+import useAuth from '../hooks/useAuth';
 
 function Card2 (props) {
 
-  const { cart, addProductToResults, removeFromCart } = useContext(CartContext);
+  const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
+  const {auth} = useAuth()
+
+  const precio_mayor = 0
 
   function cartIcon() {
     const alreadyInCart = cart.some(item => item._id === props.id)
     if(alreadyInCart) {
         return <IoCartSharp  className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
     } else {
-        return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+        // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+        return <IoCartOutline className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
     }
 }
 

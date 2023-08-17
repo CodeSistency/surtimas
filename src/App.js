@@ -44,16 +44,17 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<AllProducts />} />
         <Route path="/productos/mujer" element={<Mujer />} />
-        <Route path="/carrito" element={<Cart />} />
+        {/* <Route path="/carrito" element={<Cart />} /> */}
 
         
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             {/* <Route path="/carrito" element={<Cart />} /> */}
             <Route path="/productos/:id" element={<ProductDetail />} />
+            <Route path="/carrito/:username" element={<Cart />} />
             
           </Route>
 

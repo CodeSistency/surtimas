@@ -39,9 +39,29 @@ const UpdateProduct = () => {
   const [images, setImages] = useState([])
   const [selectedImages, setSelectedImages] = useState([]);
 
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [croppedImage2, setCroppedImage2] = useState(null);
+  const [croppedImage3, setCroppedImage3] = useState(null);
+  const [croppedImage4, setCroppedImage4] = useState(null);
+  const [croppedImage5, setCroppedImage5] = useState(null);
+  const [imageFile, setImageFile] = useState()
+
   const [success, setSuccess] = useState(false)
   const [next, setNext] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false)
+  const [created, setCreated] = useState(false)
+
+  const [loadingStates, setLoadingStates] = useState([true, true, true, true, true]);
+  const [progress, setProgress] = useState([0, 0, 0, 0, 0]);
+  const [uploadComplete, setUploadComplete] = useState(false);
+
+  const [successUpload, setSuccessUpload] = useState(0)
+  const [uploadStart, setUploadStart] = useState(false)
+
+  const [error, setError] = useState(false)
   
 
   const [quantity, setQuantity] = useState({
@@ -190,6 +210,39 @@ const UpdateProduct = () => {
     
   };
 
+  const handleImageChange2 = (e) => {
+    const file = e.target.files[0];
+    // setImage2(URL.createObjectURL(file));
+    setImage2(file);
+    setCroppedImage2(null)
+    
+  };
+  
+  const handleImageChange3 = (e) => {
+    const file = e.target.files[0];
+    // setImage3(URL.createObjectURL(file));
+    setImage3(file);
+    setCroppedImage3(null)
+    
+  };
+  
+  const handleImageChange4 = (e) => {
+    const file = e.target.files[0];
+    // setImage4(URL.createObjectURL(file));
+    setImage4(file);
+    setCroppedImage4(null)
+    
+  };
+  
+  const handleImageChange5 = (e) => {
+    const file = e.target.files[0];
+    // setImage5(URL.createObjectURL(file));
+    setImage5(file);
+    setCroppedImage5(null)
+    
+  };
+  
+
   useEffect(() => {
     console.log('Selected images:', selectedImages);
   }, [selectedImages]);
@@ -202,6 +255,12 @@ const UpdateProduct = () => {
       }, [imagen, imagen2, imagen3, imagen4, imagen5])
   
       async function uploadImage(image, index) {
+        setUploadStart(true)
+        setLoadingStates(prevLoadingStates => {
+          const newLoadingStates = [...prevLoadingStates];
+          newLoadingStates[index] = true;
+          return newLoadingStates;
+        });
         if (!image) {
           console.log(`No image at index ${index}`);
           return;
@@ -215,8 +274,11 @@ const UpdateProduct = () => {
       
         uploadTask.on('state_changed', 
           (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload at index ${index} is ${progress}% done`);
+            const newProgress = [...progress];
+          newProgress[index] = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(newProgress);
+            // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload at index ${index} is ${newProgress}% done`);
             switch (snapshot.state) {
               case 'paused':
                 console.log(`Upload at index ${index} is paused`);
@@ -234,11 +296,22 @@ const UpdateProduct = () => {
               const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
               console.log(`File at index ${index} available at`, downloadURL);
               setUrl2(downloadURL);
-              
+              setSuccessUpload(prevCount => prevCount + 1)
               setUrls(prevUrls => [...prevUrls, downloadURL]);
               console.log(urls)
               setNext(true)
               setIsLoading(false)
+
+              console.log(urls.length)
+            console.log(successUpload + selectedImages.length)
+            console.log(selectedImages)
+          console.log(successUpload)
+            
+            setLoadingStates(prevLoadingStates => {
+              const newLoadingStates = [...prevLoadingStates];
+              newLoadingStates[index] = false;
+              return newLoadingStates;
+            });
               // Handle the download URL as needed (e.g., set it in the state)
             } catch (err) {
               console.error(err);
@@ -250,6 +323,11 @@ const UpdateProduct = () => {
       async function uploadImages() {
         try {
           const images = [imagen, imagen2, imagen3, imagen4, imagen5];
+          const filteredImages = images.filter(image => image !== '');
+          console.log(filteredImages)
+          setSelectedImages(filteredImages)
+
+          
           
           for (let i = 0; i < images.length; i++) {
             await uploadImage(images[i], i + 1);
@@ -308,11 +386,17 @@ useEffect(() => {
     setQuantityShoe(products?.tallas_zapatos)
     setUrl(products?.imagen)
     setUrls(products?.imagenes)
+    setSuccessUpload(products?.imagenes.length)
     console.log(products?.tallas)
     console.log(quantity)
     console.log(products)
+    console.log(urls)
     
 }, [products])
+
+useEffect(() =>{
+  console.log(urls)
+}, [urls])
 
   const handleSubmit = async (e) => {
 
@@ -337,6 +421,8 @@ useEffect(() => {
 
 
     try {
+        setError(false)
+        setIsLoadingCreate(true)
         const response = await axiosPrivate.put(`products/${id}`,
         JSON.stringify({ titulo, descripcion, precio, precioAlMayor, tipo, sexo, codigo, tallas_zapatos: quantityShoe, tallas: quantity, imagen: url, imagenes: urls}),
     
@@ -350,6 +436,7 @@ useEffect(() => {
         // navigate(-1);
     } catch (err) {
         console.error(err);
+        setError(true)
         // navigate('/login', { state: { from: location }, replace: true });
         
     }
@@ -431,7 +518,7 @@ useEffect(() => {
       <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
         <p>Foto Primaria</p>
         {/* <label style={{marginTop:'0'}}htmlFor="imagen"></label> */}
-        <div className='imagenes-guardadas'>
+        {/* <div className='imagenes-guardadas'>
 
         <input
           type="file"
@@ -497,8 +584,88 @@ useEffect(() => {
         />
         {products?.imagenes[4] && urls ? <p>Guardado</p> : null}
         </div>
-       
-        
+        */}
+        <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
+
+<input
+  type="file"
+  id="imagen"
+  onChange={handleImageChange}
+  className="input-imagen"
+  accept='image/*'
+  style={{fontSize: '12px'}}
+  
+  
+/>
+{loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p>{Math.round(progress[1])}%</p>}
+{products?.imagenes && <p>Guardado</p>}
+{imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
+</div>
+
+<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+
+<input
+  type="file"
+  id="imagen"
+  onChange={handleImageChange2}
+  className="input-imagen"
+  accept='image/*'
+  style={{fontSize: '12px'}}
+  
+  
+/>
+{loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p>{Math.round(progress[2])}%</p>}
+{products?.imagenes  && <p>Guardado</p>}
+{imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
+</div>
+<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+
+<input
+  type="file"
+  id="imagen"
+  onChange={handleImageChange3}
+  className="input-imagen"
+  accept='image/*'
+  style={{fontSize: '12px'}}
+  
+  
+/>
+{loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p>{Math.round(progress[3])}%</p>}
+{ products?.imagenes[2] && urls[2] && <p>Guardado</p>}
+{imagen3 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen3)}/>}
+</div>
+<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+
+<input
+  type="file"
+  id="imagen"
+  onChange={handleImageChange4}
+  className="input-imagen"
+  accept='image/*'
+  style={{fontSize: '12px'}}
+  
+  
+/>
+ {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p>{Math.round(progress[4])}%</p>}
+ { products?.imagenes[3] && urls[3] && <p>Guardado</p>}
+ {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
+</div>
+<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+
+  <input
+  style={{fontSize: '12px'}}
+    type="file"
+    id="imagen"
+    onChange={handleImageChange5}
+    className="input-imagen"
+    accept='image/*'
+    
+    
+  />
+  {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p>{Math.round(progress[5])}%</p>}
+  {products?.imagenes[5] && urls[4] && <p>Guardado</p>}
+{imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
+</div>
         
       </div>
 
@@ -509,6 +676,21 @@ useEffect(() => {
           {isLoading ? 'Cargando...' : 'Guardar'}
         </div>
       )}
+
+{/* {uploadStart && products?.imagenes.length > products?.imagenes.length -1 && selectedImages.length == successUpload  ? (
+  <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
+) : (
+  <div onClick={uploadImages} style={{ padding: '5px 15px', border: '1px solid black', borderRadius: '10px', width: '150px', margin: '10px 0', cursor: 'pointer' }}>
+    {isLoading ? 'Cargando...' : 'Guardar'}
+  </div>
+)} */}
+{/* {uploadStart && urls.length > 1 && selectedImages.length == successUpload  ? (
+  <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
+) : (
+  <div onClick={uploadImages} style={{ padding: '5px 15px', border: '1px solid black', borderRadius: '10px', width: '150px', margin: '10px 0', cursor: 'pointer' }}>
+    {isLoading ? 'Cargando...' : 'Guardar'}
+  </div>
+)} */}
 
       <div className='select'>
         <label className='prenda' style={{display: 'flex'}}>
