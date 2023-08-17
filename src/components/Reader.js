@@ -2,11 +2,12 @@
 import { useEffect, useState, useRef } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import {MdDeleteForever} from "react-icons/md"
+import {MdDeleteForever, MdOutlineModeEditOutline} from "react-icons/md"
 import {BsFillPlusCircleFill} from "react-icons/bs"
 import { QrReader } from 'react-qr-reader';
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import { BsQrCodeScan } from 'react-icons/bs'
+import ModalComponent from "./Modal";
 
 import React from 'react'
 import AdminNav from "./AdminNav";
@@ -24,6 +25,9 @@ function Reader() {
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
     
 
     const windowWidth = useRef(window.innerWidth);
@@ -64,7 +68,7 @@ function Reader() {
     }, [productsLoaded]);
   
     function filterProducts(result) {
-        const filteredProduct = products.find((product) => product._id.toString() === result);
+        const filteredProduct = products.find((product) => product.codigo.toString() === result);
         console.log("Scanned QR:", result);
         console.log("Filtered Product:", filteredProduct);
         console.log("Products Array:", products);
@@ -72,7 +76,7 @@ function Reader() {
           console.log(filteredProduct);
           setResults((prevResults) => [
             ...prevResults,
-            { titulo: filteredProduct.titulo, precio: filteredProduct.precio },
+            filteredProduct,
           ]);
         }
       }
@@ -115,6 +119,7 @@ function Reader() {
   
   function addProductToResults(product) {
     setResults((prevResults) => [...prevResults, product]);
+    setSearchInput('')
   }
   
 
@@ -382,61 +387,105 @@ function Reader() {
       //   });
       //   return totalRevenue;
       // };
+      useEffect(() =>{
+        console.log(quantityChanges)
+      }, [quantityChanges])
+
       function removeItem(codigo) {
         setResults(prevItems => prevItems.filter(item => item.codigo !== codigo))
         
     }
     return (
-      <div className="dashboard-reader admin-container">
+      <div className="dashboard-reader admin-container modal-container">
         <AdminNav />
         
         <div className="grid-productos">
+          
 
-            <div className="productos">
-            {results?.map((product) => (
-              <div key={product.codigo} className="lista-productos">
-                <h2 className="producto">{product.titulo}</h2>
-                <p className="producto">{product.codigo}</p>
-                <p className="producto">{`${product.precio}$`}</p>
-                {Object.entries(product.tallas).map(([size, colors]) => (
-                  <div className="lista-productos" key={`${product.codigo}-${size}`}>
-                    <h4 className="producto"> {size}</h4>
-                    {colors.map((color, index) => (
-                      <div className="lista-productos" key={color._id}>
-                        <div className="producto" style={{backgroundColor: color.color, borderRadius: "50%", border: "1px solid black", height: "5", width: "5"}}></div>
-                        <p className="producto">
-                          Quantity:{" "}
-                          {color.quantity - (parseInt(quantityChanges[`${product.codigo}-${size}-${index}`], 10) || 0)}
-                        
-                        </p>
-                        <input
-                          style={{ width: "10", padding: ".9em" }}
-                          className="producto"
-                          type="number"
-                          value={color.sold || 0}
-                          onChange={(e) =>
-                            onChange(product.codigo, size, index, e.target.value)
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ))}
-                {/* <MdDeleteForever color="black" style={{padding: "0 5px", color: "black"}} onClick={() => removeItem(product.codigo)}/> */}
-                <p onClick={() => removeItem(product.codigo)}>Borrar</p>
-              </div>
-            ))}
-            
-          </div>
+        <div className="productos">
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Codigo</th>
+        <th>Precio</th>
+        <th>Actualizar</th>
+        <th>Borrar</th>
+        {results?.map((product) =>
+          Object.keys(product.tallas).map((size) => (
+            <th key={`${product.codigo}-${size}`}>{size}</th>
+          ))
+        )}
+      </tr>
+    </thead>
+    <tbody>
+      {results?.map((product) => (
+        <tr key={product.codigo}>
+          <td>{product.titulo}</td>
+          <td>{product.codigo}</td>
+          <td>{`${product.precio}$`}</td>
+          <td><MdOutlineModeEditOutline fontSize={30} onClick={() => {
+                setSelectedProduct(product);
+                setIsModalOpen(true);
+              }}/></td>
+          <td><MdDeleteForever fontSize={40} color="black" style={{padding: "0 5px", color: "black"}} onClick={() => removeItem(product.codigo)}/></td>
+          
+          {Object.entries(product.tallas).map(([size, colors]) => (
+            <td key={`${product.codigo}-${size}`}>
+              {colors.map((color, index) => (
+                <div className='lista-productos' key={color._id}>
+                  <div
+                    style={{
+                      backgroundColor: color.color,
+                      borderRadius: "50%",
+                      border: "1px solid black",
+                      height: "30px",
+                      width: "30px"
+                    }}
+                  ></div>
+                  <p style={{padding: '0 8px'}}>
+                    
+                    {`Cantidad: ${color.quantity - (parseInt(quantityChanges[`${product.codigo}-${size}-${index}`], 10) || 0)}`}
+                  </p>
+                  <input
+                    style={{ width: "60px", padding: ".9em" }}
+                    type="number"
+                    value={color.sold || 0}
+                    onChange={(e) =>
+                      onChange(product.codigo, size, index, e.target.value)
+                    }
+                  />
+                </div>
+              ))}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+
+{isModalOpen && selectedProduct && (
+        <ModalComponent
+          product={selectedProduct}
+          onClose={() => setIsModalOpen(false)}
+          handleApplyChanges={handleApplyChanges}
+          setResults={setResults} 
+          results={results}
+        />
+      )}
+
+          
           {results.length ? <div className="add-producto">
             {/* <button onClick={handleApplyChanges}>Apply Changes</button> */}
             <p><strong>Total:</strong> {calculateTotalRevenue()}</p>
-            <button className="btn" style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={newSale}>Venta</button>
+            <button className="btn" style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={handleApplyChanges}>Venta</button>
             
           </div>: <p></p>}
         </div>
     
-        {windowWidth.current > 600 ?<section className="qr-reader">
+      <section className="qr-reader">
           
           <div className="lector">
           <h2>Lector QR</h2>
@@ -451,7 +500,7 @@ function Reader() {
      </div>
           </div>
           
-     <ul style={{marginTop:'65px'}} className="add-productos">
+     {searchInput && <ul style={{marginTop:'65px'}} className="add-productos">
           {filterProductsByTitle().map((product) => (
             <li key={product._id} className="add-producto">
               <p><strong>Producto:</strong> {product.titulo}</p>
@@ -459,23 +508,36 @@ function Reader() {
 
             </li>
           ))}
-        </ul>
+        </ul>}
 
         
-        {/*  {qrReaderActive && ( // Render the QR reader only if qrReaderActive is true
-          <QrReader
-            onResult={(result, error) => {
-              if (!!result) {
-                setScanResult(result?.text);
-              }
-              if (!!error) {
-                console.info(error);
-              }
-            }}
-            style={{ width: '100%' }}
-          />
+         {qrReaderActive && (
+           // Render the QR reader only if qrReaderActive is true
+           <div className="modal-overlay">
+            <div className="qr-content">
+
+             <QrReader
+               onResult={(result, error) => {
+                 if (!!result) {
+                   setScanResult(result?.text);
+                 }
+                 if (!!error) {
+                   console.info(error);
+                 }
+               }}
+               style={{ width: '100%' }}
+             />
+             <button style={{width: '100%', color:'white'}} onClick={toggleQrReader}>Desactivar</button>
+             {scanResult && (
+            <div id="reader">
+              Success: {scanResult}
+            </div>
+          ) }
+            </div>
+
+           </div>
         )}
-        <button className="btn" style={{marginBottom: "5px", marginTop: "0"}}  onClick={toggleQrReader}>
+        {/* <button className="btn" style={{marginBottom: "5px", marginTop: "0"}}  onClick={toggleQrReader}>
           {qrReaderActive ? 'Desactivar Lector QR ' : 'Activar Lector QR'}
         </button>
           {scanResult && (
@@ -483,8 +545,8 @@ function Reader() {
               Success: {scanResult}
 
             </div>
-          ) }
-          
+          ) } */}
+{/*           
           <h4>Buscador de producto</h4>
           <input
             type="text"
@@ -512,11 +574,11 @@ function Reader() {
               </ul> */}
               <div className="scan">
                 {/* <p>Scanner</p> */}
-              <BsQrCodeScan fontSize={50}/>
+              <BsQrCodeScan fontSize={50} onClick={toggleQrReader}/>
               </div>
              
         </section>
-        : <div className="qr-reader">It works {windowWidth.current}</div>}
+      
          </div>
     );
   }
