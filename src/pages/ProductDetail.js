@@ -79,7 +79,7 @@ function ProductDetail() {
               <hr />
               {/* <p className="producto">{product.codigo}</p> */}
               <div className='precios'>
-              <p className="producto precio dollars">{`${product.precio}`}7<span className='dolar'>$</span></p>
+              <p className="producto precio dollars">{`${product.precio}`}<span className='dolar'>$</span></p>
               <p className="producto precio-mayor dollars"><strong>Mayor</strong> {`${product.precio_mayor}`} <span className='dolar'>$</span></p>
               </div>
               <h4>Tallas</h4>
