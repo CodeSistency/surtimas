@@ -63,6 +63,7 @@ const CreateProduct = () => {
   const [uploadStart, setUploadStart] = useState(false)
 
   const [error, setError] = useState(false)
+  const [errMsg, setErrMsg] = useState()
 
   const [quantity, setQuantity] = useState({
     'U': [{ color: "#fff", quantity: 0 }],
@@ -72,6 +73,7 @@ const CreateProduct = () => {
     'L': [{ color: "#fff", quantity: 0 }],
     'XL': [{ color: "#fff", quantity: 0 }],
     '0XL': [{ color: "#fff", quantity: 0 }],
+    '1XL': [{ color: "#fff", quantity: 0 }],
     '2XL': [{ color: "#fff", quantity: 0 }],
     '3XL': [{ color: "#fff", quantity: 0 }],
     '4XL': [{ color: "#fff", quantity: 0 }],
@@ -470,6 +472,7 @@ formData.append('imagenes', JSON.stringify(urls));
           console.error(err);
           // navigate('/login', { state: { from: location }, replace: true });
           setError(true)
+          setErrMsg(err)
       }
   
       return () => {
@@ -522,6 +525,7 @@ function reset (){
     'L': [{ color: "#fff", quantity: 0 }],
     'XL': [{ color: "#fff", quantity: 0 }],
     '0XL': [{ color: "#fff", quantity: 0 }],
+    '1XL': [{ color: "#fff", quantity: 0 }],
     '2XL': [{ color: "#fff", quantity: 0 }],
     '3XL': [{ color: "#fff", quantity: 0 }],
     '4XL': [{ color: "#fff", quantity: 0 }],
@@ -925,6 +929,7 @@ function reset (){
       <button className='btn'>
           {error ? 'Intentar de nuevo' : success ? 'Creado' : isLoadingCreate ? 'Cargando...' : 'Crear Producto'}
       </button>
+      {errMsg && <p>{`${errMsg}`}</p>}
     </form>
     </div>
     </main>}

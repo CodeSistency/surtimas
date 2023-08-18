@@ -62,6 +62,7 @@ const UpdateProduct = () => {
   const [uploadStart, setUploadStart] = useState(false)
 
   const [error, setError] = useState(false)
+  const [errMsg, setErrMsg] = useState()
   
 
   const [quantity, setQuantity] = useState({
@@ -72,6 +73,7 @@ const UpdateProduct = () => {
     'L': [{ color: "#fff", quantity: 0 }],
     'XL': [{ color: "#fff", quantity: 0 }],
     '0XL': [{ color: "#fff", quantity: 0 }],
+    '1XL': [{ color: "#fff", quantity: 0 }],
     '2XL': [{ color: "#fff", quantity: 0 }],
     '3XL': [{ color: "#fff", quantity: 0 }],
     '4XL': [{ color: "#fff", quantity: 0 }],
@@ -432,10 +434,12 @@ useEffect(() =>{
         console.log(JSON.stringify(response?.data));
         isMounted && setData(response.data);
         console.log(urls)
+        navigate("/admin", { state: {from: location}, replace: true });
         // navigate("/admin", { state: {from: location}, replace: true });
         // navigate(-1);
     } catch (err) {
         console.error(err);
+        setErrMsg(err)
         setError(true)
         // navigate('/login', { state: { from: location }, replace: true });
         
@@ -843,7 +847,10 @@ useEffect(() =>{
         </div>}
         </div>
       
-      <button className='btn'>Actualizar Producto</button>
+        <button className='btn'>
+          {error ? 'Intentar de nuevo' : success ? 'Actualizado' : isLoadingCreate ? 'Cargando...' : 'Actualizar Producto'}
+      </button>
+      {errMsg && <p>{`${errMsg}`}</p>}
     </form>
     </div>
 
