@@ -598,7 +598,7 @@ useEffect(() =>{
   
 />
 {loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p>{Math.round(progress[1])}%</p>}
-{products?.imagenes && <p>Guardado</p>}
+{products?.imagenes[0] && <p>Guardado</p>}
 {imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
 </div>
 
@@ -615,7 +615,7 @@ useEffect(() =>{
   
 />
 {loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p>{Math.round(progress[2])}%</p>}
-{products?.imagenes  && <p>Guardado</p>}
+{products?.imagenes[1]  && <p>Guardado</p>}
 {imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
 </div>
 <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -631,7 +631,7 @@ useEffect(() =>{
   
 />
 {loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p>{Math.round(progress[3])}%</p>}
-{ products?.imagenes[2] && urls[2] && <p>Guardado</p>}
+{ products?.imagenes[2] &&  <p>Guardado</p>}
 {imagen3 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen3)}/>}
 </div>
 <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -647,7 +647,7 @@ useEffect(() =>{
   
 />
  {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p>{Math.round(progress[4])}%</p>}
- { products?.imagenes[3] && urls[3] && <p>Guardado</p>}
+ { products?.imagenes[3] && <p>Guardado</p>}
  {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
 </div>
 <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -663,7 +663,7 @@ useEffect(() =>{
     
   />
   {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p>{Math.round(progress[5])}%</p>}
-  {products?.imagenes[5] && urls[4] && <p>Guardado</p>}
+  {products?.imagenes[4] && <p>Guardado</p>}
 {imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
 </div>
         
