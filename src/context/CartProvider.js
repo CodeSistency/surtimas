@@ -9,6 +9,34 @@ const CartContext = createContext({});
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [data, setData] = useState()
+    const [searchInput, setSearchInput] = useState(''); 
+    const [products, setProducts] = useState()
+
+    // useEffect(() => {
+    //     let isMounted = true;
+    //     const controller = new AbortController();
+
+    //     const getProducts = async () => {
+    //         try {
+    //             const response = await axiosPrivate.get('/products', {
+    //                 signal: controller.signal
+    //             });
+    //             console.log(response.data);
+    //             isMounted && setProducts(response.data);
+    //         } catch (err) {
+    //             console.error(err);
+    //             console.log(JSON.stringify(err));
+    //             navigate('/login', { state: { from: location }, replace: true });
+    //         }
+    //     }
+
+    //     getProducts();
+
+    //     return () => {
+    //         isMounted = false;
+    //         controller.abort();
+    //     }
+    // }, [])
 
     function addProductToResults(product) {
         console.log(product)
@@ -48,7 +76,7 @@ export const CartProvider = ({ children }) => {
                   
               });
               console.log(JSON.stringify(response?.data));
-              isMounted && setData(response.data);
+              isMounted && setCart(response.data);
               
           } catch (err) {
               console.error(err);
@@ -63,8 +91,25 @@ export const CartProvider = ({ children }) => {
         
     }
 
+    function filterProductsByTitle() {
+        if (!products || !searchInput) {
+          return []; // Si no hay productos cargados o el input de búsqueda está vacío, devolvemos un array vacío
+        }
+    
+        const filteredProducts = products.filter((product) => {
+            const lowerSearchInput = searchInput.toLowerCase();
+            const lowerProductTitle = product.titulo.toLowerCase();
+            const productMatchesTitle = lowerProductTitle.includes(lowerSearchInput);
+            const productMatchesId = product._id.toString().includes(searchInput);
+      
+            return productMatchesTitle || productMatchesId;
+          });
+      
+          return filteredProducts;
+      }
+
     return (
-        <CartContext.Provider value={{ cart, setCart, addProductToResults, removeFromCart, handleCart }}>
+        <CartContext.Provider value={{searchInput, cart, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
             {children}
         </CartContext.Provider>
     )

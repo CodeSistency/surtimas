@@ -18,6 +18,8 @@ function Nav() {
     'Admin': 5150
   }
 
+  const [searchInput, setSearchInput] = useState('');
+
   const [loading, setLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const totalImages = 4; // Replace with the actual number of images
@@ -70,10 +72,10 @@ function Nav() {
 
     function cartIcon() {
       
-      if(cart.length) {
-          return <Link className='cart-icon' to={`/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
+      if(auth.user) {
+          return <Link className='cart-icon' to={`home/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
       } else {
-          return <Link className='cart-icon' to={`/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
+          return <Link className='cart-icon' to={`home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
       }
   }
 
@@ -90,8 +92,8 @@ function Nav() {
             <li className='nav-admin'><Link to={"/admin"}>Admin</Link></li>
             <li className='nav-admin'><Link to={"/productos"}>Productos</Link></li>
             
-            <li><Link className='login-button' to={"/login"}>Login</Link></li>
-            <li><Link className='login-button' to={"/registro"}>Registro</Link></li>
+            {auth.user ? <button className='logout' onClick={signOut}>Salir de sesion</button> : <li><Link className='login-button' to={"/inicio"}>Login</Link></li>}
+            {!auth.user && <li><Link className='login-button' to={"/register"}>Registro</Link></li>}
             
             {/* {auth 
             ? <li onClick={signOut}>Cerrar sesión</li>

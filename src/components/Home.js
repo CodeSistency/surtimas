@@ -6,6 +6,7 @@ import Menu from "../pages/Menu";
 import Nav from "../pages/Nav";
 import Products from "../pages/Products";
 import Login from "./Login";
+import Login2 from "./Login2";
 
 const Home = () => {
     
@@ -36,7 +37,7 @@ const Home = () => {
             <Gallery />
             <div className="login-container">
 
-                <Login />
+                <Login2 />
                 <div>
                     <h3>¡Únete a la Fiesta de Descuentos al Por Mayor!</h3>
                     <br></br>

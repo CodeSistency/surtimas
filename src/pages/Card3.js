@@ -6,14 +6,25 @@ import { add } from 'date-fns';
 import { Link } from 'react-router-dom';
 import ReactWhatsapp from 'react-whatsapp';
 import useAuth from '../hooks/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Card3 (props) {
 
   const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
   const {auth} = useAuth()
   const precio_mayor = 0
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  function login(){
+    navigate("/sesion", { state: {from: location}, replace: true });
+  }
   function cartIcon() {
     const alreadyInCart = cart.some(item => item._id === props.id)
+    if(!auth.user){
+      return <IoCartOutline className='cart' fontSize={20} onClick={login}/>
+    }
     if(alreadyInCart) {
         return <IoCartSharp className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
     } else {

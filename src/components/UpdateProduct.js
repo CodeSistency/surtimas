@@ -710,12 +710,14 @@ useEffect(() =>{
             <option value="crop top">Crop top</option>
             <option value="pantalon">Pantalon</option>
             <option value="short">Short</option>
+            <option value="falda">Falda</option>
             <option value="leggins">Leggins</option>
             <option value="pijama">Pijama</option>
             <option value="playa">Playa</option>
             <option value="mono">Mono</option>
             <option value="zapato">Zapato</option>
             <option value="liquidacion">Liquidacion</option>
+            <option value="sobretodo">Sobretodo</option>
             
             
           </select>

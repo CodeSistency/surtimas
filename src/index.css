@@ -526,6 +526,10 @@ select {
     
   }
 
+  .logout{
+    display: none;
+  }
+
   .login-container > main {
     display: block !important;
     min-height: 0 !important;
@@ -2155,4 +2159,20 @@ th {
   width: 300px;
   overflow-y: auto;
   border: 1px solid white;
+}
+
+.logout{
+  background-color: #00111d;
+  border: 1px solid #00111d;
+  color: white;
+  font-size: 12px;
+  margin: 0;
+  transition: all 0.3s;
+  padding: 8px 14px;
+}
+
+.logout:hover{
+  background-color: white;
+  border: 1px solid black;
+  color: #000;
 }

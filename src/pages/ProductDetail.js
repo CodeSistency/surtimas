@@ -5,20 +5,64 @@ import { useParams } from 'react-router-dom';
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import Nav from './Nav';
 import ReactWhatsapp from 'react-whatsapp';
+import axios from '../api/axios';
+import useAuth from '../hooks/useAuth';
 
 
 function ProductDetail() {
-  const { cart, addProductToResults, removeFromCart } = useContext(CartContext);
+  const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
     const [product, setProduct] = useState()
+    const [products, setProducts] = useState()
 
-    function cartIcon() {
-      const alreadyInCart = cart.some(item => item._id === product._id)
-      if(alreadyInCart) {
-          return <IoCartSharp fontSize={20} onClick={() => removeFromCart(product._id)}/>
-      } else {
-          return <IoCartOutline fontSize={20} onClick={() => addProductToResults(product)}/>
+    const {auth} = useAuth()
+    
+
+    const handleDelete = async (id) => {
+
+      let isMounted2 = true;
+      const controller = new AbortController();
+      console.log(id)
+      
+      
+      try {
+          const response = await axios.delete(`cart/${auth.user}/${id}`,
+          
+      
+      {
+              signal: controller.signal
+          });
+          console.log(JSON.stringify(response?.data));
+          
+          
+          
+          
+      } catch (err) {
+          console.error(err);
+          console.log(JSON.stringify(err));
+      }
+  
+      return () => {
+          isMounted2 = false;
+          controller.abort();
       }
   }
+  
+
+  //   function cartIcon() {
+  //     const alreadyInCart = cart.some(item => item._id === product._id)
+  //     if(alreadyInCart) {
+  //         return <div className='addCart'>
+  //         <p>Agregar</p>
+  //         <IoCartSharp fontSize={20} onClick={() => handleDelete(product._id)}/>
+  //       </div>
+  //     } else {
+  //         return <div className='addCart'>
+  //           <p>Agregar</p>
+  //           <IoCartOutline fontSize={20} onClick={() => addProductToResults(product)}/>
+  //         </div>
+  //     }
+  // }
+  const precio_mayor = 0
 
     const axiosPrivate = useAxiosPrivate();
 
@@ -30,7 +74,7 @@ function ProductDetail() {
     
         const getProduct = async () => {
             try {
-                const response = await axiosPrivate.get(`products/${id}`, {
+                const response = await axios.get(`productos/${id}`, {
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -51,6 +95,35 @@ function ProductDetail() {
         }
     }, [])
 
+    useEffect(() => {
+      let isMounted = true;
+      const controller = new AbortController();
+
+      console.log(auth.username)
+
+      const getCartProducts = async () => {
+          try {
+              const response = await axios.get(`/cart/${auth.username}`, {
+                  signal: controller.signal
+              });
+              console.log(response.data);
+              isMounted && setProducts(response.data);
+              console.log(products)
+              // console.log(products[2].imagenes)
+          } catch (err) {
+              console.error(err);
+              // navigate('/login', { state: { from: location }, replace: true });
+          }
+      }
+
+      getCartProducts();
+
+      return () => {
+          isMounted = false;
+          controller.abort();
+      }
+  }, [])
+
     const handleQuantityChange = (productCode, size, colorIndex, quantity) => {
         const updatedResults = product.map((product) => {
           if (product.codigo === productCode) {
@@ -66,6 +139,22 @@ function ProductDetail() {
         });
         setProduct(updatedResults);
       };
+      
+      function cartIcon() {
+        const alreadyInCart = cart.some(item => item._id === product._id)
+        if(alreadyInCart) {
+            return <button className='addCart'>
+            <p>Agregar</p>
+            <IoCartSharp fontSize={20} onClick={() => handleDelete(product._id)}/>
+          </button>
+        } else {
+            // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+            return <button onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)} className='addCart'>
+            <p>Agregar</p>
+            <IoCartOutline fontSize={20} onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)}/>
+          </button>
+        }
+       }
   return (
     <div >
       <Nav className='nav-detail'/>
@@ -130,10 +219,13 @@ function ProductDetail() {
     >
       Comprar
     </ReactWhatsapp>
-                <div className='addCart'>
-                  <p>Agregar</p>
+                
+                
                   {cartIcon()}
-                </div>
+
+              
+                  
+               
                 
                 
               

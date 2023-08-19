@@ -141,106 +141,6 @@ function Reader() {
         };
       }
     
-      // const onChange = (productCode, size, index, value) => {
-      //   // Check if the input represents a number (quantity) or 'sold' property
-      //   const intValue = parseInt(value, 10);
-      //   if (!isNaN(intValue)) {
-      //     setQuantityChanges((prevChanges) => ({
-      //       ...prevChanges,
-      //       [`${productCode}-${size}-${index}`]: intValue,
-      //     }));
-      //   } else {
-      //     setResults((prevResults) => {
-      //       const updatedResults = prevResults.map((product) => {
-      //         if (product.codigo === productCode) {
-      //           const colors = product.tallas[size];
-      //           if (!colors || index >= colors.length) return product;
-    
-      //           colors[index].sold = value; // Update 'sold' property
-      //         }
-      //         return product;
-      //       });
-      //       return updatedResults;
-      //     });
-      //   }
-      // };
-    
-
-      // const onChange = (productCode, size, index, value) => {
-      //   // Check if the input represents a number (quantity) or 'sold' property
-      //   const intValue = parseInt(value, 10);
-      //   if (!isNaN(intValue)) {
-      //     setQuantityChanges((prevChanges) => ({
-      //       ...prevChanges,
-      //       [`${productCode}-${size}-${index}`]: intValue,
-      //     }));
-      //   } else {
-      //     setResults((prevResults) => {
-      //       const updatedResults = prevResults.map((product) => {
-      //         if (product.codigo === productCode) {
-      //           const colors = product.tallas[size];
-      //           if (!colors || index >= colors.length) return product;
-    
-      //           colors[index].sold = value; // Update 'sold' property
-      //         }
-      //         return product;
-      //       });
-      //       return updatedResults;
-      //     });
-      //   }
-      // };
-    
-      // const handleApplyChanges = () => {
-      //   const updatedResults = results.map((product) => {
-      //     const colors = product.tallas;
-      //     Object.keys(colors).forEach((size) => {
-      //       colors[size].forEach((color, index) => {
-      //         const changeKey = `${product.codigo}-${size}-${index}`;
-      //         const changeValue = parseInt(quantityChanges[changeKey], 10);
-      //         if (!isNaN(changeValue)) {
-      //           color.quantity -= changeValue;
-      //         }
-      //       });
-      //     });
-      //     return product;
-      //   });
-    
-      //   setResults(updatedResults);
-      //   setQuantityChanges({});
-      // };
-    
-      // const calculateTotalRevenue = () => {
-      //   let totalRevenue = 0;
-      //   results.forEach((product) => {
-      //     const colors = product.tallas;
-      //     Object.keys(colors).forEach((size) => {
-      //       colors[size].forEach((color) => {
-      //         const sold = color.sold + (parseInt(quantityChanges[`${product.codigo}-${size}-${color._id}`], 10) || 0);
-      //         const price = product.precio;
-      //         totalRevenue += sold * price;
-      //       });
-      //     });
-      //   });
-      //   return totalRevenue;
-      // };
-      // const handleApplyChanges = () => {
-      //   const updatedResults = results.map((product) => {
-      //     const colors = product.tallas;
-      //     Object.keys(colors).forEach((size) => {
-      //       colors[size].forEach((color, index) => {
-      //         const changeKey = `${product.codigo}-${size}-${index}`;
-      //         const changeValue = parseInt(quantityChanges[changeKey], 10);
-      //         if (!isNaN(changeValue)) {
-      //           color.quantity -= changeValue;
-      //         }
-      //       });
-      //     });
-      //     return product;
-      //   });
-    
-      //   setResults(updatedResults);
-      //   setQuantityChanges({});
-      // };
       
 
       const newSale = async () => {
@@ -480,7 +380,7 @@ function Reader() {
           {results.length ? <div className="add-producto">
             {/* <button onClick={handleApplyChanges}>Apply Changes</button> */}
             <p><strong>Total:</strong> {calculateTotalRevenue()}</p>
-            <button className="btn" style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={handleApplyChanges}>Venta</button>
+            <button className="btn" style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={newSale}>Venta</button>
             
           </div>: <p></p>}
         </div>

@@ -24,6 +24,8 @@ import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import AllProducts from './pages/AllProducts';
 import Mujer from './pages/Mujer';
+import Login2 from './components/Login2';
+import Register2 from './components/Register2';
 
 const ROLES = {
   'User': 2001,
@@ -38,12 +40,15 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="login" element={<Login />} />
+        <Route path="sesion" element={<Login2 />} />
         <Route path="registro" element={<Register />} />
+        <Route path="register" element={<Register2 />} />
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<AllProducts />} />
         <Route path="/productos/mujer" element={<Mujer />} />
+        <Route path="/productos/:id" element={<ProductDetail />} />
         {/* <Route path="/carrito" element={<Cart />} /> */}
 
         
@@ -53,8 +58,9 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/home" element={<Home />} />
             {/* <Route path="/carrito" element={<Cart />} /> */}
-            <Route path="/productos/:id" element={<ProductDetail />} />
-            <Route path="/carrito/:username" element={<Cart />} />
+            <Route path="home/productos/:id" element={<ProductDetail />} />
+            
+            <Route path="home/carrito/:username" element={<Cart />} />
             
           </Route>
 
