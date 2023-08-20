@@ -34,7 +34,7 @@ function Gallery(props) {
 
       const handleGenderFilter = (selectedSexo) => {
         setSelectedSexo(selectedSexo);
-        const updatedProducts = objetos.filter(
+        const updatedProducts = products.filter(
           obj => selectedSexo === 'hombre' || obj.sexo === selectedSexo
         );
         setFilteredProducts(updatedProducts);
@@ -468,20 +468,20 @@ function Gallery(props) {
         
    
 
-      useEffect(() => {
-        if (location.pathname === '/productos/mujer' && props.mujer) {
+      // useEffect(() => {
+      //   if (location.pathname === '/productos/mujer' && props.mujer) {
 
-          const handleGenderFilterNow = () => {
-            const updatedProducts = objetos.filter(obj => selectedSexo === 'mujer' || obj.sexo === 'mujer');
-            setFilteredProducts(updatedProducts);
-          };
+      //     const handleGenderFilterNow = () => {
+      //       const updatedProducts = objetos.filter(obj => selectedSexo === 'mujer' || obj.sexo === 'mujer');
+      //       setFilteredProducts(updatedProducts);
+      //     };
 
-          handleGenderFilterNow();
-        }
+      //     handleGenderFilterNow();
+      //   }
 
-        console.log(filteredProducts)
-        console.log(location.pathname)
-      }, [location.pathname]);
+      //   console.log(filteredProducts)
+      //   console.log(location.pathname)
+      // }, [location.pathname]);
 
 
   return (
@@ -524,7 +524,7 @@ function Gallery(props) {
                     
                         {/* Display filtered products here */}
                         {filteredProducts.map((product, i) => (
-                            <Card2 key={i}  titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
+                            <Card3 key={i}  titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} product={product}/>
                         ))}
                         
                     </div>
@@ -535,11 +535,11 @@ function Gallery(props) {
                     <div className='filtros'>
                           <div className='price-container'>
                             <p onClick={handlePriceClick}>Precio <AiOutlineDown /></p>
-                            {isPriceOpen && <PriceFilter  products={objetos} onFilter={handleFilter} />}
+                            {isPriceOpen && <PriceFilter  products={products} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleCategoryClick}>Categorias <AiOutlineDown /></p>
-                                  {isCategoryOpen && <FilterCategory objects={objetos} onFilter={handleGenderFilter} />}
+                                  {isCategoryOpen && <FilterCategory objects={products} onFilter={handleGenderFilter} />}
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
@@ -548,9 +548,9 @@ function Gallery(props) {
                                 
                             </div>
                 <div className='gallery-container'>
-                {objetos.map((product, i) =>
+                {products?.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
-                    <Card3 key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} id={product._id} product={product}/>
+                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product}/>
                     // </Link>
                     )}
                 </div>

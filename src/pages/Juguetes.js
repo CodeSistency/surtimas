@@ -15,7 +15,7 @@ import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 import Nav from './Nav';
 
-function Mujer() {
+function Juguetes() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -34,12 +34,12 @@ function Mujer() {
 
         const getProducts = async () => {
             try {
-                const response = await axios.get('/productos/mujer', {
+                const response = await axios.get('/productos/tipo/juguetes', {
                     signal: controller.signal
                 });
                 console.log(response.data);
                 isMounted && setProducts(response.data);
-                console.log(products[2].imagenes)
+                
             } catch (err) {
                 console.error(err);
                 // navigate('/login', { state: { from: location }, replace: true });
@@ -133,19 +133,9 @@ function Mujer() {
     <div >
         <Nav/>
         <div style={{marginTop:'140px'}}>
-        {products?.length ? <div className='gallery-container-container' ref={componentRef}>
+        {products.length ? <div className='gallery-container-container' ref={componentRef}>
         
-        {/* {products?.length
-                ? (
-                    <div className='card-container'>
-                        {products.map((product, i) =>
-                            // <Link to={`/productos/${product._id}`}>
-                            <Card key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
-                            // </Link>
-                            )}
-                    </div>
-                ) : <p>No hay productos</p>
-            } */}
+        
        
         {filteredProducts?.length 
                 ? (
@@ -182,11 +172,11 @@ function Mujer() {
                     
                     <div className='filtros'>
                           <div className='price-container'>
-                            <p onClick={handlePriceClick}>Precio <AiOutlineDown onClick={handlePriceClick}/></p>
+                            <p onClick={handlePriceClick}>Precio <AiOutlineDown /></p>
                             {isPriceOpen && <PriceFilter  products={products} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
-                                  <p onClick={handleCategoryClick}>Categorias <AiOutlineDown onClick={handleCategoryClick}/></p>
+                                  <p onClick={handleCategoryClick}>Categorias <AiOutlineDown /></p>
                                   {isCategoryOpen && <FilterCategory objects={products} onFilter={handleGenderFilter} />}
                                 </div>
                                 {/* <div className='price-container'>
@@ -205,12 +195,12 @@ function Mujer() {
             </div>
             }
         
-    </div> : <p>Cargando</p>}
-
+    </div>
+: <p>Cargando</p>}
       </div>
         
     </div>
   )
 }
 
-export default Mujer
+export default Juguetes

@@ -23,13 +23,13 @@ function Card3 (props) {
   function cartIcon() {
     const alreadyInCart = cart.some(item => item._id === props.id)
     if(!auth.user){
-      return <IoCartOutline className='cart' fontSize={20} onClick={login}/>
+      return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={login}/>
     }
     if(alreadyInCart) {
-        return <IoCartSharp className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
+        return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
     } else {
         // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
-        return <IoCartOutline className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
+        return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
     }
 }
 
@@ -45,10 +45,11 @@ function Card3 (props) {
         </img>
 
       </Link>
+      {cartIcon()}
     <div class="product-details">
       <h2 class="product-title">{props.titulo}</h2>
-      <p class="product-price">{props.precio}<small style={{color: 'black'}}>$</small></p>
-      {cartIcon()}
+      <p class="product-price price-absolute">{props.precio}<small style={{color: 'black'}}>$</small></p>
+      
     </div>
     <ReactWhatsapp 
       class="buy-button-products"

@@ -15,7 +15,7 @@ import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 import Nav from './Nav';
 
-function Mujer() {
+function Zapatos() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -34,7 +34,7 @@ function Mujer() {
 
         const getProducts = async () => {
             try {
-                const response = await axios.get('/productos/mujer', {
+                const response = await axios.get('/productos/tipo/zapato', {
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -133,7 +133,7 @@ function Mujer() {
     <div >
         <Nav/>
         <div style={{marginTop:'140px'}}>
-        {products?.length ? <div className='gallery-container-container' ref={componentRef}>
+{products?.length ? <div className='gallery-container-container' ref={componentRef}>
         
         {/* {products?.length
                 ? (
@@ -182,11 +182,11 @@ function Mujer() {
                     
                     <div className='filtros'>
                           <div className='price-container'>
-                            <p onClick={handlePriceClick}>Precio <AiOutlineDown onClick={handlePriceClick}/></p>
+                            <p onClick={handlePriceClick}>Precio <AiOutlineDown /></p>
                             {isPriceOpen && <PriceFilter  products={products} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
-                                  <p onClick={handleCategoryClick}>Categorias <AiOutlineDown onClick={handleCategoryClick}/></p>
+                                  <p onClick={handleCategoryClick}>Categorias <AiOutlineDown /></p>
                                   {isCategoryOpen && <FilterCategory objects={products} onFilter={handleGenderFilter} />}
                                 </div>
                                 {/* <div className='price-container'>
@@ -213,4 +213,4 @@ function Mujer() {
   )
 }
 
-export default Mujer
+export default Zapatos

@@ -26,6 +26,9 @@ import AllProducts from './pages/AllProducts';
 import Mujer from './pages/Mujer';
 import Login2 from './components/Login2';
 import Register2 from './components/Register2';
+import Zapatos from './pages/Zapatos';
+import Hombre from './pages/Hombre';
+import Juguetes from './pages/Juguetes';
 
 const ROLES = {
   'User': 2001,
@@ -47,7 +50,10 @@ function App() {
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<AllProducts />} />
-        <Route path="/productos/mujer" element={<Mujer />} />
+        <Route path="/mujer" element={<Mujer />} />
+        <Route path="/hombre" element={<Hombre />} />
+        <Route path="/zapatos" element={<Zapatos />} />
+        <Route path="/juguetes" element={<Juguetes />} />
         <Route path="/productos/:id" element={<ProductDetail />} />
         {/* <Route path="/carrito" element={<Cart />} /> */}
 
