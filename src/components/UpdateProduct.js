@@ -705,6 +705,7 @@ useEffect(() =>{
             <option value="blusa">Blusa</option>
             <option value="chaqueta">Chaqueta</option>
             <option value="blazer">Blazer</option>
+            <option value="sueter">Sueter</option>
             <option value="camisa">Camisa</option>
             <option value="body">Body</option>
             <option value="crop top">Crop top</option>
