@@ -14,8 +14,8 @@ const Login2 = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const userRef = useRef();
-    const errRef = useRef();
+    // const userRef = useRef();
+    // const errRef = useRef();
 
     const [user, resetUser, userAttribs] = useInput('user', '')
     const [pwd, setPwd] = useState('');
@@ -57,21 +57,21 @@ const Login2 = () => {
             } else {
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus();
+            // errRef.current.focus();
         }
     }
 
     return (
         <main className='App'>
             <div className='login'>
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                <p  className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
                         id="username"
-                        ref={userRef}
+                        // ref={userRef}
                         autoComplete="off"
                         {...userAttribs}
                         required

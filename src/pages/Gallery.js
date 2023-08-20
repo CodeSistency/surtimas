@@ -19,6 +19,9 @@ function Gallery(props) {
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedSexo, setSelectedSexo] = useState(props.mujer);
+
+    const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
     // const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,6 +31,7 @@ function Gallery(props) {
     const handleFilter = filteredProducts => {
         setFilteredProducts(filteredProducts);
       };
+
     function handleReset(){
       setFilteredProducts([])
     }
@@ -43,387 +47,77 @@ function Gallery(props) {
       
       
 
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
+    // useEffect(() => {
+    //     let isMounted = true;
+    //     const controller = new AbortController();
 
-        const getProducts = async () => {
-            try {
-                const response = await axios.get('/productos', {
-                    signal: controller.signal
-                });
-                console.log(props.mujer)
-                console.log(response.data);
-                isMounted && setProducts(response.data);
-                console.log(products[2].imagenes)
-            } catch (err) {
-                console.error(err);
-                // navigate('/login', { state: { from: location }, replace: true });
-            }
-        }
+    //     const getProducts = async (pageNumber) => {
+    //         try {
+    //             const response = await axios.get(`/productos?pageNumber=${pageNumber}`, {
+    //                 signal: controller.signal
+    //             });
+    //             console.log(props.mujer)
+    //             console.log(response.data);
+    //             isMounted && setProducts(response.data);
+    //             console.log(products[2].imagenes)
+    //             setCurrentPage(pageNumber);
+    //         } catch (err) {
+    //             console.error(err);
+    //             // navigate('/login', { state: { from: location }, replace: true });
+    //         }
+    //     }
 
-        getProducts();
+    //     getProducts();
 
-        return () => {
-            isMounted = false;
-            controller.abort();
-        }
-    }, [])
+    //     return () => {
+    //         isMounted = false;
+    //         controller.abort();
+    //     }
+    // }, [])
 
-    const objetos = [
-        {
-          _id: 6,
-            titulo: 'card',
-            precio: 10,
-            tipo: 'camisa',
-            sexo: 'mujer',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
+
+      const getProducts = async (pageNumber) => {
+          try {
+              const response = await axios.get(`/productos/limited?pageNumber=${pageNumber}`);
+              console.log(props.mujer)
+              console.log(response.data);
+              setProducts(response.data);
+              console.log(totalPages)
+              
+              setCurrentPage(pageNumber);
+          } catch (err) {
+              console.error(err);
+              // navigate('/login', { state: { from: location }, replace: true });
+          }
+      }
+
+      useEffect(() => {
+        const fetchTotalPages = async () => {
+          try {
+            const response = await axios.get('/productos');
+            const totalProducts = response.data.length;
+            const pages = Math.ceil(totalProducts / 15);
+            setTotalPages(pages);
             
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-          {
-            _id: 5,
-            titulo: 'card',
-            precio: 8,
-            tipo: 'camisa',
-            sexo: 'mujer',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
-            
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-          {
-            _id: 4,
-            titulo: 'card',
-            precio: 5,
-            tipo: 'camisa',
-            sexo: 'mujer',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
-            
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-          {
-            _id: 3,
-            titulo: 'card',
-            precio: 7,
-            tipo: 'camisa',
-            sexo: 'mujer',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
-            
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-          {
-            _id: 7,
-            titulo: 'card',
-            precio: 15,
-            tipo: 'camisa',
-            sexo: 'mujer',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
-            
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-          {
-            _id: 2,
-            titulo: 'card',
-            precio: 13,
-            tipo: 'pantalon',
-            sexo: 'hombre',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
-            
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-          {
-            _id: 8,
-            titulo: 'card',
-            precio: 20,
-            tipo: 'camisa',
-            sexo: 'hombre',
-            tallas: {
-              'U': [{ color: "#fff", quantity: 0 }],
-              'XS': [{ color: "#fff", quantity: 0 }],
-              'S': [{ color: "#fff", quantity: 0 }],
-              'M': [{ color: "#fff", quantity: 0 }],
-              'L': [{ color: "#fff", quantity: 0 }],
-              'XL': [{ color: "#fff", quantity: 0 }],
-              '0XL': [{ color: "#fff", quantity: 0 }],
-              '2XL': [{ color: "#fff", quantity: 0 }],
-              '3XL': [{ color: "#fff", quantity: 0 }],
-              '4XL': [{ color: "#fff", quantity: 0 }],
-              '5XL': [{ color: "#fff", quantity: 0 }],
-              'FIT': [{ color: "#fff", quantity: 0 }],
-            },
-            tallas_zapatos:{
-              '25': [{ color: "#fff", quantity: 0 }],
-              '26': [{ color: "#fff", quantity: 0 }],
-              '27': [{ color: "#fff", quantity: 0 }],
-              '28': [{ color: "#fff", quantity: 0 }],
-              '29': [{ color: "#fff", quantity: 0 }],
-              '30': [{ color: "#fff", quantity: 0 }],
-              '31': [{ color: "#fff", quantity: 0 }],
-              '32': [{ color: "#fff", quantity: 0 }],
-              '33': [{ color: "#fff", quantity: 0 }],
-              '34': [{ color: "#fff", quantity: 0 }],
-              '35': [{ color: "#fff", quantity: 0 }],
-              '36': [{ color: "#fff", quantity: 0 }],
-              '37': [{ color: "#fff", quantity: 0 }],
-              '38': [{ color: "#fff", quantity: 0 }],
-              '39': [{ color: "#fff", quantity: 0 }],
-              '40': [{ color: "#fff", quantity: 0 }],
-              '42': [{ color: "#fff", quantity: 0 }],
-              '43': [{ color: "#fff", quantity: 0 }],
-              '44': [{ color: "#fff", quantity: 0 }],
-            },
-            
-            imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-          },
-        {
-          _id: 1,
-          titulo: 'card',
-          precio: 12,
-          tipo: 'camisa',
-          sexo: 'hombre',
-          tallas: {
-            'U': [{ color: "#fff", quantity: 0 }],
-            'XS': [{ color: "#fff", quantity: 0 }],
-            'S': [{ color: "#fff", quantity: 0 }],
-            'M': [{ color: "#fff", quantity: 0 }],
-            'L': [{ color: "#fff", quantity: 0 }],
-            'XL': [{ color: "#fff", quantity: 0 }],
-            '0XL': [{ color: "#fff", quantity: 0 }],
-            '2XL': [{ color: "#fff", quantity: 0 }],
-            '3XL': [{ color: "#fff", quantity: 0 }],
-            '4XL': [{ color: "#fff", quantity: 0 }],
-            '5XL': [{ color: "#fff", quantity: 0 }],
-            'FIT': [{ color: "#fff", quantity: 0 }],
-          },
-          tallas_zapatos:{
-            '25': [{ color: "#fff", quantity: 0 }],
-            '26': [{ color: "#fff", quantity: 0 }],
-            '27': [{ color: "#fff", quantity: 0 }],
-            '28': [{ color: "#fff", quantity: 0 }],
-            '29': [{ color: "#fff", quantity: 0 }],
-            '30': [{ color: "#fff", quantity: 0 }],
-            '31': [{ color: "#fff", quantity: 0 }],
-            '32': [{ color: "#fff", quantity: 0 }],
-            '33': [{ color: "#fff", quantity: 0 }],
-            '34': [{ color: "#fff", quantity: 0 }],
-            '35': [{ color: "#fff", quantity: 0 }],
-            '36': [{ color: "#fff", quantity: 0 }],
-            '37': [{ color: "#fff", quantity: 0 }],
-            '38': [{ color: "#fff", quantity: 0 }],
-            '39': [{ color: "#fff", quantity: 0 }],
-            '40': [{ color: "#fff", quantity: 0 }],
-            '42': [{ color: "#fff", quantity: 0 }],
-            '43': [{ color: "#fff", quantity: 0 }],
-            '44': [{ color: "#fff", quantity: 0 }],
-          },
-          
-          imagen: 'https://firebasestorage.googleapis.com/v0/b/surtimas-18cd7.appspot.com/o/16917960165631691295997297-logo512%20-%20Copy.png?alt=media&token=8ac23ac1-35f9-47ad-ad4f-2ef18cb3635c'
-        },
-      ];
+          } catch (error) {
+            console.error(error);
+          }
+        };
+    
+        fetchTotalPages();
+        getProducts(currentPage);
+      }, [currentPage]);
+
+
+    // useEffect(() => {
+    //   getProducts(currentPage);
+    // }, [currentPage]);
+
+    const handlePageChange = (pageNumber) => {
+      getProducts(pageNumber);
+    };
+  
+
 
       const [isPriceOpen, setPriceOpen] = useState(false);
   const [isCategoryOpen, setCategoryOpen] = useState(false);
@@ -556,6 +250,18 @@ function Gallery(props) {
                 </div>
             </div>
             }
+            <div className='pagination'>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            className={`page ${page === currentPage && 'page-selected'}`}
+            key={page}
+            onClick={() => handlePageChange(page)}
+            disabled={page === currentPage}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
         
     </div>
   )

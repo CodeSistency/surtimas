@@ -2191,3 +2191,25 @@ th {
   border: 1px solid black;
   color: #000;
 }
+
+.pagination{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  gap: 5px;
+}
+
+.page{
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: 1px solid white;
+  font-size: 12px;
+
+}
+
+.page-selected{
+  background-color: white;
+  border: 1px solid gray;
+  color: #000;
+}
