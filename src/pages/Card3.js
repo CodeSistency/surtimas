@@ -40,7 +40,7 @@ function Card3 (props) {
   return (
     <div class="product-card2">
       <Link to={`/productos/${props.id}`} class="product-image-link">
-        <img src={props.img} alt="Product Image" class="product-image" >
+        <img loading='lazy' src={props.img} alt="Product Image" class="product-image" >
           
         </img>
 

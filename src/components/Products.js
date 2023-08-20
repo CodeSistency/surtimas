@@ -10,6 +10,9 @@ const Products = () => {
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [reload, setReload] = useState()
+    const [isLoading, setIsLoading] = useState()
     
 
     useEffect(() => {
@@ -136,7 +139,7 @@ const Products = () => {
               <td>{product.precio}</td>
               <td>{product.precio_mayor}</td>
               <td>
-                <img src={product.imagenes[0]} style={{width: '25px'}} alt={`Imagen ${index}`} />
+                <img loading='lazy' src={product.imagenes[0]} style={{width: '25px'}} alt={`Imagen ${index}`} />
               </td>
               <td>
               <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline fontSize={27} style={{marginTop:'7px'}}/></Link>

@@ -14,24 +14,24 @@ function GalleryCategory() {
  return(
 
     <div className="grid-container-gallery">
-            <div className="grid-item">
+            <Link to={'/mujer'} className="grid-item">
             <div className="text-container">
                 <h2>Mujer</h2>
                 {/* <p>Some description text here.</p> */}
             </div>
-        </div>
-        <div className="grid-item"><div className="text-container">
+        </Link>
+        <Link to={'/hombre'} className="grid-item"><div className="text-container">
                 <h2>Hombre</h2>
                 {/* <p>Some description text here.</p> */}
-            </div></div>
-        <div className="grid-item"><div className="text-container">
+            </div></Link>
+        <Link to={'/zapatos'} className="grid-item"><div className="text-container">
                 <h2>Zapatos</h2>
                 {/* <p>Some description text here.</p> */}
-            </div></div>
-        <div className="grid-item"><div className="text-container">
+            </div></Link>
+        <Link to={'/juguetes'} className="grid-item"><div className="text-container">
                 <h2>Juguetes</h2>
                 {/* <p>Some description text here.</p> */}
-            </div></div>
+            </div></Link>
     </div>
  )
    
