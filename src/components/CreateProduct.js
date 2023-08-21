@@ -25,6 +25,8 @@ const CreateProduct = () => {
   const [precioAlMayor, setPrecioAlMayor] = useState(0);
   const [codigo, setCodigo] = useState('');
   const [tipo, setTipo] = useState('camisa')
+  
+  const [mainUrl, setMainUrl] = useState('')
   const [url, setUrl] = useState('')
   const [url2, setUrl2] = useState('')
   const [url3, setUrl3] = useState('')
@@ -32,6 +34,7 @@ const CreateProduct = () => {
   const [url5, setUrl5] = useState('')
   const [urls, setUrls] = useState([])
  
+  const [imagenPrimaria, setImagenPrimaria] = useState()
   const [imagen, setImage] = useState("")
   const [imagen2, setImage2] = useState("")
   const [imagen3, setImage3] = useState("")
@@ -52,6 +55,8 @@ const CreateProduct = () => {
   const [success, setSuccess] = useState(false)
   const [next, setNext] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingSingle, setIsLoadingSingle] = useState(false)
+
   const [isLoadingCreate, setIsLoadingCreate] = useState(false)
   const [created, setCreated] = useState(false)
 
@@ -210,6 +215,14 @@ const handleAddColorShoe = () => {
     ];
     return updatedQuantity;
   });
+};
+
+const handleImagenPrimariaChange = (e) => {
+  const file = e.target.files[0];
+  // setImage(URL.createObjectURL(file));
+  setImagenPrimaria(file);
+  setCroppedImage(null)
+  
 };
 
 const handleImageChange = (e) => {
@@ -397,6 +410,58 @@ useEffect(() => {
         }
       );
     }
+
+    async function uploadSingleImage(image) {
+      setIsLoadingSingle(true)
+      
+      if (!imagenPrimaria) {
+        console.log(`No image`);
+        return;
+      }
+    
+      const fileName = new Date().getTime() + imagenPrimaria.name;
+      const storage = getStorage(app);
+      const storageRef = ref(storage, fileName);
+    
+      const uploadTask = uploadBytesResumable(storageRef, imagenPrimaria);
+    
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          
+          const newProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(newProgress);
+          console.log(`Uploadis ${newProgress}% done`);
+          switch (snapshot.state) {
+            case 'paused':
+              console.log(`Upload is paused`);
+              break;
+            case 'running':
+              console.log(`Upload is running`);
+              break;
+          }
+        }, 
+        (error) => {
+          // Handle unsuccessful uploads
+        }, 
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log(`File available at`, downloadURL);
+            setMainUrl(downloadURL)
+            setUrls(prev => [...prev, downloadURL])
+            console.log(urls)
+            setNext(true)
+            console.log(urls.length)
+            console.log(successUpload)
+            
+            
+            // Handle the download URL as needed (e.g., set it in the state)
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      );
+    }
     
     async function uploadImages() {
       try {
@@ -444,7 +509,7 @@ formData.append('tipo', tipo);
 formData.append('sexo', sexo);
 formData.append('tallas', JSON.stringify(quantity));
 formData.append('tallas_zapatos', JSON.stringify(quantityShoe));
-formData.append('imagen', JSON.stringify(croppedImage));
+formData.append('imagen', JSON.stringify(imagenPrimaria));
 formData.append('imagenes', JSON.stringify(urls));
   
       
@@ -624,7 +689,28 @@ function reset (){
       </div>
       <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
         <p>Foto Primaria</p>
-        {/* <label style={{marginTop:'0'}}htmlFor="imagen"></label> */}
+        <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
+        <input
+          type="file"
+          id="imagen"
+          onChange={handleImagenPrimariaChange}
+          className="input-imagen"
+          accept='image/*'
+          style={{fontSize: '12px'}}
+          
+          
+        />
+        {mainUrl && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+        {imagenPrimaria && <img style={{width: '80px'}} src={URL.createObjectURL(imagenPrimaria)}/>}
+        </div>
+        {next ? (
+          <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
+        ) : (
+          <div onClick={uploadSingleImage} style={{ padding: '5px 15px', border: '1px solid black', borderRadius: '10px', width: '150px', margin: '10px 0', cursor: 'pointer' }}>
+            {isLoadingSingle ? 'Cargando...' : 'Guardar'}
+          </div>
+        )}
+        <p>Fotos Secundarias</p>
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
 
         <input
@@ -638,7 +724,7 @@ function reset (){
           
         />
      {loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p>{Math.round(progress[1])}%</p>}
-    { urls[0] && <p>Guardado</p>}
+    { urls[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
         </div>
         
@@ -655,7 +741,7 @@ function reset (){
           
         />
        {loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p>{Math.round(progress[2])}%</p>}
-    { urls[1] && <p>Guardado</p>}
+    { urls[1] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
     </div>
     <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -687,7 +773,7 @@ function reset (){
           
         />
          {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p>{Math.round(progress[4])}%</p>}
-         {urls[3] && <p>Guardado</p>}
+         {urls[3] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
          {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
     </div>
         <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -703,7 +789,7 @@ function reset (){
             
           />
           {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p>{Math.round(progress[5])}%</p>}
-    {url[4] && <p>Guardado</p>}
+    {url[4] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
         </div>
         
@@ -754,6 +840,9 @@ function reset (){
             <option value="chaqueta">Chaqueta</option>
             <option value="blazer">Blazer</option>
             <option value="camisa">Camisa</option>
+            <option value="vestido">Vestido</option>
+            <option value="conjuntos">Conjuntos</option>
+            <option value="set">Set</option>
             <option value="sueter">Sueter</option>
             <option value="body">Body</option>
             <option value="crop top">Crop top</option>

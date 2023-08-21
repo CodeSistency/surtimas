@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { SketchPicker } from "react-color";
+import { SketchPicker, CirclePicker } from "react-color";
 
 const ColorPicker = ({ color, onChange }) => {
-  const [showPicker, setShowPicker] = useState(false);
+  const [showPicker, setShowPicker] = useState(true);
 
   const handleColorChange = (selectedColor) => {
     onChange(selectedColor);
-    setShowPicker(false);
+    
   };
 
   return (
@@ -20,7 +20,8 @@ const ColorPicker = ({ color, onChange }) => {
           backgroundColor: color,
           cursor: "pointer",
           border: "1px solid black",
-          marginLeft: '5px'
+          marginLeft: '5px',
+          marginRight: '7px'
         }}
         onClick={() => setShowPicker(!showPicker)}
       />

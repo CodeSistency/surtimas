@@ -13,9 +13,15 @@ function ProductDetail() {
   const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
     const [product, setProduct] = useState()
     const [products, setProducts] = useState()
+    const [text, setText] = useState('')
+    const [comentario, setComentario] = useState('')
+    const [comentarios, setComentarios] = useState()
 
     const {auth} = useAuth()
     
+    const handleTextChange = (event) => {
+      setText(event.target.value);
+    };
 
     const handleDelete = async (id) => {
 
@@ -48,20 +54,6 @@ function ProductDetail() {
   }
   
 
-  //   function cartIcon() {
-  //     const alreadyInCart = cart.some(item => item._id === product._id)
-  //     if(alreadyInCart) {
-  //         return <div className='addCart'>
-  //         <p>Agregar</p>
-  //         <IoCartSharp fontSize={20} onClick={() => handleDelete(product._id)}/>
-  //       </div>
-  //     } else {
-  //         return <div className='addCart'>
-  //           <p>Agregar</p>
-  //           <IoCartOutline fontSize={20} onClick={() => addProductToResults(product)}/>
-  //         </div>
-  //     }
-  // }
   const precio_mayor = 0
 
     const axiosPrivate = useAxiosPrivate();
@@ -155,6 +147,70 @@ function ProductDetail() {
           </button>
         }
        }
+
+       const handleSubmit = async (e) => {
+
+        e.preventDefault()
+    
+        let isMounted = true;
+        const controller = new AbortController();
+
+        try {
+            // setError(false)
+            // setIsLoadingCreate(true)
+            const response = await axiosPrivate.put(`productos/comentario`, {comentario: text, username: auth?.user, id},
+            
+        
+        {
+                signal: controller.signal
+            });
+            console.log(JSON.stringify(response?.data));
+            isMounted && setComentario(response.data);
+            // console.log(urls)
+            // navigate("/admin", { state: {from: location}, replace: true });
+            // navigate("/admin", { state: {from: location}, replace: true });
+            // navigate(-1);
+        } catch (err) {
+            console.error(err);
+            // setErrMsg(err)
+            // setError(true)
+            // navigate('/login', { state: { from: location }, replace: true });
+            
+        }
+    
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }
+
+    useEffect(() => {
+      let isMounted = true;
+      const controller = new AbortController();
+  
+      const getComentarios = async () => {
+          try {
+              const response = await axios.get(`productos`, {
+                  signal: controller.signal
+              });
+              console.log(response.data);
+              isMounted && setComentarios(response.data);
+          } catch (err) {
+              console.error(err);
+              // navigate('/login', { state: { from: location }, replace: true });
+          }
+      }
+  
+      getComentarios();
+  
+      
+  
+      return () => {
+          isMounted = false;
+          controller.abort();
+      }
+  }, [])
+
   return (
     <div >
       <Nav className='nav-detail'/>
@@ -163,17 +219,17 @@ function ProductDetail() {
         <div className='product-detail'>
             <img src={product?.imagenes[0]} alt='' className='image-detail'/>
             {product && 
-            <div key={product.codigo} className="producto-info">
-              <h2 className="producto titulo">{product.titulo}</h2>
+            <div key={product?.codigo} className="producto-info">
+              <h2 className="producto titulo">{product?.titulo}</h2>
               <hr />
               {/* <p className="producto">{product.codigo}</p> */}
               <div className='precios'>
-              <p className="producto precio dollars">{`${product.precio}`}<span className='dolar'>$</span></p>
-              <p className="producto precio-mayor dollars"><strong>Mayor</strong> {`${product.precio_mayor}`} <span className='dolar'>$</span></p>
+              <p className="producto precio dollars">{`${product?.precio}`}<span className='dolar'>$</span></p>
+              <p className="producto precio-mayor dollars"><strong>Mayor</strong> {`${product?.precio_mayor}`} <span className='dolar'>$</span></p>
               </div>
-              <h4>Tallas</h4>
+              <h4>Tallas disponibles:</h4>
               <section className='lista-colores'>
-                {Object.entries(product.tallas).map(([size, colors]) => {
+                {Object.entries(product?.tallas).map(([size, colors]) => {
                   const totalQuantity = colors.reduce((total, color) => total + color.quantity, 0); // Calculate total quantity for the size
                   if (totalQuantity > 0) {
                     return (
@@ -190,7 +246,7 @@ function ProductDetail() {
 
               </section>
 
-              <h4>Colores</h4>
+              <h4>Colores disponibles:</h4>
               <section className='lista-colores'>
                 {(() => {
                   const allColors = [];
@@ -235,6 +291,36 @@ function ProductDetail() {
             </div>}
         </div>
       </div>
+      <section className='section-comments'>
+
+      <div className='comentarios'>
+        <form style={{paddingTop: '1rem'}} onSubmit={handleSubmit}>
+          <textarea value={text} onChange={handleTextChange} />
+          <button className='comment-button'>Comentar</button>
+        </form>
+      </div>
+      <div>
+      {product
+                ? (
+                    <div className='comments'>
+                        {product.comentarios.map((comentario, i) =>
+
+                          
+                            <div className='comment-container'>
+                              <div className='comment-user'>
+                                <p><small>{comentario.usuario}</small></p>
+                                <p className='fecha'><small>{comentario.fecha}</small></p>
+                              </div>
+                              <p className='comment'>{comentario.comentario}</p>
+                              
+                            </div>
+                            
+                            )}
+                    </div>
+                ) : <p>No hay productos</p>
+            }
+      </div>
+      </section>
     </div>
   )
 }

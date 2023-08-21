@@ -41,30 +41,7 @@ const Products = () => {
         }
     }, [])
 
-    // const handleDelete = async (id) => {
-    //     let isMounted2 = true;
-    //     const controller = new AbortController();
-    //     console.log(id)
-
-    //     try {
-    //          const response = await axiosPrivate.delete(`products/${id}`,
-    //          {
-    //             signal: controller.signal
-    //          }
-                
-    //         );
-    //         console.log(response.data);
-            
-    //     } catch (err) {
-    //         console.error(err);
-    //         // navigate('/login', { state: { from: location }, replace: true });
-    //     }
-
-    //     return () => {
-    //         isMounted2 = false;
-    //         controller.abort();
-    //     }
-    // }
+   
     const handleDelete = async (id) => {
 
         let isMounted2 = true;
@@ -107,23 +84,13 @@ const Products = () => {
             </div>
             {products?.length
                 ? (
-                    // <ul>
-                    //     {products.map((product, i) => 
-                    //         <li className="product-list" key={i}>
-                    //             <p>{product?.titulo}</p>
-                    //             <p>{product?.precio}</p>
-                    //             <p>{product?.cantidad}</p>
-
-                                
-                    //             <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline/></Link>
-                    //             <div style={{cursor: 'pointer'}}><MdDeleteForever  onClick={() => handleDelete(product._id)}/></div>
-                                
-                    //         </li>)}
-                    // </ul>
-                    <div className="table-container">
+                    
+    <div className="table-container">
+    <p style={{fontSize: '14px'}}>Total de productos: <strong>{products.length}</strong></p>
       <table className="table">
         <thead>
           <tr>
+            <th>Nmro</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Precio Mayor</th>
@@ -135,6 +102,7 @@ const Products = () => {
         <tbody>
           {products.map((product, index) => (
             <tr key={index}>
+                <td>{index}</td>
               <td>{product.titulo}</td>
               <td>{product.precio}</td>
               <td>{product.precio_mayor}</td>

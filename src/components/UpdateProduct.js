@@ -24,6 +24,8 @@ const UpdateProduct = () => {
   const [precioAlMayor, setPrecioAlMayor] = useState(0);
   const [codigo, setCodigo] = useState('');
   const [tipo, setTipo] = useState('camisa')
+
+  const [mainUrl, setMainUrl] = useState('')
   const [url, setUrl] = useState('')
   const [url2, setUrl2] = useState('')
   const [url3, setUrl3] = useState('')
@@ -31,6 +33,7 @@ const UpdateProduct = () => {
   const [url5, setUrl5] = useState('')
   const [urls, setUrls] = useState([])
  
+  const [imagenPrimaria, setImagenPrimaria] = useState()
   const [imagen, setImage] = useState("")
   const [imagen2, setImage2] = useState("")
   const [imagen3, setImage3] = useState("")
@@ -50,9 +53,11 @@ const UpdateProduct = () => {
 
   const [success, setSuccess] = useState(false)
   const [next, setNext] = useState(false)
+  const [next2, setNext2] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingCreate, setIsLoadingCreate] = useState(false)
   const [created, setCreated] = useState(false)
+  const [isLoadingSingle, setIsLoadingSingle] = useState(false)
 
   const [loadingStates, setLoadingStates] = useState([true, true, true, true, true]);
   const [progress, setProgress] = useState([0, 0, 0, 0, 0]);
@@ -204,6 +209,14 @@ const UpdateProduct = () => {
       return updatedQuantity;
     });
   };
+
+  const handleImagenPrimariaChange = (e) => {
+    const file = e.target.files[0];
+    // setImage(URL.createObjectURL(file));
+    setImagenPrimaria(file);
+    setCroppedImage(null)
+    
+  };
   
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -256,6 +269,60 @@ const UpdateProduct = () => {
         console.log(imagen, imagen2, imagen3, imagen4, imagen5, urls)
       }, [imagen, imagen2, imagen3, imagen4, imagen5])
   
+
+      async function uploadSingleImage(image) {
+        setIsLoadingSingle(true)
+        
+        if (!imagenPrimaria) {
+          console.log(`No image`);
+          return;
+        }
+      
+        const fileName = new Date().getTime() + imagenPrimaria.name;
+        const storage = getStorage(app);
+        const storageRef = ref(storage, fileName);
+      
+        const uploadTask = uploadBytesResumable(storageRef, imagenPrimaria);
+      
+        uploadTask.on('state_changed', 
+          (snapshot) => {
+            
+            const newProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(newProgress);
+            console.log(`Uploadis ${newProgress}% done`);
+            switch (snapshot.state) {
+              case 'paused':
+                console.log(`Upload is paused`);
+                break;
+              case 'running':
+                console.log(`Upload is running`);
+                break;
+            }
+          }, 
+          (error) => {
+            // Handle unsuccessful uploads
+          }, 
+          async () => {
+            try {
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+              console.log(`File available at`, downloadURL);
+              setMainUrl(downloadURL)
+              setUrls(prev => [...prev, downloadURL])
+              console.log(urls)
+              setNext2(true)
+              console.log(urls.length)
+              console.log(successUpload)
+              
+              
+              // Handle the download URL as needed (e.g., set it in the state)
+            } catch (err) {
+              console.error(err);
+            }
+          }
+        );
+      }
+
+
       async function uploadImage(image, index) {
         setUploadStart(true)
         setLoadingStates(prevLoadingStates => {
@@ -386,7 +453,7 @@ useEffect(() => {
     setSexo(products?.sexo)
     setQuantity(products?.tallas)
     setQuantityShoe(products?.tallas_zapatos)
-    setUrl(products?.imagen)
+    setMainUrl(products?.imagen)
     setUrls(products?.imagenes)
     setSuccessUpload(products?.imagenes.length)
     console.log(products?.tallas)
@@ -407,18 +474,7 @@ useEffect(() =>{
     let isMounted = true;
     const controller = new AbortController();
 
-//     const formData = new FormData();
-// formData.append('titulo', titulo);
-// formData.append('descripcion', descripcion);
-// formData.append('precio', precio);
-// formData.append('precio_mayor', precioAlMayor);
-// formData.append('codigo', codigo);
-// formData.append('tipo', tipo);
-// formData.append('sexo', sexo);
-// formData.append('tallas', JSON.stringify(quantity));
-// formData.append('tallas_zapatos', JSON.stringify(quantityShoe));
-// formData.append('imagen', url);
-// formData.append('imagenes', JSON.stringify(urls));
+
 
 
 
@@ -426,7 +482,7 @@ useEffect(() =>{
         setError(false)
         setIsLoadingCreate(true)
         const response = await axiosPrivate.put(`products/${id}`,
-        JSON.stringify({ titulo, descripcion, precio, precioAlMayor, tipo, sexo, codigo, tallas_zapatos: quantityShoe, tallas: quantity, imagen: url, imagenes: urls}),
+        JSON.stringify({ titulo, descripcion, precio, precioAlMayor, tipo, sexo, codigo, tallas_zapatos: quantityShoe, tallas: quantity, imagen: mainUrl, imagenes: urls}),
     
     {
             signal: controller.signal
@@ -520,75 +576,31 @@ useEffect(() =>{
         />
       </div>
       <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
-        <p>Foto Primaria</p>
-        {/* <label style={{marginTop:'0'}}htmlFor="imagen"></label> */}
-        {/* <div className='imagenes-guardadas'>
-
+      <p>Foto Primaria</p>
+        <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
         <input
           type="file"
           id="imagen"
-          onChange={handleImageChange}
+          onChange={handleImagenPrimariaChange}
           className="input-imagen"
           accept='image/*'
+          style={{fontSize: '12px'}}
           
           
         />
+        {products?.imagenes[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+        {products?.imagenes[0] && <img style={{width: '80px'}} src={products?.imagenes[0]}/>}
+        </div>
+        {next2 ? (
+          <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
+        ) : (
+          <div onClick={uploadSingleImage} style={{ padding: '5px 15px', border: '1px solid black', borderRadius: '10px', width: '150px', margin: '10px 0', cursor: 'pointer' }}>
+            {isLoadingSingle ? 'Cargando...' : 'Guardar'}
+          </div>
+        )}
+        <p>Fotos Secundarias</p>
 
-        {products?.imagenes[0] && urls ? <p>Guardado </p> : null}
-        </div>
-        <div className='imagenes-guardadas'>
-
-        <input
-          type="file"
-          id="imagen"
-          onChange={e => setImage2(e.target.files[0])}
-          className="input-imagen"
-          accept='image/*'
-          
-          
-        />
-        {products?.imagenes[1] && urls ? <p>Guardado</p> : null}        
-        </div>
-        <div className='imagenes-guardadas'>
-
-        <input
-          type="file"
-          id="imagen"
-          onChange={e => setImage3(e.target.files[0])}
-          className="input-imagen"
-          accept='image/*'
-          
-          
-        />
-        {products?.imagenes[2] && urls ? <p>Guardado</p> : null}
-        </div>
-        <div className='imagenes-guardadas'>
-          
-        <input
-          type="file"
-          id="imagen"
-          onChange={e => setImage4(e.target.files[0])}
-          className="input-imagen"
-          accept='image/*'
-          
-          
-        />
-        {products?.imagenes[3] && urls ? <p>Guardado</p> : null}
-        </div>
-        <div className='imagenes-guardadas'>
-
-        <input
-          type="file"
-          id="imagen"
-          onChange={e => setImage5(e.target.files[0])}
-          className="input-imagen"
-          accept='image/*'
-          
-          
-        />
-        {products?.imagenes[4] && urls ? <p>Guardado</p> : null}
-        </div>
-        */}
+     
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
 
 <input
@@ -602,7 +614,8 @@ useEffect(() =>{
   
 />
 {loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p>{Math.round(progress[1])}%</p>}
-{products?.imagenes[0] && <p>Guardado</p>}
+{products?.imagenes[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+{products?.imagenes[0] && <img style={{width: '80px'}} src={products?.imagenes[0]}/>}
 {imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
 </div>
 
@@ -619,7 +632,8 @@ useEffect(() =>{
   
 />
 {loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p>{Math.round(progress[2])}%</p>}
-{products?.imagenes[1]  && <p>Guardado</p>}
+{products?.imagenes[1]  && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+{products?.imagenes[1] && <img style={{width: '80px'}} src={products?.imagenes[1]}/>}
 {imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
 </div>
 <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -635,7 +649,8 @@ useEffect(() =>{
   
 />
 {loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p>{Math.round(progress[3])}%</p>}
-{ products?.imagenes[2] &&  <p>Guardado</p>}
+{ products?.imagenes[2] &&  <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+{products?.imagenes[2] && <img style={{width: '80px'}} src={products?.imagenes[2]}/>}
 {imagen3 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen3)}/>}
 </div>
 <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -651,7 +666,8 @@ useEffect(() =>{
   
 />
  {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p>{Math.round(progress[4])}%</p>}
- { products?.imagenes[3] && <p>Guardado</p>}
+ { products?.imagenes[3] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+ {products?.imagenes[3] && <img style={{width: '80px'}} src={products?.imagenes[3]}/>}
  {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
 </div>
 <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
@@ -667,7 +683,8 @@ useEffect(() =>{
     
   />
   {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p>{Math.round(progress[5])}%</p>}
-  {products?.imagenes[4] && <p>Guardado</p>}
+  {products?.imagenes[4] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+  {products?.imagenes[4] && <img style={{width: '80px'}} src={products?.imagenes[4]}/>}
 {imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
 </div>
         
@@ -707,6 +724,9 @@ useEffect(() =>{
             <option value="blazer">Blazer</option>
             <option value="sueter">Sueter</option>
             <option value="camisa">Camisa</option>
+            <option value="vestido">Vestido</option>
+            <option value="conjuntos">Conjuntos</option>
+            <option value="set">Set</option>
             <option value="body">Body</option>
             <option value="crop top">Crop top</option>
             <option value="pantalon">Pantalon</option>

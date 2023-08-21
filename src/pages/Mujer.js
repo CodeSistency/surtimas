@@ -34,7 +34,7 @@ function Mujer() {
 
         const getProducts = async () => {
             try {
-                const response = await axios.get('/productos/mujer', {
+                const response = await axios.get('/productos/genero/mujer', {
                     signal: controller.signal
                 });
                 console.log(response.data);
