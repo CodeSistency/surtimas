@@ -25,7 +25,7 @@ const CreateProduct = () => {
   const [precioAlMayor, setPrecioAlMayor] = useState(0);
   const [codigo, setCodigo] = useState('');
   const [tipo, setTipo] = useState('camisa')
-  
+
   const [mainUrl, setMainUrl] = useState('')
   const [url, setUrl] = useState('')
   const [url2, setUrl2] = useState('')
@@ -723,7 +723,7 @@ function reset (){
           
           
         />
-     {loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p>{Math.round(progress[1])}%</p>}
+     {loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[1])}%</p>}
     { urls[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
         </div>
@@ -740,7 +740,7 @@ function reset (){
           
           
         />
-       {loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p>{Math.round(progress[2])}%</p>}
+       {loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[2])}%</p>}
     { urls[1] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
     </div>
@@ -756,7 +756,7 @@ function reset (){
           
           
         />
-      {loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p>{Math.round(progress[3])}%</p>}
+      {loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[3])}%</p>}
       {url[2] && <p>Guardado</p>}
       {imagen3 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen3)}/>}
     </div>
@@ -772,7 +772,7 @@ function reset (){
           
           
         />
-         {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p>{Math.round(progress[4])}%</p>}
+         {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[4])}%</p>}
          {urls[3] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
          {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
     </div>
@@ -788,7 +788,7 @@ function reset (){
             
             
           />
-          {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p>{Math.round(progress[5])}%</p>}
+          {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[5])}%</p>}
     {url[4] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
         </div>
