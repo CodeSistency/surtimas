@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
 
-const GenderRadioFilter = ({ onFilter, mujer }) => {
-  const [selectedSexo, setSelectedSexo] = useState(mujer);
+const GenderRadioFilter = ({ onFilter, products }) => {
+  const [selectedSexo, setSelectedSexo] = useState();
 
   const handleSexoChange = (sexo) => {
     setSelectedSexo(sexo);
-    onFilter(sexo);
+    console.log(selectedSexo)
+    // onFilter(sexo);
+    const updatedProducts = products.filter(
+      obj =>obj.sexo === "hombre" || obj.sexo === selectedSexo
+    );
+    console.log(updatedProducts)
+    onFilter(updatedProducts);
   };
+
+  
 
   return (
     <div className="gender-radio-filter">
-        <div className='gender'>
-        <p>Todos</p>
-            <input
-            type="radio"
-            name="sexo"
-            value="all"
-            onChange={() => handleSexoChange('todos')}
-            checked={selectedSexo === 'todos'}
-            /> 
         
-
-        </div>
         <div className='gender'>
             <p>Mujer</p>
             <input

@@ -1640,7 +1640,7 @@ right:  0;
 }
 
 .gender > p, .category > p{
-  min-width: 60px;
+  min-width: 80px;
 }
 
 .price-min > input{
@@ -1684,7 +1684,14 @@ right:  0;
   overflow-x: auto;
 }
 
-.filtros > div > p{
+.filtros-admin{
+  display: flex;
+  gap: 10px;
+  padding:  10px 3px;
+  overflow-x: auto;
+}
+
+.filtros > div > p, .filtros-admin > div > p{
   font-size: 15px;
   padding: 7px;
   background-color: white;
