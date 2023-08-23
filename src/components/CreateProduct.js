@@ -155,6 +155,24 @@ const CreateProduct = () => {
     setCodigo(e.target.value);
   };
 
+  const restart = () => {
+    setUrls([])
+    setMainUrl(null)
+    setUploadStart(false)
+    setSelectedImages([])
+    setSuccessUpload(0)
+    setIsLoading(false)
+    setIsLoadingSingle(false)
+    setNext(false)
+    
+    setImagenPrimaria(null)
+    setImage(null)
+    setImage2(null)
+    setImage3(null)
+    setImage4(null)
+    setImage5(null)
+  }
+
 
 
 const handleColorChange = (sizeIndex, colorIndex, selectedColor) => {
@@ -809,6 +827,8 @@ function reset (){
     {isLoading ? 'Cargando...' : 'Guardar'}
   </div>
 )}
+      <div onClick={restart} style={{backgroundColor: 'rgb(184, 11, 69)', padding: '5px 15px', border: '1px solid black', borderRadius: '10px', color: 'white', width: '150px', margin: '10px 0', cursor: 'pointer' }}>Reset</div>
+
 
       {/* <div className="input-container">
         <p>Imagenes:</p>

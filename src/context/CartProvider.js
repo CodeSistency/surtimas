@@ -56,15 +56,6 @@ export const CartProvider = ({ children }) => {
         const controller = new AbortController();
         const quantity = 0
 
-        // const formData = new FormData();
-        // formData.append('username', username);
-        // formData.append('nombre', nombre);
-        // formData.append('precio', precio);
-        // formData.append('precio_mayor', precio_mayor);
-        // formData.append('quantity', quantity);
-
-        // console.log(formData.getAll())
-
         console.log(username, nombre, precio, precio_mayor)
 
       
@@ -89,6 +80,38 @@ export const CartProvider = ({ children }) => {
           }
     
         
+    }
+
+    const handleDelete = async (username, id) => {
+
+        let isMounted2 = true;
+        const controller = new AbortController();
+        console.log(id)
+        
+        
+        try {
+            const response = await axios.delete(`cart/${username}/${id}`,
+            
+        
+        {
+                signal: controller.signal
+            });
+            console.log(JSON.stringify(response?.data));
+            
+            
+            
+            
+        } catch (err) {
+            console.error(err);
+            console.log(JSON.stringify(err));
+            
+            
+        }
+    
+        return () => {
+            isMounted2 = false;
+            controller.abort();
+        }
     }
 
     function filterProductsByTitle() {

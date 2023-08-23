@@ -58,6 +58,7 @@ const UpdateProduct = () => {
   const [isLoadingCreate, setIsLoadingCreate] = useState(false)
   const [created, setCreated] = useState(false)
   const [isLoadingSingle, setIsLoadingSingle] = useState(false)
+  const [isLoadingReset, setIsLoadingReset] = useState(false)
 
   const [loadingStates, setLoadingStates] = useState([true, true, true, true, true]);
   const [progress, setProgress] = useState([0, 0, 0, 0, 0]);
@@ -149,6 +150,24 @@ const UpdateProduct = () => {
   const handlePrecioAlMayorChange = (e) => {
     setPrecioAlMayor(e.target.value);
   };
+
+  const restart = () => {
+    setUrls([])
+    setMainUrl(null)
+    setUploadStart(false)
+    setSelectedImages([])
+    setSuccessUpload(0)
+    setIsLoading(false)
+    setIsLoadingSingle(false)
+    setNext(false)
+    setImagenPrimaria(null)
+    setImage(null)
+    setImage2(null)
+    setImage3(null)
+    setImage4(null)
+    setImage5(null)
+    setNext2(false)
+  }
   
   const handleColorChange = (sizeIndex, colorIndex, selectedColor) => {
     setQuantity((prevQuantity) => {
@@ -575,7 +594,7 @@ useEffect(() =>{
           required
         />
       </div>
-      <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
+{urls &&   <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
       <p>Foto Primaria</p>
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
         <input
@@ -588,8 +607,9 @@ useEffect(() =>{
           
           
         />
-        {products?.imagenes[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
-        {products?.imagenes[0] && <img style={{width: '80px'}} src={products?.imagenes[0]}/>}
+        {/* {products?.imagenes[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>} */}
+        {imagenPrimaria && <img style={{width: '80px'}} src={products?.imagen}/>}
+
         </div>
         {next2 ? (
           <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
@@ -603,92 +623,92 @@ useEffect(() =>{
      
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
 
-<input
-  type="file"
-  id="imagen"
-  onChange={handleImageChange}
-  className="input-imagen"
-  accept='image/*'
-  style={{fontSize: '12px'}}
-  
-  
-/>
-{loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[1])}%</p>}
-{products?.imagenes[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
-{products?.imagenes[0] && <img style={{width: '80px'}} src={products?.imagenes[0]}/>}
-{imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
-</div>
+            <input
+              type="file"
+              id="imagen"
+              onChange={handleImageChange}
+              className="input-imagen"
+              accept='image/*'
+              style={{fontSize: '12px'}}
+              
+              
+            />
+            {loadingStates[1] && progress[1] > 0 && progress[1] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[1])}%</p>}
+            {/* {urls[0] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>} */}
+            {urls ? <img style={{width: '80px'}} src={urls[0]}/> : <p>Nada cargado</p>}
+            {imagen && <img style={{width: '80px'}} src={URL.createObjectURL(imagen)}/>}
+            </div>
 
-<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+            <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
 
-<input
-  type="file"
-  id="imagen"
-  onChange={handleImageChange2}
-  className="input-imagen"
-  accept='image/*'
-  style={{fontSize: '12px'}}
-  
-  
-/>
-{loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[2])}%</p>}
-{products?.imagenes[1]  && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
-{products?.imagenes[1] && <img style={{width: '80px'}} src={products?.imagenes[1]}/>}
-{imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
-</div>
-<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+            <input
+              type="file"
+              id="imagen"
+              onChange={handleImageChange2}
+              className="input-imagen"
+              accept='image/*'
+              style={{fontSize: '12px'}}
+              
+              
+            />
+            {loadingStates[2] && progress[2] > 0 && progress[2] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[2])}%</p>}
+            {/* {products?.imagenes[1]  && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>} */}
+            {urls ? <img style={{width: '80px'}} src={urls[1]}/> : <p>Nada cargado</p>}
+            {imagen2 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen2)}/>}
+            </div>
+            <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
 
-<input
-  type="file"
-  id="imagen"
-  onChange={handleImageChange3}
-  className="input-imagen"
-  accept='image/*'
-  style={{fontSize: '12px'}}
-  
-  
-/>
-{loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[3])}%</p>}
-{ products?.imagenes[2] &&  <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
-{products?.imagenes[2] && <img style={{width: '80px'}} src={products?.imagenes[2]}/>}
-{imagen3 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen3)}/>}
-</div>
-<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+            <input
+              type="file"
+              id="imagen"
+              onChange={handleImageChange3}
+              className="input-imagen"
+              accept='image/*'
+              style={{fontSize: '12px'}}
+              
+              
+            />
+            {loadingStates[3] && progress[3] > 0 && progress[3] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[3])}%</p>}
+            {/* { products?.imagenes[2] &&  <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>} */}
+            {urls ? <img style={{width: '80px'}} src={urls[2]}/> : <p>Nada cargado</p>}
+            {imagen3 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen3)}/>}
+            </div>
+            <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
 
-<input
-  type="file"
-  id="imagen"
-  onChange={handleImageChange4}
-  className="input-imagen"
-  accept='image/*'
-  style={{fontSize: '12px'}}
-  
-  
-/>
- {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[4])}%</p>}
- { products?.imagenes[3] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
- {products?.imagenes[3] && <img style={{width: '80px'}} src={products?.imagenes[3]}/>}
- {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
-</div>
-<div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
+            <input
+              type="file"
+              id="imagen"
+              onChange={handleImageChange4}
+              className="input-imagen"
+              accept='image/*'
+              style={{fontSize: '12px'}}
+              
+              
+            />
+            {loadingStates[4] && progress[4] > 0 && progress[4] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[4])}%</p>}
+            {/* { products?.imagenes[3] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>} */}
+            {urls ? <img style={{width: '80px'}} src={urls[3]}/> : <p>Nada cargado</p>}
+            {imagen4 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen4)}/>}
+            </div>
+            <div style={{fontSize: '12px', display: 'flex', alignItems: 'center', gap: '3px'}}>
 
-  <input
-  style={{fontSize: '12px'}}
-    type="file"
-    id="imagen"
-    onChange={handleImageChange5}
-    className="input-imagen"
-    accept='image/*'
-    
-    
-  />
-  {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[5])}%</p>}
-  {products?.imagenes[4] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
-  {products?.imagenes[4] && <img style={{width: '80px'}} src={products?.imagenes[4]}/>}
-{imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
-</div>
+              <input
+              style={{fontSize: '12px'}}
+                type="file"
+                id="imagen"
+                onChange={handleImageChange5}
+                className="input-imagen"
+                accept='image/*'
+                
+                
+              />
+              {loadingStates[5] && progress[5] > 0 && progress[5] < 100 && <p style={{fontSize:'15px'}}>{Math.round(progress[5])}%</p>}
+              {products?.imagenes[4] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
+              {urls ? <img style={{width: '80px'}} src={urls[4]}/> : <p>Nada cargado</p>}
+            {imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
+            </div>
         
-      </div>
+      </div>}
 
       {next ? (
         <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
@@ -697,6 +717,7 @@ useEffect(() =>{
           {isLoading ? 'Cargando...' : 'Guardar'}
         </div>
       )}
+      <div onClick={restart} style={{backgroundColor: 'rgb(184, 11, 69)', padding: '5px 15px', border: '1px solid black', borderRadius: '10px', color: 'white', width: '150px', margin: '10px 0', cursor: 'pointer' }}>Reset</div>
 
 {/* {uploadStart && products?.imagenes.length > products?.imagenes.length -1 && selectedImages.length == successUpload  ? (
   <div style={{ width: '140px', margin: '10px 0', padding: '5px 10px', border: '1px solid black', background: '#226e91', color: 'white', borderRadius: '10px' }}>Guardado</div>
