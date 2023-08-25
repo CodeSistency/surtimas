@@ -251,6 +251,29 @@ h2{
   margin: 0 !important;
 }
 
+.navbar{
+  overflow-x: scroll;
+    scroll-behavior: smooth; /* Add smooth scrolling behavior */
+    white-space: nowrap
+}
+
+.navbar::-webkit-scrollbar:horizontal{
+  height: 5px;
+  width: 8px;
+  background-color: transparent;
+}
+.navbar::-webkit-scrollbar-thumb:horizontal{
+        background: transparent;
+        border-radius: 10px;
+        width: 8px;
+        
+    }
+    .navbar::-webkit-scrollbar-thumb:horizontal:active{
+      background: rgba(255, 255, 255, 0.399);
+      border-radius: 10px;
+      
+  }
+
 
 }
 
@@ -533,6 +556,13 @@ select {
 }
 
 @media (max-width: 750px){
+  .nav-bottom{
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  
+
   .login-container{
     flex-direction: column-reverse !important;
     
@@ -588,14 +618,14 @@ select {
   }
   
 
-  .nav-admin, .nav-products{
+  /* .nav-admin, .nav-products{
     display: none;
-  }
+  } */
 
-  .navbar{
+  /* .navbar{
     gap: 10px !important;
     margin-right: 5px;
-  }
+  } */
 
   
   h2{
@@ -621,7 +651,7 @@ select {
     max-width: 250px !important;
   }
 
-  .cart-icon{
+  .user-icon, .gender-icon{
     display: none;
   }
   h2{
@@ -647,9 +677,9 @@ select {
   }
 
 
-  .input-search:hover, .input-search:focus{
+  /* .input-search:hover, .input-search:focus{
     width: 75% !important;
-  }
+  } */
 
   .filtros{
     flex-wrap: wrap;
@@ -664,9 +694,9 @@ select {
     bottom: 20% !important;
   }
 
-  .nav-link-search{
+  /* .nav-link-search{
     display: none;
-  }
+  } */
   .ctas{
     flex-direction: column !important;
   }
@@ -926,12 +956,39 @@ li {
     width: 100%;
     background-color: white;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    flex-direction: column;
     box-shadow: 0 0 5px 2px rgb(48, 48, 48);
     z-index: 100;
     min-height: 118px;
     /* padding: 10px; */
+}
+
+.logo{
+  width: 140px;
+}
+
+.nav-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -30px;
+  padding: 0 15px;
+}
+
+.nav-top-left, .nav-top-right{
+  display: flex;
+  align-items: center;
+}
+
+.nav-bottom{
+  display: flex;
+  margin-top: -40px;
+  padding: 8px 15px;
+  /* background-color: #ff4040; */
+  background: linear-gradient(90deg, rgb(133, 17, 61), #e72828);
+  /* border-top: 0.5px solid #ff4040; */
 }
 
 .nav > a > img {
@@ -943,25 +1000,61 @@ li {
     display: flex;
     align-items: center;
     gap: 10px;
-    
+    ; 
     margin-right: 20px;
 }
 
 /* HERO */
 
 .image-container {
-    margin-top: 60px;
+    /* margin-top: 60px; */
     position: relative; /* Establecer posición relativa para alinear el botón */
-    display: flex; /* Utilizar flexbox para el diseño */
-    justify-content: center; /* Centrar horizontalmente el contenido */
-    align-items: center; /* Centrar verticalmente el contenido */
-    height: 50vh; /* La imagen ocupa la mitad de la altura de la ventana */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    /* height: 50vh; La imagen ocupa la mitad de la altura de la ventana */
     overflow: hidden; /* Para ocultar cualquier contenido que salga del contenedor */
-    background-image: url('../public/bg.jpg');
-    background-size: cover;
-    background-position: center;
+    /* background-image: url('../public/bg.jpg'); */
+    /* background-size: cover; */
+    /* background-position: center; */
     box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.592);
     
+}
+
+.image-container-2 {
+  /* margin-top: 60px; */
+  position: relative; /* Establecer posición relativa para alinear el botón */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  /* height: 50vh; La imagen ocupa la mitad de la altura de la ventana */
+  overflow: hidden; /* Para ocultar cualquier contenido que salga del contenedor */
+  /* background-image: url('../public/bg.jpg'); */
+  /* background-size: cover; */
+  /* background-position: center; */
+  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.592);
+  
+}
+
+.image-container-3 {
+  /* margin-top: 60px; */
+  position: relative; /* Establecer posición relativa para alinear el botón */
+  
+  /* height: 50vh; La imagen ocupa la mitad de la altura de la ventana */
+  overflow: hidden; /* Para ocultar cualquier contenido que salga del contenedor */
+  /* background-image: url('../public/bg.jpg'); */
+  /* background-size: cover; */
+  /* background-position: center; */
+  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.592);
+  
+}
+
+.hero{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  z-index: -1;
 }
 
 .image-container > h1{
@@ -973,6 +1066,24 @@ li {
  
   /* -webkit-text-stroke-width: 3px;
   -webkit-text-stroke-color: rgb(74, 74, 74); */
+}
+
+.image-container-2 > h1, .image-container-2 > h4{
+  justify-self: baseline;
+  align-self: baseline;
+  padding: 10px;
+  color: #000;
+}
+
+.image-container-3 > div{
+  justify-self: start;
+  align-self: baseline;
+  padding: 10px;
+  color: #000;
+}
+
+.image-container-2 > h4{
+  text-align: right;
 }
 
 
@@ -988,7 +1099,29 @@ li {
     transition: all .3s;
 }
 
-.content:hover{
+.content2 {
+  position: absolute; /* Posiciona el botón con respecto al contenedor */
+  bottom: 15%; /* Alinear el botón a la izquierda */
+  left: 15%;
+  background-color: rgba(192, 168, 12, 0.762); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
+  padding: 10px 20px; /* Espacio alrededor del botón */
+  border: none; /* Quitar borde del botón (opcional) */
+  cursor: pointer;
+  border-radius: 10px; /* Cambiar el cursor al pasar sobre el botón */
+  transition: all .3s;
+}
+
+.content3 {
+  margin: 0 auto;
+  background-color: rgba(192, 168, 12, 0.762); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
+  padding: 10px 20px; /* Espacio alrededor del botón */
+  border: none; /* Quitar borde del botón (opcional) */
+  cursor: pointer;
+  border-radius: 10px; /* Cambiar el cursor al pasar sobre el botón */
+  transition: all .3s;
+}
+
+.content:hover, .content2:hover{
   background-color: white;
   border: 2px solid black;
   /* border-radius: 30px; */
@@ -1136,12 +1269,12 @@ li {
   }
 
   /* Hide scrollbar for WebKit browsers */
-.card-container::-webkit-scrollbar, .lista-colores::-webkit-scrollbar {
+.card-container::-webkit-scrollbar, .lista-colores::-webkit-scrollbar, .navbar::-webkit-scrollbar {
   width: 0; /* Set the width to 0 to hide the scrollbar */
 }
 
 /* Optional: Style for the scrollbar track (background) */
-.card-container::-webkit-scrollbar-track, .lista-colores::-webkit-scrollbar-track {
+.card-container::-webkit-scrollbar-track, .lista-colores::-webkit-scrollbar-track, .navbar::-webkit-scrollbar-track {
   background-color: transparent; /* Set the background color of the track */
 }
 
@@ -1276,6 +1409,9 @@ li {
   }
   
   /* SEARCH */
+.nav-link-search{
+  flex: 1;
+}
 
   .search, .search-relative{
     position: relative;
@@ -1288,13 +1424,13 @@ li {
     height: 50px;
     background: none !important;
     border: 3px solid var(--primary-color) !important;
-    border-radius: 50px !important;
+    border-radius: 0 50px 50px 0 !important;
     box-sizing: border-box !important;
     /* font-family: Comic Sans MS !important; */
     font-size: 20px; 
     color: black !important;
     outline: none !important;
-    transition: .5s;
+    transition: .3s;
 
     /* appearance: unset !important;
     border: unset !important;
@@ -1341,16 +1477,17 @@ li {
 .input-search-nav{
   padding: 10px !important;
   width: 100%;
-  height: 50px;
-  background: none !important;
-  border: 3px solid var(--primary-color) !important;
-  border-radius: 50px !important;
+  height: 35px;
+  background: white;
+  border: 3px solid rgb(238, 238, 238) !important;
+  border-radius: 5px !important;
   box-sizing: border-box !important;
   /* font-family: Comic Sans MS !important; */
   font-size: 20px; 
   color: black !important;
   outline: none !important;
-  transition: .5s;
+  box-shadow: inset 0 0 5px 1px rgb(170, 170, 170) !important;
+  transition: .3s;
 
   /* appearance: unset !important;
   border: unset !important;
@@ -1404,11 +1541,11 @@ right:  0;
 
 .navbar, .navbar > li> a{
   font-size: 16px;
-  color: #4f4f4f;
+  color: black;
   cursor: pointer;
 }
 .navbar > li > a:hover, .navbar > svg:hover{
-  color: #000;
+  color: #e0e0e0;
 }
 .login-button{
   font-size: 18px;
@@ -1555,7 +1692,7 @@ right:  0;
 }
 
 .buy-button:hover {
-  background-color: #de012d;
+  background: linear-gradient(90deg, rgb(133, 17, 61), #e72828);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -1578,7 +1715,7 @@ right:  0;
 }
 
 .buy-button-products:hover {
-  background-color: #de012d;
+  background: linear-gradient(90deg, rgb(250, 16, 109), #c90000);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -1960,7 +2097,7 @@ right:  0;
   gap: 30px;
   align-items: center;
   padding: 15px 15px;
-  background-color: rgb(184, 39, 75);
+  background: linear-gradient(90deg, rgb(133, 17, 61), #e72828); background-color: rgb(184, 39, 75);
 }
 
 .login-container > div{
@@ -2298,4 +2435,59 @@ textarea{
   color: white;
   margin-top: 0;
   border: #0077d1;
+}
+
+/* CARRUSEL */
+
+.embla {
+  overflow: hidden;
+  margin-top: 65px;
+}
+.embla__container {
+  display: flex;
+  height: 50vh;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  /* background-color: blue; */
+}
+
+/* Categories */
+
+.categories-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  height: 300px;
+}
+
+.category-foto-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.foto-category{
+  position: relative;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: white;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.307);
+  
+}
+
+.foto-category > img{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  z-index: -1;
 }

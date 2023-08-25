@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 // import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import axios from "../api/axios";
 
@@ -9,6 +9,7 @@ const CartContext = createContext({});
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [data, setData] = useState()
+    const [searchQuery, setSearchQuery] = useState()
     const [searchInput, setSearchInput] = useState(''); 
     const [products, setProducts] = useState()
 
@@ -37,6 +38,10 @@ export const CartProvider = ({ children }) => {
     //         controller.abort();
     //     }
     // }, [])
+
+    useEffect(() =>{
+        console.log(searchQuery)
+    }, [searchQuery])
 
     function addProductToResults(product) {
         console.log(product)
@@ -132,7 +137,7 @@ export const CartProvider = ({ children }) => {
       }
 
     return (
-        <CartContext.Provider value={{searchInput, cart, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
+        <CartContext.Provider value={{searchQuery, setSearchQuery, searchInput, cart, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
             {children}
         </CartContext.Provider>
     )

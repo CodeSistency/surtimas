@@ -14,11 +14,11 @@ import GenderRadioFilter from './GenderFilter';
 import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 
-function Gallery(props) {
+function Gallery() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [selectedSexo, setSelectedSexo] = useState(props.mujer);
+    const [selectedSexo, setSelectedSexo] = useState();
 
     const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -43,6 +43,8 @@ function Gallery(props) {
         );
         setFilteredProducts(updatedProducts);
       };
+
+      const { cart, setCart, searchQuery } = useContext(CartContext);
 
       
       
@@ -78,8 +80,9 @@ function Gallery(props) {
 
       const getProducts = async (pageNumber) => {
           try {
-              const response = await axios.get(`/productos/limited?pageNumber=${pageNumber}`);
-              console.log(props.mujer)
+              // const response = await axios.get(`/limited?pageNumber=${pageNumber}&search=${searchQuery}`);
+              const response = await axios.get(`/limited?pageNumber=${pageNumber}`);
+              // console.log(props.mujer)
               console.log(response.data);
               setProducts(response.data);
               console.log(totalPages)
@@ -207,7 +210,7 @@ function Gallery(props) {
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
-                                  {isGenderOpen && <GenderRadioFilter mujer={props.mujer} onFilter={handleGenderFilter} />}
+                                  {isGenderOpen && <GenderRadioFilter onFilter={handleGenderFilter} />}
                                 </div>
                                 <button style={{fontSize: '15px'}} onClick={handleReset}>Reset</button>
                             </div>
@@ -237,7 +240,7 @@ function Gallery(props) {
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
-                                  {isGenderOpen && <GenderRadioFilter mujer={props.mujer} onFilter={handleGenderFilter} />}
+                                  {isGenderOpen && <GenderRadioFilter  onFilter={handleGenderFilter} />}
                                 </div>
                                 
                             </div>

@@ -47,6 +47,21 @@ function Products() {
         }
     }, [])
 
+    function shuffleArray(array) {
+        for (let i = array?.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+      
+      // Shuffle the 'clothes' array randomly
+      useEffect(() => {
+
+          const shuffledClothes = shuffleArray(products);
+          console.log(shuffledClothes)
+      }, [products])
+
 
   return (
     <div >

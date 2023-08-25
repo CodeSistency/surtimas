@@ -12,7 +12,7 @@ const Menu = ({isOpen, toggleMenu}) => {
   return (
     
     <div>
-    <BiMenu onClick={toggleMenu} className="menu-icon" color="black" style={{marginTop: '7px'}} fontSize={45} />
+    <BiMenu onClick={toggleMenu} className="menu-icon" color="black" style={{marginTop: '7px', cursor: 'pointer'}} fontSize={45} />
     {isOpen && <div className="overlay" onClick={toggleMenu} />}
     <div className={`menu-container ${isOpen ? 'visible' : ''}`}>
       <button className="close-button" onClick={toggleMenu}>

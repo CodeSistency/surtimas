@@ -10,6 +10,7 @@ import Card from './Card';
 import Card2 from './Card2';
 import Gallery from './Gallery';
 import Nav from './Nav';
+import Gallery2 from './Gallery2';
 
 function AllProducts() {
 
@@ -400,7 +401,7 @@ function AllProducts() {
     <div >
         <Nav/>
         <div style={{marginTop:'150px'}}>
-          <Gallery />
+          <Gallery2 />
 
       </div>
         
