@@ -109,7 +109,7 @@ function Reader() {
         const lowerSearchInput = searchInput.toLowerCase();
         const lowerProductTitle = product.titulo.toLowerCase();
         const productMatchesTitle = lowerProductTitle.includes(lowerSearchInput);
-        const productMatchesId = product._id.toString().includes(searchInput);
+        const productMatchesId = product.codigo.toString().includes(searchInput);
   
         return productMatchesTitle || productMatchesId;
       });

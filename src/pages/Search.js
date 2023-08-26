@@ -14,7 +14,7 @@ import GenderRadioFilter from './GenderFilter';
 import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 
-function Gallery() {
+function Search() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -46,7 +46,6 @@ function Gallery() {
 
       const { cart, setCart, searchQuery } = useContext(CartContext);
 
-      
       
 
     // useEffect(() => {
@@ -80,8 +79,7 @@ function Gallery() {
 
       const getProducts = async (pageNumber) => {
           try {
-              // const response = await axios.get(`/limited?pageNumber=${pageNumber}&search=${searchQuery}`);
-              const response = await axios.get(`productos/limited?pageNumber=${pageNumber}`);
+              const response = await axios.get(`/productos/search?search=${searchQuery}`);
               // console.log(props.mujer)
               console.log(response.data);
               setProducts(response.data);
@@ -99,7 +97,7 @@ function Gallery() {
           try {
             const response = await axios.get('/productos');
             const totalProducts = response.data.length;
-            const pages = Math.ceil(totalProducts / 15);
+            const pages = Math.ceil(totalProducts / 40);
             setTotalPages(pages);
             
           } catch (error) {
@@ -109,7 +107,7 @@ function Gallery() {
     
         fetchTotalPages();
         getProducts(currentPage);
-      }, [currentPage]);
+      }, [currentPage, searchQuery]);
 
 
     // useEffect(() => {
@@ -182,7 +180,10 @@ function Gallery() {
 
 
   return (
-    <div className='gallery-container-container' ref={componentRef}>
+    <div>
+
+    
+    {products ? <div className='gallery-container-container' ref={componentRef}>
         
         {/* {products?.length
                 ? (
@@ -210,7 +211,7 @@ function Gallery() {
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
-                                  {isGenderOpen && <GenderRadioFilter onFilter={handleGenderFilter} />}
+                                  {isGenderOpen && <GenderRadioFilter  onFilter={handleGenderFilter} />}
                                 </div>
                                 <button style={{fontSize: '15px'}} onClick={handleReset}>Reset</button>
                             </div>
@@ -253,7 +254,7 @@ function Gallery() {
                 </div>
             </div>
             }
-            <div className='pagination'>
+            {/* <div className='pagination'>
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
             className={`page ${page === currentPage && 'page-selected'}`}
@@ -264,10 +265,14 @@ function Gallery() {
             {page}
           </button>
         ))}
-      </div>
+      </div> */}
         
-    </div>
+    </div> : 
+    <div className='load'>
+        <p>Cargando...</p>
+    </div>}
+    </div> 
   )
 }
 
-export default Gallery
+export default Search

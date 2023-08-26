@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 :root {
   --primary-color: rgb(184, 11, 69);
   --dark: rgb(34, 0, 14);
@@ -82,6 +83,20 @@ body {
 
 
 @media (max-width: 600px){
+
+  .foto-category > p{
+    font-size: 13px !important;
+  }
+
+  .categories-container{
+    height: 200px !important;
+  }
+
+.foto-category > img{
+  width: 60px !important;
+  height: 60px !important;
+}
+  .foto-category 
 
   .comentarios, .comments{
     padding: 10px !important;
@@ -596,6 +611,11 @@ select {
 
 @media (max-width: 470px){
 
+  .foto-category > img{
+    height: 45px !important;
+    width: 45px !important;
+  }
+
   .card-container, .grid-container-gallery, .gallery-container{
     padding: 20px 20px !important;
   }
@@ -1024,9 +1044,7 @@ li {
 .image-container-2 {
   /* margin-top: 60px; */
   position: relative; /* Establecer posición relativa para alinear el botón */
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  
   /* height: 50vh; La imagen ocupa la mitad de la altura de la ventana */
   overflow: hidden; /* Para ocultar cualquier contenido que salga del contenedor */
   /* background-image: url('../public/bg.jpg'); */
@@ -1055,6 +1073,7 @@ li {
   height: 100%;
   background-size: cover;
   z-index: -1;
+  background-position: center;
 }
 
 .image-container > h1{
@@ -1071,59 +1090,80 @@ li {
 .image-container-2 > h1, .image-container-2 > h4{
   justify-self: baseline;
   align-self: baseline;
-  padding: 10px;
+  /* padding: 10px; */
   color: #000;
+  font-family: 'Bebas neue';
+
 }
 
-.image-container-3 > div{
+.image-container-3 > div, .image-container-2 > div{
   justify-self: start;
   align-self: baseline;
   padding: 10px;
   color: #000;
+  font-family: 'Bebas neue';
 }
 
-.image-container-2 > h4{
-  text-align: right;
+.image-container-3 > div > h1, .image-container-2 > div > h1{
+  font-size: 60px;
 }
+
+.image-container-3 > div > h3, .image-container-2 > div > h4{
+  font-size: 30px;
+  color: white;
+  margin-top: -10px;
+  text-shadow: 0px 0px 25px black;
+}
+
+/* .image-container-2 > h4{
+  text-align: right;
+} */
 
 
 
 .content {
     position: absolute; /* Posiciona el botón con respecto al contenedor */
     bottom: 15%; /* Alinear el botón a la izquierda */
-    background-color: rgba(192, 168, 12, 0.762); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
+    background-color: rgba(237, 208, 21, 0.7); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
     padding: 10px 20px; /* Espacio alrededor del botón */
     border: none; /* Quitar borde del botón (opcional) */
     cursor: pointer;
     border-radius: 10px; /* Cambiar el cursor al pasar sobre el botón */
     transition: all .3s;
+    
 }
 
 .content2 {
   position: absolute; /* Posiciona el botón con respecto al contenedor */
-  bottom: 15%; /* Alinear el botón a la izquierda */
-  left: 15%;
-  background-color: rgba(192, 168, 12, 0.762); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
+  bottom: 45%; /* Alinear el botón a la izquierda */
+  left: 10px;
+  background: linear-gradient(280deg, rgb(73, 8, 33), #ff0909);/* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
   padding: 10px 20px; /* Espacio alrededor del botón */
   border: none; /* Quitar borde del botón (opcional) */
   cursor: pointer;
   border-radius: 10px; /* Cambiar el cursor al pasar sobre el botón */
   transition: all .3s;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.278);
+  color: white !important;
 }
 
 .content3 {
   margin: 0 auto;
-  background-color: rgba(192, 168, 12, 0.762); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
+  background: linear-gradient(280deg, rgb(73, 8, 33), #ff0909); /* Fondo transparente para el botón (puedes cambiar el color si lo deseas) */
   padding: 10px 20px; /* Espacio alrededor del botón */
   border: none; /* Quitar borde del botón (opcional) */
   cursor: pointer;
   border-radius: 10px; /* Cambiar el cursor al pasar sobre el botón */
   transition: all .3s;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.278);
+  color: white !important;
+
 }
 
 .content:hover, .content2:hover{
-  background-color: white;
-  border: 2px solid black;
+  /* background-color: hsl(49, 90%, 88%); */
+  /* border: 2px solid black; */
+  box-shadow: 0 0 5px 2px rgba(6, 6, 6, 0.289);
   /* border-radius: 30px; */
 }
 
@@ -2465,29 +2505,43 @@ textarea{
 
 .category-foto-container{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
 .foto-category{
   position: relative;
-  height: 100px;
-  width: 100px;
+  /* height: 100px; */
+  /* width: 100px; */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  border: white;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.307);
+  /* border-radius: 50%; */
+  /* border: white;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.307); */
   
 }
 
 .foto-category > img{
   width: 100px;
   height: 100px;
-  position: absolute;
+  /* position: absolute; */
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+  border: white;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.307);
   z-index: -1;
+}
+
+.foto-category > p{
+  font-size: 20px;
+}
+
+.load{
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

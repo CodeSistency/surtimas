@@ -3,12 +3,15 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import BarCodeGen from "./BarCodeGen";
 import QRcode from "./QRcode";
+import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 
 import {MdDeleteForever, MdOutlineModeEditOutline} from "react-icons/md"
 import PriceFilter from "../pages/PriceFilter";
 import FilterCategory from "../pages/FilterCategory";
 import GenderRadioFilter from "../pages/GenderFilter";
 import {AiOutlineDown} from 'react-icons/ai'
+import {LiaSearchSolid} from 'react-icons/lia'
+
 
 const Products = () => {
     const [products, setProducts] = useState();
@@ -21,6 +24,8 @@ const Products = () => {
 
     const [reload, setReload] = useState()
     const [isLoading, setIsLoading] = useState()
+
+    const [searchInput, setSearchInput] = useState()
 
     const handleFilter = filteredProducts => {
         setFilteredProducts(filteredProducts);
@@ -105,6 +110,10 @@ const Products = () => {
         }
     }
 
+    function handleSearchInputChange(event) {
+      setSearchInput(event.target.value);
+    }
+
     const [isPriceOpen, setPriceOpen] = useState(false);
     const [isCategoryOpen, setCategoryOpen] = useState(false);
     const [isGenderOpen, setGenderOpen] = useState(false);
@@ -127,6 +136,42 @@ const Products = () => {
           setPriceOpen(false);
         };
 
+        function filterProductsByTitle() {
+          if (!products || !searchInput) {
+            return []; // Si no hay productos cargados o el input de búsqueda está vacío, devolvemos un array vacío
+          }
+      
+          const filteredProducts = products.filter((product) => {
+              const lowerSearchInput = searchInput.toLowerCase();
+              const lowerProductTitle = product.titulo.toLowerCase();
+              const productMatchesTitle = lowerProductTitle.includes(lowerSearchInput);
+              const productMatchesId = product.codigo.toString().includes(searchInput);
+        
+              return productMatchesTitle || productMatchesId;
+            });
+            setFilteredProducts(filteredProducts)
+            return filteredProducts;
+            
+        }
+
+        useEffect(() => {
+          filterProductsByTitle()
+        }, [searchInput])
+
+        const calculateTotalQuantity = () => {
+          let totalQuantity = 0;
+        
+          products?.forEach((product) => {
+            Object.values(product?.tallas).forEach((colors) => {
+              colors.forEach((color) => {
+                totalQuantity += color.quantity;
+              });
+            });
+          });
+        
+          return totalQuantity;
+        };
+
     return (
         <article className="admin-products">
             <div className="crear-producto-container">
@@ -139,6 +184,7 @@ const Products = () => {
                 ? (
                     <div>
                     <div className='table-container'>
+                    <p style={{fontSize: '14px'}}>Cantidad total: <strong>{calculateTotalQuantity()}</strong></p>
                     <p style={{fontSize: '14px'}}>Total de productos: <strong>{filteredProducts?.length}</strong></p>
                     <div style={{padding: '10px 0'}} className='filtros-admin'>
                           <div className='price-container'>
@@ -153,8 +199,15 @@ const Products = () => {
                                   <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
                                   {isGenderOpen && <GenderRadioFilter products={products} onFilter={handleFilter} />}
                                 </div>
+                                
                                 <button style={{fontSize: '15px 3px'}} onClick={handleReset}>Reset</button>
                             </div>
+                            <div className="search-nav">
+                                  <form style={{paddingBottom: '0'}} name="search search-relative" className=" search-relative-nav">
+                                      <input type="text" className="input-search-nav " onChange={handleSearchInputChange} name="txt"  />
+                                      <LiaSearchSolid fontSize={25} style={{top:'50%'}}className="search-button-nav" />
+                                  </form>
+                                </div>
                     <table className="table">
                         <thead>
                         <tr>
@@ -192,6 +245,7 @@ const Products = () => {
                 ) : 
                 <div>
                     <div className='table-container'>
+                    <p style={{fontSize: '14px'}}>Cantidad total: <strong>{calculateTotalQuantity()}</strong></p>
                     <p style={{fontSize: '14px'}}>Total de productos: <strong>{products?.length}</strong></p>
                     <div style={{padding: '10px 3px'}} className='filtros-admin'>
                           <div className='price-container'>
@@ -207,7 +261,14 @@ const Products = () => {
                                   {isGenderOpen && <GenderRadioFilter products={products} onFilter={handleFilter} />}
                                 </div>
                                 
+                                
                             </div>
+                            <div className="search-nav">
+                                  <form style={{paddingBottom: '0'}} name="search search-relative" className=" search-relative-nav">
+                                      <input type="text" className="input-search-nav " onChange={handleSearchInputChange} name="txt"  />
+                                      <LiaSearchSolid fontSize={25} style={{top:'50%'}}className="search-button-nav" />
+                                  </form>
+                                </div>
                     <table className="table">
                         <thead>
                         <tr>

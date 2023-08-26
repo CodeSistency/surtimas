@@ -123,15 +123,37 @@ const QRcodes = () => {
                    <div className='qr'>
                     <ul className="qr-list">
                         {products.map((product, i) => 
-                            <li  key={i}>
-                                
-                                <QRcode 
+                             {Object.entries(product?.tallas).map(([size, colors]) => {
+                                console.log(colors)
+                                colors.map((color) => {
+                                    return (
+                                        <li  key={i}>
                                     
-                                    id={product?.codigo} 
-                                />
-                                <p style={{marginTop: '-5px', fontSize: '10px'}}>{product.titulo}</p>
+                                            <QRcode 
+                                                
+                                                id={product?.codigo} 
+                                            />
+                                            <p style={{marginTop: '-5px', fontSize: '10px'}}>{product.titulo}{product.size}{color.color}</p>
+                                    
+                                        </li>
+                                      );
+                                })
                                 
-                            </li>)}
+                                  
+                                
+                                
+                              })}
+                            // <li  key={i}>
+                                
+                            //     <QRcode 
+                                    
+                            //         id={product?.codigo} 
+                            //     />
+                            //     <p style={{marginTop: '-5px', fontSize: '10px'}}>{product.titulo}</p>
+                                
+                            // </li>
+                            
+                            )}
                     </ul>
                     <ReactToPrint
                         trigger={() => <button>Print</button>}
