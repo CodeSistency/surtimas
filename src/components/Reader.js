@@ -8,7 +8,7 @@ import { QrReader } from 'react-qr-reader';
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
 import { BsQrCodeScan } from 'react-icons/bs'
 import ModalComponent from "./Modal";
-
+import {LiaSearchSolid} from 'react-icons/lia'
 import React from 'react'
 import AdminNav from "./AdminNav";
 
@@ -390,14 +390,22 @@ function Reader() {
           <div className="lector">
           <h2>Lector QR</h2>
           <hr style={{margin: '15px 0'}}/>
-          <div className="search">
+          {/* <div className="search">
     <form name="search search-relative" className="form search-relative">
         <input value={searchInput}
             onChange={handleSearchInputChange} type="text" className="input-search " name="txt" />
         <IoCartOutline className="search-button" />
     </form>
     
-     </div>
+     </div> */}
+     <div className='nav-link-search-2'>
+                  <div className="search-nav-2">
+                    <form style={{paddingBottom: '0'}} name="search search-relative-2" className=" search-relative-nav-2">
+                        <input type="text" value={searchInput} className="input-search-nav-2 " onChange={handleSearchInputChange} name="txt"  />
+                        <LiaSearchSolid fontSize={25} style={{top:'50%'}}className="search-button-nav-2" />
+                    </form>
+                  </div>
+              </div>
           </div>
           
      {searchInput && <ul style={{marginTop:'65px'}} className="add-productos">

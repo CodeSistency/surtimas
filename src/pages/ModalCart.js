@@ -16,13 +16,15 @@ const ModalCart = (props) => {
         <ReactWhatsapp 
                             className='buy-total'
                             style={{borderRadius: '10px'}} 
-                            number='+58 4121940547'
-                            message={`¡Hola! 👋 ¡Bienvenido a Surtymas!\n
-                            Mi correo es: ${user}\n
-                            Mi compra es la siguiente:\n
+                            number='+58 4124668486'
+                            message={`¡Hola! 👋 ¡Bienvenido a Surtymas!
+Mi correo es: ${user}
+Mi compra es la siguiente:
+
 ${cart?.cartProducts.map(product => (
-  `"${product.nombre}". Precio: $${product.precio} Codigo: ${product.codigo}\n\n`
+`"${product.nombre}". Precio: $${product.precio} Codigo: ${product.codigo}`
 ))}
+
 Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
 
                             >Comprar</ReactWhatsapp> 

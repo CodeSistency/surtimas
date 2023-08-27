@@ -14,11 +14,12 @@ const ModalBuy = (props) => {
         <ReactWhatsapp
             className='modal-button'
             style={{backgroundColor: 'rgb(0, 255, 64)', border: '1px solid rgb(0, 255, 64)'}}
-          number="+58 4249670445"
-          message={`¡Hola! 👋 ¡Bienvenido a Surtymas!\n
-          Mi correo es: ${user}\n
-          Mi compra es:\n
-           "${product.titulo}". Precio: ${product.precio} Codigo: ${product.codigo}`}
+          number="+58 4124668486"
+          message={`¡Hola! 👋 ¡Bienvenido a Surtymas!
+Mi correo es: ${user}
+Mi compra es:
+
+"${product.titulo}". Precio: ${product.precio} Codigo: ${product.codigo}`}
         >
           Comprar por WhatsApp
         </ReactWhatsapp>
