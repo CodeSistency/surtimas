@@ -295,6 +295,11 @@ function Reader() {
         setResults(prevItems => prevItems.filter(item => item.codigo !== codigo))
         
     }
+
+    const qrReaderConstraints = {
+      facingMode: 'environment',
+    };
+
     return (
       <div className="dashboard-reader admin-container modal-container">
         <AdminNav />
@@ -434,6 +439,7 @@ function Reader() {
                  }
                }}
                style={{ width: '100%' }}
+               constraints={qrReaderConstraints}
              />
              <button style={{width: '100%', color:'white'}} onClick={toggleQrReader}>Desactivar</button>
              {scanResult && (

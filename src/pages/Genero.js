@@ -14,6 +14,8 @@ import GenderRadioFilter from './GenderFilter';
 import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 import useAuth from '../hooks/useAuth';
+import Nav from './Nav';
+import Search from './Search';
 
 function Genero() {
 
@@ -195,19 +197,15 @@ function Genero() {
 
 
   return (
-    <div className='gallery-container-container' ref={componentRef}>
+    <div>
+      <Nav/>
+    <div style={{marginTop:'150px'}}>
+    {searchQuery && <h4 style={{marginTop: '90px', marginLeft: '35px'}}>Busqueda: '{searchQuery}'</h4>}
+    {searchQuery ? <Search/>
+    
+    :<div className='gallery-container-container' ref={componentRef}>
         
-        {/* {products?.length
-                ? (
-                    <div className='card-container'>
-                        {products.map((product, i) =>
-                            // <Link to={`/productos/${product._id}`}>
-                            <Card key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
-                            // </Link>
-                            )}
-                    </div>
-                ) : <p>No hay productos</p>
-            } */}
+        
        
         {filteredProducts?.length 
                 ? (
@@ -279,6 +277,8 @@ function Genero() {
         ))}
       </div> */}
         
+        </div>}
+      </div>
     </div>
   )
 }

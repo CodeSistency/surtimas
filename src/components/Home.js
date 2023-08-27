@@ -23,7 +23,7 @@ const Home = () => {
     return (
         <div>
             <Nav />
-            <Menu />
+            {/* <Menu /> */}
             {searchQuery && <h4 style={{marginTop: '90px', marginLeft: '35px'}}>Busqueda: '{searchQuery}'</h4>}
             {searchQuery ? <Search/> :
             <div>

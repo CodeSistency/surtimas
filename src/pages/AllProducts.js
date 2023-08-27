@@ -59,7 +59,7 @@ function AllProducts() {
     <div >
         <Nav/>
         <div style={{marginTop:'150px'}}>
-          {searchQuery && <h4>'{searchQuery}'</h4>}
+        {searchQuery && <h4 style={{marginTop: '90px', marginLeft: '35px'}}>Busqueda: '{searchQuery}'</h4>}
           {
 
           searchQuery ? <Search /> 
