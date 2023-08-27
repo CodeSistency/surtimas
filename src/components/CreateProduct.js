@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import app from '../firebase';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from './cropUtils';
+import ImageUploading from 'react-images-uploading';
 
 const CreateProduct = () => {
 
@@ -69,6 +70,15 @@ const CreateProduct = () => {
 
   const [error, setError] = useState(false)
   const [errMsg, setErrMsg] = useState()
+
+  const [pictures, setPictures] = React.useState([]);
+  const maxNumber = 69;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setPictures(imageList);
+  };
 
   const [quantity, setQuantity] = useState({
     'U': [{ color: "#fff", quantity: 0 }],
@@ -810,6 +820,46 @@ function reset (){
     {url[4] && <p style={{fontSize:'15px'}}><strong>Guardado</strong></p>}
     {imagen5 && <img style={{width: '80px'}} src={URL.createObjectURL(imagen5)}/>}
         </div>
+
+        <ImageUploading
+        multiple
+        value={pictures}
+        onChange={onChange}
+        maxNumber={maxNumber}
+        dataURLKey="data_url"
+      >
+        {({
+          imageList,
+          onImageUpload,
+          onImageRemoveAll,
+          onImageUpdate,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          // write your building UI
+          <div className="upload__image-wrapper">
+            <div
+              style={isDragging ? { color: 'red' } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              Click or Drop here
+            </div>
+            &nbsp;
+            <div onClick={onImageRemoveAll}>Remove all images</div>
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <img src={image['data_url']} alt="" width="100" />
+                <div className="image-item__btn-wrapper">
+                  <div onClick={() => onImageUpdate(index)}>Update</div>
+                  <div onClick={() => onImageRemove(index)}>Remove</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
         
         </div>
       {/* {urls.length ? (
