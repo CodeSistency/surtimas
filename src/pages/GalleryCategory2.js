@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function GalleryCategory2() {
   return (
     <div>
-        <h1 style={{textAlign: 'center'}}>Categorias</h1>
+        <h2 style={{textAlign: 'center'}}>Categorias</h2>
     <div className='categories-container'>
         <div className='category-foto-container'>
             <Link to={'/tipo/pantalon'} className='foto-category'>

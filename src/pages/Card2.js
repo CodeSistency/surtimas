@@ -73,7 +73,7 @@ function cartIcon() {
 
   return (
     <div class="product-card">
-      <Link to={`/productos/${props.id}`} class="product-image-link">
+      <Link to={`productos/${props.id}`} class="product-image-link">
         <img loading='lazy' src={props.img} alt="Product Image" class="product-image" >
           
         </img>
