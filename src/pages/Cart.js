@@ -5,10 +5,21 @@ import { useParams } from 'react-router-dom';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import { MdDeleteForever } from 'react-icons/md';
+import ModalCart from './ModalCart';
 
 function Cart() {
     const { cart, setCart } = useContext(CartContext);
     console.log(cart)
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
     const {auth} = useAuth()
 
@@ -150,7 +161,13 @@ function Cart() {
                               <h2>Subtotal:</h2>
                               <h1>{total}$</h1>
                             </div>
-                            <ReactWhatsapp 
+                            <button className="buy-total" onClick={openModal}>
+                                Comprar
+                              </button>
+                              {modalOpen && (
+                                <ModalCart closeModal={closeModal} cart={products} user={auth?.user}/>
+                              )}
+                              {/* <ReactWhatsapp 
                             className='buy-total' 
                             number='+58 4121940547'
                             message={`¡Hola! 👋 ¡Bienvenido a Surtymas! Agradecemos tu interés en nuestros productos. Aquí está la lista de lo que pediste:
@@ -159,7 +176,7 @@ ${cart.map(product => (
 ))}
 Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
 
-                            >Comprar</ReactWhatsapp>
+                            >Comprar</ReactWhatsapp> */}
                           </div>
                           </div>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useContext} from 'react'
 import CartContext from "../context/CartProvider";
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
@@ -7,8 +7,20 @@ import { Link } from 'react-router-dom';
 import ReactWhatsapp from 'react-whatsapp';
 import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ModalBuy from './ModalBuy';
+
 
 function Card3 (props) {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
   const {auth} = useAuth()
@@ -35,7 +47,7 @@ function Card3 (props) {
         return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
     } else {
         // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
-        return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
+        return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id, props.codigo)}/>
     }
 }
 
@@ -61,13 +73,12 @@ useEffect(() =>{
       <p class="product-price price-absolute">{props.precio}<small style={{color: 'black'}}>$</small></p>
       
     </div>
-    <ReactWhatsapp 
-      class="buy-button-products"
-      number="+58 4249670445" 
-      message={`¡Hola! 👋 ¡Bienvenido a Surtymas! Agradecemos tu interés en nuestro producto "${props.titulo}". Precio:$${props.precio}. Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
-    >
-      Comprar
-    </ReactWhatsapp>
+    <button className="buy-button-products" onClick={openModal}>
+        Comprar
+      </button>
+      {modalOpen && (
+        <ModalBuy closeModal={closeModal} product={props.product} user={auth?.user}/>
+      )}
   </div>
   )
 }

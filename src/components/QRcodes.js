@@ -160,9 +160,9 @@ const QRcodes = () => {
                             </button>
                             ))}
                         </div>
-                        <button onClick={() => exportAsImage(exportRef.current, "test")}>
+                        {/* <button onClick={() => exportAsImage(exportRef.current, "test")}>
 Capture Image
-</button>
+</button> */}
                     {/* <ReactToPrint
                         trigger={() => <button>Print</button>}
                         content={() => ref.current}
@@ -187,7 +187,11 @@ Capture Image
     )}
   </Webcam> */}
                     </div> 
-                ) : <p>No hay QR</p>
+                ) : 
+                
+                <div className="load">
+                  <p>Cargando</p>
+                </div>
             }
         </article>
     );

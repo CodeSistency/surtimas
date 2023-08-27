@@ -22,6 +22,7 @@ function Search() {
 
     const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [AllProducts, setAllProducts] = useState()
     // const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
@@ -46,7 +47,26 @@ function Search() {
 
       const { cart, setCart, searchQuery } = useContext(CartContext);
 
+      function filterProductsByTitle() {
+        if (!AllProducts || !searchQuery) {
+          return []; // Si no hay productos cargados o el input de búsqueda está vacío, devolvemos un array vacío
+        }
+    
+        const filteredProducts = AllProducts.filter((product) => {
+            const lowerSearchInput = searchQuery.toLowerCase();
+            const lowerProductTitle = product.titulo.toLowerCase();
+            const productMatchesTitle = lowerProductTitle.includes(lowerSearchInput);
+            const productMatchesId = product.codigo.toString().includes(searchQuery);
       
+            return productMatchesTitle || productMatchesId;
+          });
+          setFilteredProducts(filteredProducts)
+          return filteredProducts;
+      }
+
+      useEffect(() => {
+        filterProductsByTitle()
+      }, [searchQuery, AllProducts])
 
     // useEffect(() => {
     //     let isMounted = true;
@@ -79,7 +99,7 @@ function Search() {
 
       const getProducts = async (pageNumber) => {
           try {
-              const response = await axios.get(`/productos/search?search=${searchQuery}`);
+              const response = await axios.get(`/productos/search?query=${searchQuery}`);
               // console.log(props.mujer)
               console.log(response.data);
               setProducts(response.data);
@@ -99,6 +119,7 @@ function Search() {
             const totalProducts = response.data.length;
             const pages = Math.ceil(totalProducts / 40);
             setTotalPages(pages);
+            setAllProducts(response.data)
             
           } catch (error) {
             console.error(error);
@@ -183,7 +204,7 @@ function Search() {
     <div>
 
     
-    {products ? <div className='gallery-container-container' ref={componentRef}>
+    {AllProducts ? <div className='gallery-container-container' ref={componentRef}>
         
         {/* {products?.length
                 ? (
@@ -246,7 +267,7 @@ function Search() {
                                 
                             </div>
                 <div className='gallery-container'>
-                {products?.map((product, i) =>
+                {AllProducts?.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
                     <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product}/>
                     // </Link>

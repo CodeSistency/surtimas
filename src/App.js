@@ -66,6 +66,7 @@ function App() {
             <Route path="home/genero/:genero" element={<Genero />} />
             <Route path="home/tipo/:tipo" element={<Tipo />} />
             <Route path="home/carrito/:username" element={<Cart />} />
+            <Route path="home/productos" element={<AllProducts />} />
             
           </Route>
 

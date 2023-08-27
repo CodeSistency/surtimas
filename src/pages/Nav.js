@@ -1,5 +1,5 @@
 import {useState, useEffect}  from 'react'
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from '../hooks/useAuth'
 import useLogout from '../hooks/useLogout'
 import {useContext} from 'react'
@@ -29,6 +29,8 @@ function Nav() {
 
   const {auth} = useAuth()
 
+  const location = useLocation()
+
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
@@ -40,6 +42,9 @@ function Nav() {
 
   const { cart, setCart, setSearchQuery } = useContext(CartContext);
 
+  function login(){
+    navigate("/sesion", { state: {from: location}, replace: true });
+  }
 
   // setSearchQuery(searchInput)
     const {logout} = useLogout()
@@ -54,11 +59,16 @@ function Nav() {
 
     function cartIcon() {
       
-      if(auth.user) {
-          return <Link  to={`home/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
+      if(!auth.user) {
+          return <IoCartOutline fontSize={40} onClick={login}/>
       } else {
-          return <Link  to={`home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
+        return <Link  to={`/home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
       }
+      // if(cart) {
+      //   return  <Link  to={`/home/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
+      // } else{
+      //   <Link  to={`/home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
+      // }
   }
 
     // const {auth} = useAuth()

@@ -226,7 +226,7 @@ function Gallery2() {
                     
                         {/* Display filtered products here */}
                         {filteredProducts.map((product, i) => (
-                            <Card3 key={i}  titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} product={product}/>
+                            <Card3 key={i}  titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} product={product} codigo={product.codigo}/>
                         ))}
                         
                     </div>
@@ -252,7 +252,7 @@ function Gallery2() {
                 <div className='gallery-container'>
                 {products?.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
-                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product}/>
+                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product} codigo={product.codigo}/>
                     // </Link>
                     )}
                 </div>

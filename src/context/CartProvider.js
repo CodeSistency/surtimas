@@ -54,18 +54,18 @@ export const CartProvider = ({ children }) => {
         
     }
 
-    const handleCart = async (username, nombre, precio, precio_mayor, imagen, id) => {
+    const handleCart = async (username, nombre, precio, precio_mayor, imagen, id, codigo) => {
 
-        console.log(username, nombre, precio, precio_mayor)
+        // console.log(username, nombre, precio, precio_mayor)
     let isMounted = true;
         const controller = new AbortController();
         const quantity = 0
 
-        console.log(username, nombre, precio, precio_mayor)
+        console.log(username, nombre, precio, precio_mayor, codigo)
 
       
           try {
-              const response = await axios.put('cart', { username, nombre, precio, precio_mayor, quantity, imagen, id },
+              const response = await axios.put('cart', { username, nombre, precio, precio_mayor, quantity, imagen, id, codigo},
             //   JSON.stringify({username, nombre, precio, precio_mayor, quantity}),
               { 
                   signal: controller.signal,
