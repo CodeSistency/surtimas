@@ -5,12 +5,14 @@ import useLogout from '../hooks/useLogout'
 import {useContext} from 'react'
 import CartContext from "../context/CartProvider";
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
-import {BiMenu} from 'react-icons/bi'
+import {AiOutlineMan, AiOutlineWoman} from 'react-icons/ai'
+import {BiMenu, BiUser} from 'react-icons/bi'
 import {LiaSearchSolid} from 'react-icons/lia'
+import {BsInstagram} from 'react-icons/bs'
 import Menu from './Menu';
-// import rr from '../../public/logo3.svg'
+// import rr from '../assets/logo3.svg'
  
-function Nav() {
+function Nav2() {
 
   const ROLES = {
     'User': 2001,
@@ -31,29 +33,7 @@ function Nav() {
     setMenuVisible(!menuVisible);
   };
 
-  // useEffect(() => {
-  //   const handleImageLoad = () => {
-  //     setImagesLoaded((prevLoaded) => prevLoaded + 1);
-  //   };
-
-  //   const images = document.querySelectorAll('img');
-  //   images.forEach((img) => {
-  //     img.addEventListener('load', handleImageLoad);
-  //   });
-
-  //   window.addEventListener('load', () => {
-  //     setLoading(false);
-  //   });
-
-  //   return () => {
-  //     images.forEach((img) => {
-  //       img.removeEventListener('load', handleImageLoad);
-  //     });
-  //   };
-
-    
-  // }, []);
-
+ 
   useEffect(() => {
     console.log(auth)
   }, [])
@@ -75,9 +55,9 @@ function Nav() {
     function cartIcon() {
       
       if(auth.user) {
-          return <Link className='cart-icon' to={`home/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
+          return <Link  to={`home/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
       } else {
-          return <Link className='cart-icon' to={`home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
+          return <Link  to={`home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
       }
   }
 
@@ -88,30 +68,47 @@ function Nav() {
      <div>
      
         <nav className='nav'>
-        {auth.user ? <Link to={'/home'}><img src="logo3.svg" alt='logo'/></Link> : <Link to={'/'}><img src="logo3.svg" alt='logo'/></Link>}
-        <ul className="navbar">
-          
-            <li className='nav-admin'><Link to={"/admin"}>Admin</Link></li>
-            <li className='nav-admin'><Link to={"/productos"}>Productos</Link></li>
-            
-            {auth.user ? <button className='logout' onClick={signOut}>Salir de sesion</button> : <li><Link className='login-button' to={"/inicio"}>Login</Link></li>}
-            {!auth.user && <li><Link className='login-button' to={"/register"}>Registro</Link></li>}
-            
-            
-            <li className='nav-link-search'>
-              <div className="search-nav">
-                <form style={{paddingBottom: '0'}} name="search search-relative" className=" search-relative-nav">
-                    <input type="text" className="input-search-nav " onChange={(e) => setSearchQuery(e.target.value)} name="txt"  />
-                    <LiaSearchSolid style={{top:'50%'}}className="search-button-nav" />
-                </form>
-                
-                </div>
+          <section className='nav-top'>
+            <div className='nav-top-left'>
+              <Menu toggleMenu={toggleMenu} onClick={toggleMenu} isOpen={menuVisible}></Menu>
+              <Link to={'productos'}><AiOutlineMan className='gender-icon' color='#0d3f71' fontSize={35}/></Link>
+              <Link to={'productos'}><AiOutlineWoman className='gender-icon' color='pink' fontSize={35}/></Link>
+            </div>
+            {auth.user ? <Link to={'/home'}><img src="../assets/logo3.svg" className='logo' alt='logo'/></Link> : <Link to={'/'}><img src="../assets/logo3.svg" className='logo' alt='logo'/></Link>}
+            <div className='nav-top-right'>
+            <Link to={'/Login2'}><BsInstagram className='user-icon' fontSize={30}/></Link>
+              <div className='cart-icon'>{cartIcon()}</div>
+              <Link to={'/Login2'}><BiUser className='user-icon' fontSize={35}/></Link>
+            </div>
+          </section>
 
-          </li>
-          <li className='cart-icon'>{cartIcon()}</li>
-          
-          <Menu toggleMenu={toggleMenu} onClick={toggleMenu} isOpen={menuVisible}></Menu>
-        </ul>
+          <section className='nav-bottom'>
+
+            <ul className="navbar">
+              
+                <li className='nav-admin'><Link to={"/admin"}>Admin</Link></li>
+                <li className='nav-admin'><Link to={"/productos"}>Productos</Link></li>
+                <li className='nav-admin'><Link to={"/productos"}>Mujer</Link></li>
+                <li className='nav-admin'><Link to={"/productos"}>Hombre</Link></li>
+                <li className='nav-admin'><Link to={"/productos"}>Faldas</Link></li>
+                <li className='nav-admin'><Link to={"/productos"}>Pantalones</Link></li>
+                <li className='nav-admin'><Link to={"/productos"}>Franelas</Link></li>
+                
+                {/* {auth.user ? <button className='logout' onClick={signOut}>Salir de sesion</button> : <li><Link className='login-button' to={"/inicio"}>Login</Link></li>}
+                {!auth.user && <li><Link className='login-button' to={"/register"}>Registro</Link></li>} */}
+
+            </ul>
+
+            <div className='nav-link-search'>
+                  <div className="search-nav">
+                    <form style={{paddingBottom: '0'}} name="search search-relative" className=" search-relative-nav">
+                        <input type="text" className="input-search-nav " onChange={(e) => setSearchQuery(e.target.value)} name="txt"  />
+                        <LiaSearchSolid fontSize={25} style={{top:'50%'}}className="search-button-nav" />
+                    </form>
+                  </div>
+              </div>
+          </section>
+        
 
         </nav>
       
@@ -119,4 +116,4 @@ function Nav() {
   )
 }
 
-export default Nav
+export default Nav2

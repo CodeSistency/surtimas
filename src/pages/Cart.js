@@ -113,7 +113,7 @@ function Cart() {
   return (
     <div>
       <div className='cart-icon-container'>
-        <img src='shopping.png'/>
+        <img src='/shopping.png'/>
 
       </div>
         {products
@@ -131,13 +131,13 @@ function Cart() {
                             <p onClick={handleLess}>+</p>
                           </article> */}
                           <p style={{textAlign: 'right'}}>{`${product.precio}$`}</p>
-                          <ReactWhatsapp style={{width:'100%', padding: '3px 10px'}}
-                          class="buy-button-products"
+                          {/* <ReactWhatsapp style={{width:'100%', padding: '3px 10px'}}
+                          className="buy-button-products"
                           number="+58 4121940547" 
                           message={`¡Hola! 👋 ¡Bienvenido a Surtymas! Agradecemos tu interés en nuestro producto "${product.titulo}". Precio:$${product.precio}. Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
                         >
                           Comprar
-                        </ReactWhatsapp>
+                        </ReactWhatsapp> */}
                         </div>
                         <MdDeleteForever fontSize={30} style={{marginTop:'4px', cursor: 'pointer', alignSelf: 'flex-start', color: '#7e7979'}} onClick={() => handleDelete(product.product)}/>
                       </div>

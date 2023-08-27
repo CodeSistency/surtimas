@@ -5,7 +5,7 @@ import { axiosPrivate } from '../api/axios';
 import axios from '../api/axios';
 import { useState, useEffect, useRef } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link, useParams } from "react-router-dom";
 import Card from './Card';
 import Card2 from './Card2';
 import PriceFilter from './PriceFilter';
@@ -15,7 +15,7 @@ import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 import useAuth from '../hooks/useAuth';
 
-function Gallery2() {
+function Genero() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -30,6 +30,8 @@ function Gallery2() {
     const componentRef = useRef(null);
 
     const {auth} = useAuth()
+
+    const {genero} = useParams()
 
     const handleFilter = filteredProducts => {
         setFilteredProducts(filteredProducts);
@@ -84,46 +86,52 @@ function Gallery2() {
     // }, [])
 
 
-      const getProducts = async (pageNumber) => {
+      const getProducts = async () => {
           try {
-              const response = await axios.get(`/productos/some?pageNumber=${pageNumber}`);
+              const response = await axios.get(`/productos/gender/${genero}`);
               // console.log(props.mujer)
               console.log(response.data);
               setProducts(response.data);
               console.log(totalPages)
               
-              setCurrentPage(pageNumber);
+              // setCurrentPage(pageNumber);
           } catch (err) {
               console.error(err);
               // navigate('/login', { state: { from: location }, replace: true });
           }
       }
 
-      useEffect(() => {
-        const fetchTotalPages = async () => {
-          try {
-            const response = await axios.get('/productos');
-            const totalProducts = response.data.length;
-            const pages = Math.ceil(totalProducts / 40);
-            setTotalPages(pages);
+      
+
+      useEffect(()=>{
+        getProducts()
+      }, [])
+
+    //   useEffect(() => {
+    //     const fetchTotalPages = async () => {
+    //       try {
+    //         const response = await axios.get('/productos');
+    //         const totalProducts = response.data.length;
+    //         const pages = Math.ceil(totalProducts / 40);
+    //         setTotalPages(pages);
             
-          } catch (error) {
-            console.error(error);
-          }
-        };
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     };
     
-        fetchTotalPages();
-        getProducts(currentPage);
-      }, [currentPage, searchQuery]);
+    //     fetchTotalPages();
+    //     getProducts(currentPage);
+    //   }, [currentPage, searchQuery]);
 
 
-    // useEffect(() => {
-    //   getProducts(currentPage);
-    // }, [currentPage]);
+    // // useEffect(() => {
+    // //   getProducts(currentPage);
+    // // }, [currentPage]);
 
-    const handlePageChange = (pageNumber) => {
-      getProducts(pageNumber);
-    };
+    // const handlePageChange = (pageNumber) => {
+    //   getProducts(pageNumber);
+    // };
   
 
 
@@ -258,7 +266,7 @@ function Gallery2() {
                 </div>
             </div>
             }
-            <div className='pagination'>
+            {/* <div className='pagination'>
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
             className={`page ${page === currentPage && 'page-selected'}`}
@@ -269,10 +277,10 @@ function Gallery2() {
             {page}
           </button>
         ))}
-      </div>
+      </div> */}
         
     </div>
   )
 }
 
-export default Gallery2
+export default Genero

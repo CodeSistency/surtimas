@@ -71,12 +71,12 @@ function Nav() {
           <section className='nav-top'>
             <div className='nav-top-left'>
               <Menu toggleMenu={toggleMenu} onClick={toggleMenu} isOpen={menuVisible}></Menu>
-              <Link to={'productos'}><AiOutlineMan className='gender-icon' color='#0d3f71' fontSize={35}/></Link>
-              <Link to={'productos'}><AiOutlineWoman className='gender-icon' color='pink' fontSize={35}/></Link>
+              {auth?.user ? <Link to={'home/genero/hombre'}><AiOutlineMan className='gender-icon' color='#0d3f71' fontSize={35}/></Link> : <Link to={'genero/hombre'}><AiOutlineMan className='gender-icon' color='#0d3f71' fontSize={35}/></Link>}
+              {auth?.user ? <Link to={'home/genero/mujer'}><AiOutlineWoman className='gender-icon' color='pink' fontSize={35}/></Link> : <Link to={'genero/mujer'}><AiOutlineWoman className='gender-icon' color='pink' fontSize={35}/></Link>}
             </div>
-            {auth.user ? <Link to={'/home'}><img src="logo3.svg" className='logo' alt='logo'/></Link> : <Link to={'/'}><img src="logo3.svg" className='logo' alt='logo'/></Link>}
+            {auth?.user ? <Link to={'/home'}><img src="/logo3.svg" className='logo' alt='logo'/></Link> : <Link to={'/'}><img src="/logo3.svg" className='logo' alt='logo'/></Link>}
             <div className='nav-top-right'>
-            <Link to={'/Login2'}><BsInstagram className='user-icon' fontSize={30}/></Link>
+            <Link to={'/sesion'}><BsInstagram className='user-icon' fontSize={30}/></Link>
               <div className='cart-icon'>{cartIcon()}</div>
               <Link to={'/Login2'}><BiUser className='user-icon' fontSize={35}/></Link>
             </div>
@@ -87,12 +87,12 @@ function Nav() {
             <ul className="navbar">
               
                 <li className='nav-admin'><Link to={"/admin"}>Admin</Link></li>
-                <li className='nav-admin'><Link to={"/productos"}>Productos</Link></li>
-                <li className='nav-admin'><Link to={"/productos"}>Mujer</Link></li>
-                <li className='nav-admin'><Link to={"/productos"}>Hombre</Link></li>
-                <li className='nav-admin'><Link to={"/productos"}>Faldas</Link></li>
-                <li className='nav-admin'><Link to={"/productos"}>Pantalones</Link></li>
-                <li className='nav-admin'><Link to={"/productos"}>Franelas</Link></li>
+
+                <li className='nav-admin'><Link to={"/genero/mujer"}>Mujer</Link></li>
+                <li className='nav-admin'><Link to={"/genero/hombre"}>Hombre</Link></li>
+                <li className='nav-admin'><Link to={"/tipo/faldas"}>Faldas</Link></li>
+                <li className='nav-admin'><Link to={"/tipo/pantalon"}>Pantalones</Link></li>
+                <li className='nav-admin'><Link to={"/tipo/franela"}>Franelas</Link></li>
                 
                 {/* {auth.user ? <button className='logout' onClick={signOut}>Salir de sesion</button> : <li><Link className='login-button' to={"/inicio"}>Login</Link></li>}
                 {!auth.user && <li><Link className='login-button' to={"/register"}>Registro</Link></li>} */}

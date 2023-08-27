@@ -5,6 +5,9 @@ import BarCodeGen from "./BarCodeGen";
 import QRcode from "./QRcode";
 import ReactToPrint from "react-to-print";
 import AdminNav from "./AdminNav";
+import axios from "../api/axios";
+import Webcam from "react-webcam";
+import exportAsImage from "../utils/exportAsImage";
 
 const QRcodes = () => {
     const [products, setProducts] = useState();
@@ -12,58 +15,62 @@ const QRcodes = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: "user"
+  };
+
     const ref = useRef()
     
 
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
-
-        const getProducts = async () => {
-            try {
-                const response = await axiosPrivate.get('/products', {
-                    signal: controller.signal
-                });
-                console.log(response.data);
-                isMounted && setProducts(response.data);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
-            }
-        }
-
-        getProducts();
-
-        return () => {
-            isMounted = false;
-            controller.abort();
-        }
-    }, [])
-
-    // const handleDelete = async (id) => {
-    //     let isMounted2 = true;
-    //     const controller = new AbortController();
-    //     console.log(id)
-
-    //     try {
-    //          const response = await axiosPrivate.delete(`products/${id}`,
-    //          {
-    //             signal: controller.signal
-    //          }
-                
-    //         );
-    //         console.log(response.data);
+    const getProducts = async (pageNumber) => {
+        try {
+            // const response = await axios.get(`/limited?pageNumber=${pageNumber}&search=${searchQuery}`);
+            const response = await axios.get(`productos/qr?pageNumber=${pageNumber}`);
+            // console.log(props.mujer)
+            console.log(response.data);
+            setProducts(response.data);
+            console.log(totalPages)
             
-    //     } catch (err) {
-    //         console.error(err);
-    //         // navigate('/login', { state: { from: location }, replace: true });
-    //     }
+            setCurrentPage(pageNumber);
+        } catch (err) {
+            console.error(err);
+            // navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
 
-    //     return () => {
-    //         isMounted2 = false;
-    //         controller.abort();
-    //     }
-    // }
+    useEffect(() => {
+      const fetchTotalPages = async () => {
+        try {
+          const response = await axios.get('/productos');
+          const totalProducts = response.data.length;
+          const pages = Math.ceil(totalProducts / 30);
+          setTotalPages(pages);
+          
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchTotalPages();
+      getProducts(currentPage);
+    }, [currentPage]);
+
+
+  // useEffect(() => {
+  //   getProducts(currentPage);
+  // }, [currentPage]);
+
+  const handlePageChange = (pageNumber) => {
+    getProducts(pageNumber);
+  };
+
+
+    
     const handleDelete = async (id) => {
 
         let isMounted2 = true;
@@ -94,6 +101,8 @@ const QRcodes = () => {
         }
     }
 
+    const exportRef = useRef();
+
     const pageStyle =`
 @page {
     size: 30mm 20mm
@@ -116,51 +125,67 @@ const QRcodes = () => {
 
     return (
         
-        <article className='dashboard admin-container' ref={ref}>
+        <article className='dashboard admin-container' ref={exportRef}>
             <AdminNav />
             {products?.length
                 ? (
                    <div className='qr'>
                     <ul className="qr-list">
-                        {products.map((product, i) => 
-                             {Object.entries(product?.tallas).map(([size, colors]) => {
-                                console.log(colors)
-                                colors.map((color) => {
-                                    return (
-                                        <li  key={i}>
-                                    
-                                            <QRcode 
-                                                
-                                                id={product?.codigo} 
-                                            />
-                                            <p style={{marginTop: '-5px', fontSize: '10px'}}>{product.titulo}{product.size}{color.color}</p>
-                                    
-                                        </li>
-                                      );
-                                })
-                                
-                                  
-                                
-                                
-                              })}
-                            // <li  key={i}>
-                                
-                            //     <QRcode 
-                                    
-                            //         id={product?.codigo} 
-                            //     />
-                            //     <p style={{marginTop: '-5px', fontSize: '10px'}}>{product.titulo}</p>
-                                
-                            // </li>
-                            
+                        
+                       {products.map((product, i) =>
+                            Object.entries(product?.tallas).map(([size, colors]) =>
+                                colors.map((color, j) => (
+                                <li key={`${i}-${j}`}>
+                                    <QRcode id={product?.codigo} />
+                                    <p style={{ marginTop: '-5px', fontSize: '8px', maxWidth: '130px'}}>
+                                    {product.titulo}
+                                    {size}
+                                    {color.color}
+                                    {product.codigo}
+                                    </p>
+                                </li>
+                                ))
+                            )
                             )}
-                    </ul>
-                    <ReactToPrint
+                        </ul>
+                        <div className='pagination'>
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                            <button
+                                className={`page ${page === currentPage && 'page-selected'}`}
+                                key={page}
+                                onClick={() => handlePageChange(page)}
+                                disabled={page === currentPage}
+                            >
+                                {page}
+                            </button>
+                            ))}
+                        </div>
+                        <button onClick={() => exportAsImage(exportRef.current, "test")}>
+Capture Image
+</button>
+                    {/* <ReactToPrint
                         trigger={() => <button>Print</button>}
                         content={() => ref.current}
                         pageStyle={pageStyle}
                         
-                    /> 
+                    />  */}
+                    {/* <Webcam
+    audio={false}
+    height={720}
+    screenshotFormat="image/jpeg"
+    width={1280}
+    videoConstraints={videoConstraints}
+  >
+    {({ getScreenshot }) => (
+      <button
+        onClick={() => {
+          const imageSrc = getScreenshot()
+        }}
+      >
+        Capture photo
+      </button>
+    )}
+  </Webcam> */}
                     </div> 
                 ) : <p>No hay QR</p>
             }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useContext} from 'react'
 import CartContext from "../context/CartProvider";
 import {IoCartOutline, IoCartSharp} from "react-icons/io5"
@@ -20,11 +20,17 @@ function Card3 (props) {
   function login(){
     navigate("/sesion", { state: {from: location}, replace: true });
   }
+
   function cartIcon() {
-    const alreadyInCart = cart.some(item => item._id === props.id)
+    
     if(!auth.user){
       return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={login}/>
     }
+
+    const alreadyInCart = cart?.cartProducts?.some(item => item.product === props.id)
+    console.log(alreadyInCart)
+    
+
     if(alreadyInCart) {
         return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
     } else {
@@ -33,7 +39,11 @@ function Card3 (props) {
     }
 }
 
-  
+
+
+useEffect(() =>{
+  cartIcon()
+}, [cart])
 
 
 

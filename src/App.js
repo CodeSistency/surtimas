@@ -23,12 +23,12 @@ import QRcodes from './components/QRcodes';
 import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import AllProducts from './pages/AllProducts';
-import Mujer from './pages/Mujer';
+
 import Login2 from './components/Login2';
 import Register2 from './components/Register2';
-import Zapatos from './pages/Zapatos';
-import Hombre from './pages/Hombre';
-import Juguetes from './pages/Juguetes';
+import Genero from './pages/Genero';
+import Tipo from './pages/Tipo';
+
 
 const ROLES = {
   'User': 2001,
@@ -50,10 +50,8 @@ function App() {
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<AllProducts />} />
-        <Route path="/mujer" element={<Mujer />} />
-        <Route path="/hombre" element={<Hombre />} />
-        <Route path="/zapatos" element={<Zapatos />} />
-        <Route path="/juguetes" element={<Juguetes />} />
+        <Route path="/genero/:genero" element={<Genero />} />
+        <Route path="/tipo/:tipo" element={<Tipo />} />
         <Route path="/productos/:id" element={<ProductDetail />} />
         {/* <Route path="/carrito" element={<Cart />} /> */}
 
@@ -65,7 +63,8 @@ function App() {
             <Route path="/home" element={<Home />} />
             {/* <Route path="/carrito" element={<Cart />} /> */}
             <Route path="home/productos/:id" element={<ProductDetail />} />
-            
+            <Route path="home/genero/:genero" element={<Genero />} />
+            <Route path="home/tipo/:tipo" element={<Tipo />} />
             <Route path="home/carrito/:username" element={<Cart />} />
             
           </Route>

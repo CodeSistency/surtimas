@@ -13,6 +13,7 @@ import FilterCategory from './FilterCategory';
 import GenderRadioFilter from './GenderFilter';
 import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
+import useAuth from '../hooks/useAuth';
 
 function Gallery() {
 
@@ -27,6 +28,8 @@ function Gallery() {
     const location = useLocation();
     
     const componentRef = useRef(null);
+
+    const {auth} = useAuth()
 
     const handleFilter = filteredProducts => {
         setFilteredProducts(filteredProducts);
@@ -44,38 +47,13 @@ function Gallery() {
         setFilteredProducts(updatedProducts);
       };
 
-      const { cart, setCart, searchQuery } = useContext(CartContext);
+      const { cart, setCart, searchQuery, getCartProducts } = useContext(CartContext);
 
       
-      
+      useEffect(() => {
+        getCartProducts(auth?.user)
+      }, [auth])
 
-    // useEffect(() => {
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-
-    //     const getProducts = async (pageNumber) => {
-    //         try {
-    //             const response = await axios.get(`/productos?pageNumber=${pageNumber}`, {
-    //                 signal: controller.signal
-    //             });
-    //             console.log(props.mujer)
-    //             console.log(response.data);
-    //             isMounted && setProducts(response.data);
-    //             console.log(products[2].imagenes)
-    //             setCurrentPage(pageNumber);
-    //         } catch (err) {
-    //             console.error(err);
-    //             // navigate('/login', { state: { from: location }, replace: true });
-    //         }
-    //     }
-
-    //     getProducts();
-
-    //     return () => {
-    //         isMounted = false;
-    //         controller.abort();
-    //     }
-    // }, [])
 
 
       const getProducts = async (pageNumber) => {

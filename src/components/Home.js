@@ -33,13 +33,13 @@ const Home = () => {
             <div className="embla" ref={emblaRef}>
                 <div className="embla__container">
                     <div className="embla__slide image-container">
-                        <img src="bg.jpg" className="hero"/>
+                        <img src="/bg.jpg" className="hero"/>
                             <h1>Bienvenido</h1>
                             <Link to={'/productos'} className="content">Productos</Link>
                         
                     </div>
                     <div className="embla__slide image-container-2">
-                        <img src="model.jpg" className="hero"/>
+                        <img src="/model.jpg" className="hero"/>
                             <div>
 
                                 <h1>Compra desde 12 piezas</h1>
@@ -49,7 +49,7 @@ const Home = () => {
                         
                     </div>
                     <div className="embla__slide image-container-3">
-                        <img src="discounts.jpg" className="hero"/>
+                        <img src="/discounts.jpg" className="hero"/>
                             <div>
 
                                 <h3>Los mejores descuentos los encuentras en</h3>

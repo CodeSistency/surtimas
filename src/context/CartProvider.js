@@ -72,7 +72,7 @@ export const CartProvider = ({ children }) => {
                   
               });
               console.log(JSON.stringify(response?.data));
-              isMounted && setCart(response.data);
+            //   isMounted && setCart(response.data);
               
           } catch (err) {
               console.error(err);
@@ -86,6 +86,29 @@ export const CartProvider = ({ children }) => {
     
         
     }
+
+   //
+  
+        const getCartProducts = async (username) => {
+            try {
+                const response = await axios.get(`/cart/${username}`, {
+                 
+                });
+                console.log(response.data);
+                setCart(response.data);
+                console.log(products)
+                // console.log(products[2].imagenes)
+            } catch (err) {
+                console.error(err);
+                // navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
+  
+        useEffect(() =>{
+            getCartProducts()
+        }, [cart])
+        
+  
 
     const handleDelete = async (username, id) => {
 
@@ -137,7 +160,7 @@ export const CartProvider = ({ children }) => {
       }
 
     return (
-        <CartContext.Provider value={{searchQuery, setSearchQuery, searchInput, cart, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
+        <CartContext.Provider value={{searchQuery, setSearchQuery, searchInput, cart, getCartProducts, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
             {children}
         </CartContext.Provider>
     )

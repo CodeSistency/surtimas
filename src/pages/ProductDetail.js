@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from 'react'
+import {useContext, useState, useEffect, useCallback, useRef} from 'react'
 import CartContext from "../context/CartProvider";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useParams } from 'react-router-dom';
@@ -7,10 +7,25 @@ import Nav from './Nav';
 import ReactWhatsapp from 'react-whatsapp';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
+import ImageZoom from '../components/ImageZoom';
+import useEmblaCarousel from 'embla-carousel-react'
+import Slider from 'react-slick';
+import Nav2 from './Nav2';
+// import Swiper from 'swiper';
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css/pagination';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+// import 'swiper/css/swiper.css';
+
 
 
 function ProductDetail() {
-  const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
+  const { cart, addProductToResults, removeFromCart, handleCart, getCartProducts } = useContext(CartContext);
     const [product, setProduct] = useState()
     const [products, setProducts] = useState()
     const [text, setText] = useState('')
@@ -18,6 +33,15 @@ function ProductDetail() {
     const [comentarios, setComentarios] = useState()
 
     const {auth} = useAuth()
+
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    // getCartProducts(auth?.user)
+
+    useEffect(() => {
+      getCartProducts(auth?.user)
+    }, [auth])
     
     const handleTextChange = (event) => {
       setText(event.target.value);
@@ -87,34 +111,34 @@ function ProductDetail() {
         }
     }, [])
 
-    useEffect(() => {
-      let isMounted = true;
-      const controller = new AbortController();
+  //   useEffect(() => {
+  //     let isMounted = true;
+  //     const controller = new AbortController();
 
-      console.log(auth.username)
+  //     console.log(auth.username)
 
-      const getCartProducts = async () => {
-          try {
-              const response = await axios.get(`/cart/${auth.username}`, {
-                  signal: controller.signal
-              });
-              console.log(response.data);
-              isMounted && setProducts(response.data);
-              console.log(products)
-              // console.log(products[2].imagenes)
-          } catch (err) {
-              console.error(err);
-              // navigate('/login', { state: { from: location }, replace: true });
-          }
-      }
+  //     const getCartProducts = async () => {
+  //         try {
+  //             const response = await axios.get(`/cart/${auth.username}`, {
+  //                 signal: controller.signal
+  //             });
+  //             console.log(response.data);
+  //             isMounted && setProducts(response.data);
+  //             console.log(products)
+  //             // console.log(products[2].imagenes)
+  //         } catch (err) {
+  //             console.error(err);
+  //             // navigate('/login', { state: { from: location }, replace: true });
+  //         }
+  //     }
 
-      getCartProducts();
+  //     getCartProducts();
 
-      return () => {
-          isMounted = false;
-          controller.abort();
-      }
-  }, [])
+  //     return () => {
+  //         isMounted = false;
+  //         controller.abort();
+  //     }
+  // }, [])
 
     const handleQuantityChange = (productCode, size, colorIndex, quantity) => {
         const updatedResults = product.map((product) => {
@@ -131,23 +155,57 @@ function ProductDetail() {
         });
         setProduct(updatedResults);
       };
+
+      // function alreadyInCart() {
+      //   const alreadyInCart = cart?.cartProducts.some(item => item._id === product._id)
+      //   console.log(alreadyInCart)
+        
+      //   return alreadyInCart
+      // }
       
+      // function cartIcon() {
+      //   // useEffect(() =>{
+
+      //   //   const alreadyInCart = cart?.cartProducts.some(item => item._id === product._id)
+      //   // })
+      //   const alreadyInCart = cart?.cartProducts.some(item => item._id === product._id)
+      //   // console.log(alreadyInCart)
+      //   console.log(alreadyInCart)
+      //   if(alreadyInCart) {
+      //       return <button className='addCart'>
+      //       <p>Agregar</p>
+      //       <IoCartSharp fontSize={20} onClick={() => handleDelete(product._id)}/>
+      //     </button>
+      //   } else {
+      //       // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+      //       return <button onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)} className='addCart'>
+      //       <p>Agregar</p>
+      //       <IoCartOutline fontSize={20} onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)}/>
+      //     </button>
+      //   }
+      //  }
+
+      function login(){
+        navigate("/sesion", { state: {from: location}, replace: true });
+      }
+
       function cartIcon() {
-        const alreadyInCart = cart.some(item => item._id === product._id)
+    
+        if(!auth.user){
+          return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={login}/>
+        }
+    
+        const alreadyInCart = cart?.cartProducts?.some(item => item.product === product.id)
+        console.log(alreadyInCart)
+        
+    
         if(alreadyInCart) {
-            return <button className='addCart'>
-            <p>Agregar</p>
-            <IoCartSharp fontSize={20} onClick={() => handleDelete(product._id)}/>
-          </button>
+            return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(product.id)}/>
         } else {
             // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
-            return <button onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)} className='addCart'>
-            <p>Agregar</p>
-            <IoCartOutline fontSize={20} onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)}/>
-          </button>
+            return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, product.titulo, product.precio, precio_mayor, product.img, product.id)}/>
         }
-       }
-
+     }
        const handleSubmit = async (e) => {
 
         e.preventDefault()
@@ -211,13 +269,93 @@ function ProductDetail() {
       }
   }, [])
 
+  const [emblaRef, emblaApi] = useEmblaCarousel()
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  const swiperRef = useRef(null);
+
+  // useEffect(() => {
+  //   const swiper = new Swiper(swiperRef.current, {
+  //     navigation: {
+  //       nextEl: '.swiper-button-next',
+  //       prevEl: '.swiper-button-prev',
+  //     },
+  //   });
+  // }, []);
+
   return (
     <div >
       <Nav className='nav-detail'/>
       <div className='product-detail-container' >
 
         <div className='product-detail'>
-            <img src={product?.imagenes[0]} alt='' className='image-detail'/>
+          <div className='image-detail'>
+
+            {/* <Slider {...settings}>
+          <div >
+            <h3>Slide 1</h3>
+          </div>
+          <div>
+            <h3>Slide 2</h3>
+          </div>
+          <div>
+            <h3>Slide 3</h3>
+          </div>
+        </Slider> */}
+        {/* <div className="swiper-container" ref={swiperRef}>
+          <div className="swiper-wrapper">
+            <div className="swiper-slide">
+              <h3>Slide 1</h3>
+            </div>
+            <div className="swiper-slide">
+              <h3>Slide 2</h3>
+            </div>
+            <div className="swiper-slide">
+              <h3>Slide 3</h3>
+            </div>
+          </div>
+
+          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev"></div>
+        </div> */}
+
+<Swiper
+      // navigation={true}
+      // modules={[Navigation]}
+      pagination={true}
+      modules={[Pagination]}
+      // spaceBetween={1}
+      // slidesPerView={1}
+      // onSlideChange={() => console.log('slide change')}
+      // onSwiper={(swiper) => console.log(swiper)}
+    >
+      {product?.imagenes[0] && <SwiperSlide><ImageZoom src={product?.imagenes[0]}/></SwiperSlide>}
+      {product?.imagenes[1] &&<SwiperSlide><ImageZoom src={product?.imagenes[1]}/></SwiperSlide>}
+      {product?.imagenes[2] && <SwiperSlide><ImageZoom src={product?.imagenes[2]}/></SwiperSlide>}
+      {product?.imagenes[3] && <SwiperSlide><ImageZoom src={product?.imagenes[3]}/></SwiperSlide>}
+      {product?.imagenes[4] && <SwiperSlide><ImageZoom src={product?.imagenes[4]}/></SwiperSlide>}
+      
+      
+    </Swiper>
+          </div>
+       
+      
+         
             {product && 
             <div key={product?.codigo} className="producto-info">
               <h2 className="producto titulo">{product?.titulo}</h2>

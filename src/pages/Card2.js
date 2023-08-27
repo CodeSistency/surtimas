@@ -22,17 +22,36 @@ function Card2 (props) {
     navigate("/sesion", { state: {from: location}, replace: true });
   }
 
-  function cartIcon() {
-    const alreadyInCart = cart.some(item => item._id === props.id)
-    if(!auth.user){
-      return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={login}/>
-    }
-    if(alreadyInCart) {
-        return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
-    } else {
-        // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
-        return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
-    }
+//   function cartIcon() {
+//     const alreadyInCart = cart?.cartProducts.some(item => item._id === props.id)
+//     console.log(alreadyInCart)
+//     if(!auth.user){
+//       return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={login}/>
+//     }
+//     if(alreadyInCart) {
+//         return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
+//     } else {
+//         // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+//         return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
+//     }
+// }
+
+function cartIcon() {
+    
+  if(!auth.user){
+    return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={login}/>
+  }
+
+  const alreadyInCart = cart?.cartProducts?.some(item => item.product === props.id)
+  console.log(alreadyInCart)
+  
+
+  if(alreadyInCart) {
+      return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
+  } else {
+      // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+      return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id)}/>
+  }
 }
 
   
