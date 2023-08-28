@@ -746,7 +746,7 @@ function reset (){
           id="imagen"
           onChange={handleImageChange}
           className="input-imagen"
-          accept='image/*'
+          // accept='image/*'
           style={{fontSize: '12px'}}
           
           
@@ -763,7 +763,7 @@ function reset (){
           id="imagen"
           onChange={handleImageChange2}
           className="input-imagen"
-          accept='image/*'
+          // accept='image/*'
           style={{fontSize: '12px'}}
           
           
@@ -779,7 +779,7 @@ function reset (){
           id="imagen"
           onChange={handleImageChange3}
           className="input-imagen"
-          accept='image/*'
+          // accept='image/*'
           style={{fontSize: '12px'}}
           
           
@@ -795,7 +795,7 @@ function reset (){
           id="imagen"
           onChange={handleImageChange4}
           className="input-imagen"
-          accept='image/*'
+          // accept='image/*'
           style={{fontSize: '12px'}}
           
           
@@ -812,7 +812,7 @@ function reset (){
             id="imagen"
             onChange={handleImageChange5}
             className="input-imagen"
-            accept='image/*'
+            // accept='image/*'
             
             
           />
