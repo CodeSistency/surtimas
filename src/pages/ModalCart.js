@@ -55,7 +55,7 @@ const ModalCart = (props) => {
                             Mi compra es la siguiente:
                             
                             ${cart?.cartProducts.map((product) => {
-                              let message = `"${product.nombre}". Precio: $${product.precio} Codigo: ${product.codigo}`;
+                              let message = `"${product.nombre}". Precio: $${product.precio}, Precio al mayor: $${product.precio_mayor}, Codigo: ${product.codigo}`;
                               if (product.tallas) {
                                 const tallasMessage = Object.entries(product.tallas)
                                   .map(([size, colors]) => {

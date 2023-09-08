@@ -84,7 +84,7 @@ const ModalBuyCart = ({ product, closeModalBuy, handleApplyChanges, setQuantityC
                 <p>No disponible</p>
               ) : (
                 <input
-                  style={{ width: "200px" }}
+                  style={{ width: "70%" }}
                   type="number"
                   value={quantityChangesModal[`${product.codigo}-${size}-${index}`] || ""}
                   onChange={(e) =>

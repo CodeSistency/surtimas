@@ -91,7 +91,7 @@ const ModalBuy = (props) => {
                 <p>No disponible</p>
               ) : (
                 <input
-                style={{width: "200px",}}
+                style={{width: "70%",}}
                   type="number"
                   value={quantityChangesModal[`${product.codigo}-${size}-${index}`] || ""}
                   onChange={(e) =>
@@ -116,7 +116,7 @@ const ModalBuy = (props) => {
                             Mi compra es la siguiente:
                             
                             ${results?.map((product) => {
-                              let message = `"${product.titulo}". Precio: $${product.precio} Codigo: ${product.codigo}`;
+                              let message = `"${product.titulo}". Precio: $${product.precio}, Precio al mayor: $${product.precio_mayor}, Codigo: ${product.codigo}`;
                               if (product.tallas) {
                                 const tallasMessage = Object.entries(product.tallas)
                                   .map(([size, colors]) => {
