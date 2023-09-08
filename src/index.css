@@ -2832,6 +2832,7 @@ flex-wrap: wrap;
    .skeleton {
        padding:15px;
        min-width: 160px;
+       overflow-x: auto;
        /* width: 100%; */
        background: #fff;
        margin-bottom: 20px;
