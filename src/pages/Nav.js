@@ -60,9 +60,9 @@ function Nav() {
     function cartIcon() {
       
       if(!auth.user) {
-          return <IoCartOutline fontSize={40} onClick={login}/>
+          return <IoCartOutline style={{cursor: 'pointer'}} fontSize={40} onClick={login}/>
       } else {
-        return <Link  to={`/home/carrito/${auth.user}`}><IoCartOutline fontSize={40} /></Link>
+        return <Link  to={`/home/carrito/${auth.user}`}><IoCartOutline style={{cursor: 'pointer'}} fontSize={40} /></Link>
       }
       // if(cart) {
       //   return  <Link  to={`/home/carrito/${auth.user}`}><IoCartSharp fontSize={40} /></Link>
