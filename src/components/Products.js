@@ -11,6 +11,8 @@ import FilterCategory from "../pages/FilterCategory";
 import GenderRadioFilter from "../pages/GenderFilter";
 import {AiOutlineDown} from 'react-icons/ai'
 import {LiaSearchSolid} from 'react-icons/lia'
+import Loader from "../pages/Loader";
+import ModalDelete from "../pages/ModalDelete";
 
 
 const Products = () => {
@@ -26,6 +28,20 @@ const Products = () => {
     const [isLoading, setIsLoading] = useState()
 
     const [searchInput, setSearchInput] = useState()
+
+    const [isDeleting, setIsDeleting] = useState(false)
+    const [deleteMsg, setDeleteMsg] = useState(false)
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    
+    const openModal = () => {
+      setModalOpen(true);
+    };
+  
+    const closeModal = () => {
+      setModalOpen(false);
+    };
 
     const handleFilter = filteredProducts => {
         setFilteredProducts(filteredProducts);
@@ -48,33 +64,38 @@ const Products = () => {
         console.log(filteredProducts)
         console.log('working')
       };
-    
 
-    useEffect(() => {
+      const getProducts = async () => {
         let isMounted = true;
         const controller = new AbortController();
 
-        const getProducts = async () => {
-            try {
-                const response = await axiosPrivate.get('/products', {
-                    signal: controller.signal
-                });
-                console.log(response.data);
-                isMounted && setProducts(response.data);
-            } catch (err) {
-                console.error(err);
-                console.log(JSON.stringify(err));
-                navigate('/login', { state: { from: location }, replace: true });
-            }
+        try {
+            const response = await axiosPrivate.get('/products', {
+                signal: controller.signal
+            });
+            console.log(response.data);
+            isMounted && setProducts(response.data);
+            setIsDeleting(false)
+        } catch (err) {
+            console.error(err);
+            console.log(JSON.stringify(err));
+            navigate('/login', { state: { from: location }, replace: true });
         }
+
+        return () => {
+          isMounted = false;
+          controller.abort();
+      }
+    }
+    
+
+    useEffect(() => {
+        
 
         getProducts();
 
-        return () => {
-            isMounted = false;
-            controller.abort();
-        }
-    }, [])
+        
+    }, [isDeleting])
 
    
     const handleDelete = async (id) => {
@@ -92,11 +113,11 @@ const Products = () => {
                 signal: controller.signal
             });
             console.log(JSON.stringify(response?.data));
-            console.log(JSON.stringify(response?.data[4].imagenes[0]));
+            // console.log(JSON.stringify(response?.data[4].imagenes[0]));
             
             
-            navigate("/admin", { state: {from: location}, replace: true });
-            navigate(-1);
+          closeModal()
+          setIsDeleting(true)
         } catch (err) {
             console.error(err);
             console.log(JSON.stringify(err));
@@ -295,7 +316,11 @@ const Products = () => {
                                 <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline fontSize={27} style={{marginTop:'7px'}}/></Link>
                                 </td>
                                 <td>
-                                <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={() => handleDelete(product._id)}/>
+                                <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={openModal}/>
+                                {/* <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={() => handleDelete(product._id)}/> */}
+                                {modalOpen && (
+        <ModalDelete closeModal={closeModal} isDeleting={setIsDeleting} product={product}  handleDelete={handleDelete}/>
+      )}
                                 </td>
                                 </tr>
                             ))}
@@ -345,6 +370,7 @@ const Products = () => {
     </div>
                 ) : <div class="lds-dual-ring"></div>
             } */}
+            {isDeleting && <Loader />}
         </article>
     );
 };

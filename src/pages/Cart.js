@@ -165,7 +165,7 @@ function Cart() {
                                 Comprar
                               </button>
                               {modalOpen && (
-                                <ModalCart closeModal={closeModal} cart={products} user={auth?.user}/>
+                                <ModalCart closeModal={closeModal} cart={products} setCart={setCart} user={auth?.user}/>
                               )}
                               {/* <ReactWhatsapp 
                             className='buy-total' 

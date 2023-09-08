@@ -8,6 +8,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import Card from './Card';
 import Card2 from './Card2';
+import Skeleton from './Skeleton';
 
 function Products() {
 
@@ -83,11 +84,11 @@ function Products() {
                     <div className='card-container'>
                         {products.map((product, i) =>
                             // <Link to={`/productos/${product._id}`}>
-                            <Card2 key={i} id={product._id} titulo={product.titulo} img={product.imagenes[0]} precio='10' product={product} codigo={product.codigo}/>
+                            <Card2 key={i} id={product._id} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} product={product} codigo={product.codigo}/>
                             // </Link>
                             )}
                     </div>
-                ) : <p>No hay productos</p>
+                ) : <Skeleton/>
             }
         
     </div>

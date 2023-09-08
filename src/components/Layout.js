@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Outlet } from "react-router-dom"
 
 const Layout = () => {
@@ -5,7 +6,10 @@ const Layout = () => {
     
     return (
         <main >
-            <Outlet />
+            <Suspense fallback={<div>loading...</div>}>
+                <Outlet />
+
+            </Suspense>
         </main>
     )
 }

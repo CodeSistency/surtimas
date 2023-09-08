@@ -54,7 +54,7 @@ export const CartProvider = ({ children }) => {
         
     }
 
-    const handleCart = async (username, nombre, precio, precio_mayor, imagen, id, codigo) => {
+    const handleCart = async (username, nombre, precio, precio_mayor, imagen, id, codigo, tallas, tallas_zapatos) => {
 
         // console.log(username, nombre, precio, precio_mayor)
     let isMounted = true;
@@ -65,7 +65,7 @@ export const CartProvider = ({ children }) => {
 
       
           try {
-              const response = await axios.put('cart', { username, nombre, precio, precio_mayor, quantity, imagen, id, codigo},
+              const response = await axios.put('cart', { username, nombre, precio, precio_mayor, quantity, imagen, id, codigo, tallas, tallas_zapatos},
             //   JSON.stringify({username, nombre, precio, precio_mayor, quantity}),
               { 
                   signal: controller.signal,
@@ -106,7 +106,7 @@ export const CartProvider = ({ children }) => {
   
         useEffect(() =>{
             getCartProducts()
-        }, [cart])
+        }, [])
         
   
 
@@ -127,7 +127,7 @@ export const CartProvider = ({ children }) => {
             console.log(JSON.stringify(response?.data));
             
             
-            
+            getCartProducts()
             
         } catch (err) {
             console.error(err);

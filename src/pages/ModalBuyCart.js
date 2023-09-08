@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChanges, results, setResults }) => {
+const ModalBuyCart = ({ product, closeModalBuy, handleApplyChanges, setQuantityChanges, results, setResults }) => {
     const [quantityChangesModal, setQuantityChangesModal] = useState({});
   
     const onChangeModal = (size, index, value) => {
@@ -14,7 +14,7 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
     };
 
     const applyChangesModal = () => {
-        const updatedResults = results.map((prod) => {
+        const updatedResults = results?.cartProducts?.map((prod) => {
           if (prod.codigo === product.codigo) {
             const updatedTallas = { ...prod.tallas };
             Object.keys(updatedTallas).forEach((size) => {
@@ -22,6 +22,7 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
                 const changeKey = `${product.codigo}-${size}-${index}`;
                 const changeValue = parseInt(quantityChangesModal[changeKey], 10) || 0;
                 color.quantity -= changeValue;
+                color.deseo = changeValue
               });
             });
             return { ...prod, tallas: updatedTallas };
@@ -30,8 +31,8 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
         });
     
         setResults(updatedResults); // Update the results array
-        onClose();
-        handleApplyChanges();
+        closeModalBuy();
+        // handleApplyChanges();
       };
   
     // const applyChangesModal = () => {
@@ -50,7 +51,7 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
     return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Editar Producto: {product.titulo}</h2>
+        <h2 style={{color:'black'}}>Producto: {product.nombre}</h2>
         <hr />
         {Object.entries(product.tallas).map(([size, colors]) => (
           <div key={`${product.codigo}-${size}`} className="size-section">
@@ -66,29 +67,42 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
                     width: "30px",
                   }}
                 ></div>
-                <p>
+                {/* <p>
                   Quantity:{" "}
                   {color.quantity -
                     (parseInt(quantityChangesModal[`${product.codigo}-${size}-${index}`], 10) || 0)}
-                </p>
+                </p> */}
+                {/* <input
+                style={{width: "200px",}}
+                  type="number"
+                  value={quantityChangesModal[`${product.codigo}-${size}-${index}`] || ""}
+                  onChange={(e) =>
+                    onChangeModal(size, index, e.target.value)
+                  }
+                /> */}
+                {color.quantity === 0 ? (
+                <p>No disponible</p>
+              ) : (
                 <input
+                  style={{ width: "200px" }}
                   type="number"
                   value={quantityChangesModal[`${product.codigo}-${size}-${index}`] || ""}
                   onChange={(e) =>
                     onChangeModal(size, index, e.target.value)
                   }
                 />
+              )}
               </div>
             ))}
           </div>
         ))}
         <div className="modal-buttons">
-          <button onClick={applyChangesModal}>Actualizar</button>
-          <button onClick={onClose}>Cancelar</button>
+          <button onClick={applyChangesModal} style={{backgroundColor:' rgb(5, 248, 78)', border: '1px solid rgb(5, 248, 78)'}}>Actualizar</button>
+          <button onClick={closeModalBuy}>Cancelar</button>
         </div>
       </div>
     </div>
     );
   };
 
-  export default ModalComponent
+  export default ModalBuyCart

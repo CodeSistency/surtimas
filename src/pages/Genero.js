@@ -16,6 +16,7 @@ import {AiOutlineDown} from 'react-icons/ai'
 import useAuth from '../hooks/useAuth';
 import Nav from './Nav';
 import Search from './Search';
+import Skeleton from './Skeleton';
 
 function Genero() {
 
@@ -106,8 +107,9 @@ function Genero() {
       
 
       useEffect(()=>{
+        setProducts(null)
         getProducts()
-      }, [])
+      }, [genero])
 
     //   useEffect(() => {
     //     const fetchTotalPages = async () => {
@@ -255,13 +257,13 @@ function Genero() {
                                 </div>
                                 
                             </div>
-                <div className='gallery-container'>
+                            {products ? <div className='gallery-container'>
                 {products?.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
-                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product}/>
+                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product} codigo={product.codigo}/>
                     // </Link>
                     )}
-                </div>
+                </div> : <Skeleton flex='wrap'/>}
             </div>
             }
             {/* <div className='pagination'>

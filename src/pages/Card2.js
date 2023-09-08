@@ -63,7 +63,7 @@ function cartIcon() {
       return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
   } else {
       // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
-      return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id, props.codigo)}/>
+      return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id, props.codigo, props.product.tallas, props.product.tallas_zapatos)}/>
   }
 }
 
@@ -85,9 +85,9 @@ function cartIcon() {
       <p class="product-price price-absolute">{props.precio}<small style={{color: 'black'}}>$</small></p>
       
     </div>
-    <button className="buy-button-products" onClick={openModal}>
+    {auth?.user ? <button className="buy-button-products" onClick={openModal}>
         Comprar
-      </button>
+      </button>: <Link to={'/sesion'}><button  className="buy-button-products">Comprar</button></Link>}
       {modalOpen && (
         <ModalBuy closeModal={closeModal} product={props.product} user={auth?.user}/>
       )}

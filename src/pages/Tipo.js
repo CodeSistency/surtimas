@@ -16,12 +16,14 @@ import {AiOutlineDown} from 'react-icons/ai'
 import useAuth from '../hooks/useAuth';
 import Nav from './Nav';
 import Search from './Search';
+import Skeleton from './Skeleton';
 
 function Tipo() {
 
     const [products, setProducts] = useState();
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedSexo, setSelectedSexo] = useState();
+    
 
     const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -104,8 +106,9 @@ function Tipo() {
       }
 
       useEffect(()=>{
+        setProducts(null)
         getProducts()
-      }, [])
+      }, [tipo])
 
     //   useEffect(() => {
     //     const fetchTotalPages = async () => {
@@ -255,13 +258,13 @@ function Tipo() {
                                 </div>
                                 
                             </div>
-                <div className='gallery-container'>
+                            {products ? <div className='gallery-container'>
                 {products?.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
-                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product}/>
+                    <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product} codigo={product.codigo}/>
                     // </Link>
                     )}
-                </div>
+                </div> : <Skeleton flex='wrap'/>}
             </div>
             }
             {/* <div className='pagination'>

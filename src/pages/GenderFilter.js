@@ -7,7 +7,7 @@ const GenderRadioFilter = ({ onFilter, products }) => {
     setSelectedSexo(sexo);
     console.log(selectedSexo)
     // onFilter(sexo);
-    const updatedProducts = products.filter(
+    const updatedProducts = products?.filter(
       obj =>obj.sexo === "hombre" || obj.sexo === selectedSexo
     );
     console.log(updatedProducts)

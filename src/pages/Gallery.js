@@ -14,6 +14,7 @@ import GenderRadioFilter from './GenderFilter';
 import Card3 from './Card3';
 import {AiOutlineDown} from 'react-icons/ai'
 import useAuth from '../hooks/useAuth';
+import Skeleton from './Skeleton';
 
 function Gallery() {
 
@@ -160,19 +161,10 @@ function Gallery() {
 
 
   return (
-    <div className='gallery-container-container' ref={componentRef}>
+  
+  <div className='gallery-container-container' ref={componentRef}>
         
-        {/* {products?.length
-                ? (
-                    <div className='card-container'>
-                        {products.map((product, i) =>
-                            // <Link to={`/productos/${product._id}`}>
-                            <Card key={i} titulo={product.titulo} img={product.imagen} precio={product.precio} product={product}/>
-                            // </Link>
-                            )}
-                    </div>
-                ) : <p>No hay productos</p>
-            } */}
+        
        
         {filteredProducts?.length 
                 ? (
@@ -214,7 +206,7 @@ function Gallery() {
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleCategoryClick}>Categorias <AiOutlineDown /></p>
-                                  {isCategoryOpen && <FilterCategory objects={products} onFilter={handleGenderFilter} />}
+                                  {isCategoryOpen && <FilterCategory objects={products} onFilter={handleFilter} />}
                                 </div>
                                 <div className='price-container'>
                                   <p onClick={handleGenderClick}>Genero <AiOutlineDown /></p>
@@ -222,13 +214,13 @@ function Gallery() {
                                 </div>
                                 
                             </div>
-                <div className='gallery-container'>
+              {products ? <div className='gallery-container'>
                 {products?.map((product, i) =>
                     // <Link to={`/productos/${product._id}`}>
                     <Card3 key={i} titulo={product.titulo} img={product.imagenes[0]} precio={product.precio} id={product._id} product={product} codigo={product.codigo}/>
                     // </Link>
                     )}
-                </div>
+                </div> : <Skeleton flex='wrap'/>}
             </div>
             }
             <div className='pagination'>
@@ -245,6 +237,7 @@ function Gallery() {
       </div>
         
     </div>
+    
   )
 }
 

@@ -96,10 +96,10 @@ function Nav() {
 
             <ul className="navbar">
               
-                <li className='nav-admin'><Link to={"/admin"}>Admin</Link></li>
+                <li className='nav-admins'><Link to={"/admin"}>Admin</Link></li>
 
-                <li className='nav-admin'><Link to={"/genero/mujer"}>Mujer</Link></li>
-                <li className='nav-admin'><Link to={"/genero/hombre"}>Hombre</Link></li>
+                <li className='nav-mujer'><Link to={"/genero/mujer"}>Mujer</Link></li>
+                <li className='nav-hombre'><Link to={"/genero/hombre"}>Hombre</Link></li>
                 <li className='nav-admin'><Link to={"/tipo/faldas"}>Faldas</Link></li>
                 <li className='nav-admin'><Link to={"/tipo/pantalon"}>Pantalones</Link></li>
                 <li className='nav-admin'><Link to={"/tipo/franela"}>Franelas</Link></li>
