@@ -63,7 +63,7 @@ ${cart?.cartProducts.map((product) => {
                                     if (deseos.length > 0) {
                                       const deseosMessage = deseos
                                         .map((color) => `${size}: ${color.deseo}`)
-                                        .join(", ");
+                                        // .join(", ");
                                       return deseosMessage;
                                     }
                                     return null;
@@ -71,12 +71,12 @@ ${cart?.cartProducts.map((product) => {
                                   .filter((message) => message !== null)
                                   .join("\n");
                                 if (tallasMessage !== "") {
-                                  message += `\nTallas: \n${tallasMessage} piezas`;
+                                  message += `\nTallas: \n${tallasMessage} piezas\n`;
                                 }
                               }
                               return message;
                             })}
-                            Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
+Nuestro equipo te atenderá pronto. ¡Gracias! 🛍️`}
 
                             >Comprar</ReactWhatsapp> 
         <button className='modal-button' onClick={closeModal}>Cancelar</button>
