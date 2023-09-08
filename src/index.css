@@ -1337,7 +1337,7 @@ li {
   }
 
   /* Hide scrollbar for WebKit browsers */
-.card-container::-webkit-scrollbar, .lista-colores::-webkit-scrollbar, .navbar::-webkit-scrollbar {
+.card-container::-webkit-scrollbar, .lista-colores::-webkit-scrollbar, .navbar::-webkit-scrollbar, .container-skeleton::-webkit-scrollbar {
   width: 0; /* Set the width to 0 to hide the scrollbar */
 }
 
@@ -2804,6 +2804,7 @@ textarea{
   /*      flex-flow: wrap row; */
   /*      justify-content: center; */
        align-items: center;
+       overflow-x: auto;
   }
   .container-skeletonwrap {
     /*      height: 100vh; */
@@ -2819,7 +2820,7 @@ textarea{
         display: flex;
      gap: 10px;
      padding: 10px;
-     overflow-x: auto;
+     
   /*      padding: 0 15px; */
   }
   .box-wrap{

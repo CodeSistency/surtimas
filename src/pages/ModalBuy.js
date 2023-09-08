@@ -112,8 +112,8 @@ const ModalBuy = (props) => {
             style={{backgroundColor: 'rgb(0, 255, 64)', border: '1px solid rgb(0, 255, 64)'}}
           number="+58 4124668486"
           message={`¡Hola! 👋 ¡Bienvenido a Surtymas!
-                            Mi correo es: ${user}
-                            Mi compra es la siguiente:
+Mi correo es: ${user}
+Mi compra es la siguiente:
                             
                             ${results?.map((product) => {
                               let message = `"${product.titulo}". Precio: $${product.precio}, Precio al mayor: $${product.precio_mayor}, Codigo: ${product.codigo}`;

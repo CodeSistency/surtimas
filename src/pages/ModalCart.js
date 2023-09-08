@@ -50,11 +50,11 @@ const ModalCart = (props) => {
                             className='modal-button'
                             style={{borderRadius: '10px', backgroundColor:'rgb(5, 248, 78)', border: '1px solid rgb(5, 248, 78)'}} 
                             number='+58 4124668486'
-                            message={`¡Hola! 👋 ¡Bienvenido a Surtymas!
-                            Mi correo es: ${user}
-                            Mi compra es la siguiente:
+                            message={`¡Hola! 👋 ¡Bienvenido a Surtymas! 
+Mi correo es: ${user}
+Mi compra es la siguiente:
                             
-                            ${cart?.cartProducts.map((product) => {
+${cart?.cartProducts.map((product) => {
                               let message = `"${product.nombre}". Precio: $${product.precio}, Precio al mayor: $${product.precio_mayor}, Codigo: ${product.codigo}`;
                               if (product.tallas) {
                                 const tallasMessage = Object.entries(product.tallas)
@@ -71,7 +71,7 @@ const ModalCart = (props) => {
                                   .filter((message) => message !== null)
                                   .join("\n");
                                 if (tallasMessage !== "") {
-                                  message += `\nTallas: \n${tallasMessage}`;
+                                  message += `\nTallas: \n${tallasMessage} piezas`;
                                 }
                               }
                               return message;
