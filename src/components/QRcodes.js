@@ -132,21 +132,36 @@ const QRcodes = () => {
                    <div className='qr'>
                     <ul className="qr-list">
                         
-                       {products.map((product, i) =>
-                            Object.entries(product?.tallas).map(([size, colors]) =>
-                                colors.map((color, j) => (
-                                <li key={`${i}-${j}`}>
-                                    <QRcode id={product?.codigo} />
-                                    <p style={{ marginTop: '-5px', fontSize: '8px', maxWidth: '130px'}}>
-                                    {product.titulo}
-                                    {size}
-                                    {color.color}
-                                    {product.codigo}
-                                    </p>
-                                </li>
-                                ))
-                            )
-                            )}
+                    {products.map((product, i) =>
+  Object.entries(product?.tallas).map(([size, colors]) =>
+    colors.map((color, j) => 
+    color.quantity > 0 && 
+    <li>
+           <QRcode id={product?.codigo} />
+           <p style={{ marginTop: '-5px', fontSize: '8px', maxWidth: '130px'}}>
+           {product.titulo}
+             {size}
+             {color.color}
+             {product.codigo}
+           </p>
+         </li>
+      
+      // {color.quantity > 0 ? (
+      //   <div key={`${i}-${j}`}>
+      //     <li>
+      //       <QRcode id={product?.codigo} />
+      //       <p style={{ marginTop: '-5px', fontSize: '8px', maxWidth: '130px'}}>
+      //         {product.titulo}
+      //         {size}
+      //         {color.color}
+      //         {product.codigo}
+      //       </p>
+      //     </li>
+      //   </div>
+      // ) : null}
+    )
+  )
+)}
                         </ul>
                         <div className='pagination'>
                             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
