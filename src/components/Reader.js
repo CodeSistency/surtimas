@@ -242,8 +242,9 @@ function Reader() {
             });
           });
         });
+        // setTotal(totalRevenue)
         return totalRevenue;
-        setTotal(totalRevenue)
+        // setTotal(totalRevenue)
       };
 
       const totalRevenue = calculateTotalRevenue()

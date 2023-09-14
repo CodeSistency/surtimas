@@ -735,7 +735,7 @@ useEffect(() =>{
 )} */}
 
       <div className='select'>
-        <label className='prenda' style={{display: 'flex'}}>
+        <label  className='prenda label' style={{display: 'flex'}}>
           Categorias:
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="camisa">Camisa</option>
@@ -757,6 +757,7 @@ useEffect(() =>{
             <option value="pijama">Pijama</option>
             <option value="playa">Playa</option>
             <option value="mono">Mono</option>
+            <option value="enterizo">Enterizo</option>
             <option value="zapato">Zapato</option>
             <option value="liquidacion">Liquidacion</option>
             <option value="sobretodo">Sobretodo</option>
@@ -767,7 +768,7 @@ useEffect(() =>{
         </div>
 
       <div>
-        <label style={{display: 'flex'}}>
+        <label className='label' style={{display: 'flex'}}>
           Sexo:
           <select value={sexo} onChange={(e) => setSexo(e.target.value)}>
             <option value="mujer">Mujer</option>
@@ -782,7 +783,7 @@ useEffect(() =>{
 
       
       <div className='select'>
-      <label style={{display: 'flex'}}>
+      <label className='label' style={{display: 'flex'}}>
           Talla:
           <select value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
             <option value="U">U</option>
@@ -814,7 +815,7 @@ useEffect(() =>{
                   handleColorChange(selectedSize, colorIndex, selectedColor)
                 }
               />
-              <label style={{display: 'flex', alignItems: 'center'}}>
+              <label className='label' style={{display: 'flex', alignItems: 'center'}}>
                 Cantidad:
                 <input
                   type="number"
@@ -832,7 +833,7 @@ useEffect(() =>{
         : <p>No</p>}
         <button type="button" className='btn-color' onClick={() => handleAddColor(selectedSize)}>Agregar Color</button>
         {tipo === 'zapato' &&<div>
-        <label>
+        <label className='label'>
           Talla:
           <select value={selectedSizeShoe} onChange={(e) => setSelectedSizeShoe(e.target.value)}>
             <option value="25">25</option>
@@ -867,7 +868,7 @@ useEffect(() =>{
                   handleColorChangeShoe(selectedSizeShoe, colorIndex, selectedColor)
                 }
               />
-              <label>
+              <label className='label'>
                 Cantidad:
                 <input
                   type="number"

@@ -12,6 +12,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import GalleryCategory2 from "../pages/GalleryCategory2";
 import Search from "../pages/Search";
 import { useContext } from "react";
+import Checkout from "./checkout/Checkout";
 
 const Home = () => {
     
@@ -63,6 +64,11 @@ const Home = () => {
             <Products />
             {/* <GalleryCategory /> */}
             <GalleryCategory2/>
+            {/* <div className='modal-overlay'> 
+        <div className='modal-content'>
+        <Checkout />
+        </div>
+        </div> */}
             <Gallery api='limited'/>
             <div className="login-container">
 

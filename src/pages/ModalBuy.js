@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactWhatsapp from 'react-whatsapp';
 
 const ModalBuy = (props) => {
   const { closeModal, product, user } = props;
 
+  console.log(product)
+
   const [quantityChangesModal, setQuantityChangesModal] = useState({});
   const [results, setResults] = useState()
   
   const onChangeModal = (size, index, value) => {
+    // applyChangesModal()
     const changeKey = `${product.codigo}-${size}-${index}`;
     setQuantityChangesModal((prevChanges) => ({
       ...prevChanges,
@@ -15,47 +18,51 @@ const ModalBuy = (props) => {
     }));
     console.log(changeKey)
     console.log(quantityChangesModal)
-    applyChangesModal()
+    
   };
+
+  useEffect(() =>{
+    applyChangesModal()
+  },[quantityChangesModal])
 
   const applyChangesModal = () => {
     
-      // const updatedResults = product?.map((prod) => {
-        // if (prod.codigo === product.codigo) {
+      
           const updatedTallas = { ...product.tallas };
           Object.keys(updatedTallas).forEach((size) => {
             updatedTallas[size].forEach((color, index) => {
               const changeKey = `${product.codigo}-${size}-${index}`;
               const changeValue = parseInt(quantityChangesModal[changeKey], 10) || 0;
-              color.quantity -= changeValue;
+              const desireDifference = changeValue - color.deseo;
               color.deseo = changeValue
+              color.quantity -= desireDifference;
+              
               
             });
             setResults([{...product, tallas: updatedTallas}])
             return { ...product, tallas: updatedTallas };
           });
-          // return { ...product, tallas: updatedTallas };
-        
-      //   return prod;
-      // });
-  
-      // setResults([{...product, tallas: updatedTallas}]); // Update the results array
+         
     console.log(results)
-      // closeModalBuy();
-      // handleApplyChanges();
+      
     };
 
 
   return (
-    <div className='modal-overlay'>
+    // <div className='modal-overlay'>
 
     
-    <div className="modal-buy">
+    // <div className="modal-buy">
+    <div>
+
+    
+    <div >
       <div className="modal-content-buy">
-        <h3>¿Estás seguro de realizar esta compra?</h3>
+        {/* <h3>¿Estás seguro de realizar esta compra?</h3> */}
+
         <div className='modal-info' style={{margin: '15px 0', border: 'none'}}>
-          <img style={{width: '50px', height: '50px'}} src={product?.imagenes[0]}/>
-          <p>Producto: {product.titulo}</p>
+          <img style={{width: '50px', height: '50px'}} src={`${product.imagenes ? product.imagenes[0] : product.imagen}`}/>
+          <p>Producto: {product.titulo}{product.nombre}</p>
         </div>
         
         <div>
@@ -69,9 +76,10 @@ const ModalBuy = (props) => {
                   style={{
                     backgroundColor: color.color,
                     borderRadius: "50%",
-                    border: "1px solid black",
+                    border: "1px solid gray",
                     height: "30px",
                     width: "30px",
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.305)'
                   }}
                 ></div>
                 {/* <p>
@@ -87,8 +95,19 @@ const ModalBuy = (props) => {
                     onChangeModal(size, index, e.target.value)
                   }
                 /> */}
-                {color.quantity === 0 ? (
-                <p>No disponible</p>
+                {color.quantity < 1 ? (
+                  <div>
+                    <p>Agotados</p>
+                    <input
+                style={{width: "70%",}}
+                className='input-titulo'
+                  type="number"
+                  value={quantityChangesModal[`${product.codigo}-${size}-${index}`] || ""}
+                  onChange={(e) =>
+                    onChangeModal(size, index, e.target.value)
+                  }
+                /> 
+                    </div>
               ) : (
                 <input
                 style={{width: "70%",}}
@@ -105,7 +124,7 @@ const ModalBuy = (props) => {
         ))}
         </div>
         </div>
-        <div className='modal-buy-buttons'>
+        {/* <div className='modal-buy-buttons'>
 
         <ReactWhatsapp
             className='modal-button'
@@ -142,7 +161,7 @@ Mi compra es la siguiente:
           Comprar por WhatsApp
         </ReactWhatsapp>
         <button className='modal-button' onClick={closeModal}>Cancelar</button>
-        </div>
+        </div> */}
       </div>
     </div>
     </div>

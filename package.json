@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.22.10",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
+    "@mui/material": "^5.14.8",
     "axios": "^0.24.0",
     "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.0.0-rc12",

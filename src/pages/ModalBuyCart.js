@@ -49,8 +49,10 @@ const ModalBuyCart = ({ product, closeModalBuy, handleApplyChanges, setQuantityC
     
   
     return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    // <div className="modal-overlay">
+    //   <div className="modal-content">
+    <div >
+      <div >
         <h2 style={{color:'black'}}>Producto: {product.nombre}</h2>
         <hr />
         {Object.entries(product.tallas).map(([size, colors]) => (

@@ -6,6 +6,8 @@ import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import { MdDeleteForever } from 'react-icons/md';
 import ModalCart from './ModalCart';
+import ProductsModal from './ProductsModal';
+import Checkout from '../components/checkout/Checkout';
 
 function Cart() {
     const { cart, setCart } = useContext(CartContext);
@@ -165,7 +167,12 @@ function Cart() {
                                 Comprar
                               </button>
                               {modalOpen && (
-                                <ModalCart closeModal={closeModal} cart={products} setCart={setCart} user={auth?.user}/>
+                                // <ModalCart closeModal={closeModal} cart={products} setCart={setCart} user={auth?.user}/>
+                                <div className='modal-overlay'>
+                                  <div className="modal-content">
+                                      <Checkout closeModal={closeModal} product={products} cart={cart}/>
+                                  </div>
+                                </div>
                               )}
                               {/* <ReactWhatsapp 
                             className='buy-total' 

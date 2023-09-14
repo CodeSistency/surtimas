@@ -901,7 +901,7 @@ function reset (){
       
 
       <div className='select'>
-        <label className='prenda' style={{display: 'flex'}}>
+        <label className='prenda label' style={{display: 'flex'}}>
           Categorias:
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="camisa">Camisa</option>
@@ -923,6 +923,7 @@ function reset (){
             <option value="pijama">Pijama</option>
             <option value="playa">Playa</option>
             <option value="mono">Mono</option>
+            <option value="enterizo">Enterizo</option>
             <option value="zapato">Zapato</option>
             <option value="liquidacion">Liquidacion</option>
             <option value="sobretodo">Sobretodo</option>
@@ -933,7 +934,7 @@ function reset (){
         </div>
 
         <div>
-        <label style={{display: 'flex'}}>
+        <label className='label' style={{display: 'flex'}}>
           Sexo:
           <select value={sexo} onChange={(e) => setSexo(e.target.value)}>
             <option value="mujer">Mujer</option>
@@ -987,7 +988,7 @@ function reset (){
       {tipo === 'zapato' ? null :
       <div className='select'>
         
-        <label style={{display: 'flex'}}>
+        <label className='label' style={{display: 'flex'}}>
           Talla:
           <select value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
             <option value="U">U</option>
@@ -1015,7 +1016,7 @@ function reset (){
                   handleColorChange(selectedSize, colorIndex, selectedColor)
                 }
               />
-              <label style={{display: 'flex', alignItems: 'center'}}>
+              <label className='label' style={{display: 'flex', alignItems: 'center'}}>
                 Cantidad:
                 <input
                   type="number"
@@ -1032,7 +1033,7 @@ function reset (){
         </div>}
 
         {tipo === 'zapato' &&<div>
-        <label>
+        <label className='label'>
           Talla:
           <select value={selectedSizeShoe} onChange={(e) => setSelectedSizeShoe(e.target.value)}>
             <option value="25">25</option>
@@ -1067,7 +1068,7 @@ function reset (){
                   handleColorChangeShoe(selectedSizeShoe, colorIndex, selectedColor)
                 }
               />
-              <label>
+              <label className='label'>
                 Cantidad:
                 <input
                   type="number"

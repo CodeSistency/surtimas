@@ -12,6 +12,7 @@ export const CartProvider = ({ children }) => {
     const [searchQuery, setSearchQuery] = useState()
     const [searchInput, setSearchInput] = useState(''); 
     const [products, setProducts] = useState()
+    const [buyProduct, setBuyProduct] = useState()
 
     // useEffect(() => {
     //     let isMounted = true;
@@ -160,7 +161,7 @@ export const CartProvider = ({ children }) => {
       }
 
     return (
-        <CartContext.Provider value={{searchQuery, setSearchQuery, searchInput, cart, getCartProducts, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
+        <CartContext.Provider value={{buyProduct, setBuyProduct, searchQuery, setSearchQuery, searchInput, cart, getCartProducts, filterProductsByTitle, setCart, addProductToResults, removeFromCart, handleCart }}>
             {children}
         </CartContext.Provider>
     )

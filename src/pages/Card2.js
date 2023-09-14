@@ -8,20 +8,28 @@ import ReactWhatsapp from 'react-whatsapp';
 import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ModalBuy from './ModalBuy';
+import Checkout from '../components/checkout/Checkout';
+import CartCheckout from '../components/cart/Checkout';
 
 function Card2 (props) {
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const openModal2 = () => {
+    setModalOpen2(true);
   };
 
-  const { cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalOpen2(false);
+  };
+
+  const {buyProduct, setBuyProduct, cart, addProductToResults, removeFromCart, handleCart } = useContext(CartContext);
   const {auth} = useAuth()
 
  
@@ -59,12 +67,19 @@ function cartIcon() {
   console.log(alreadyInCart)
   
 
+  // if(alreadyInCart) {
+  //     return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
+  // } else {
+  //     // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+  //     return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id, props.codigo, props.product.tallas, props.product.tallas_zapatos)}/>
+  // }
+
   if(alreadyInCart) {
-      return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => removeFromCart(props.id)}/>
-  } else {
-      // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
-      return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={() => handleCart(auth?.user, props.titulo, props.precio, precio_mayor, props.img, props.id, props.codigo, props.product.tallas, props.product.tallas_zapatos)}/>
-  }
+    return <IoCartSharp style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={openModal2}/>
+} else {
+    // return <IoCartOutline className='cart' fontSize={20} onClick={() => addProductToResults(props.product)}/>
+    return <IoCartOutline style={{cursor: 'pointer'}} className='cart' fontSize={20} onClick={openModal2}/>
+}
 }
 
   
@@ -89,7 +104,20 @@ function cartIcon() {
         Comprar
       </button>: <Link to={'/sesion'}><button  className="buy-button-products">Comprar</button></Link>}
       {modalOpen && (
-        <ModalBuy closeModal={closeModal} product={props.product} user={auth?.user}/>
+        <div className='modal-overlay'> 
+        <div className='modal-content'>
+        <Checkout closeModal={closeModal} product={props.product} user={auth?.user}/>
+        </div>
+        </div>
+      )}
+
+{modalOpen2 && (
+        // <ModalBuy closeModal={closeModal} product={props.product} user={auth?.user}/>
+        <div className='modal-overlay'> 
+        <div className='modal-content'>
+        <CartCheckout  closeModal={closeModal} product={props.product} user={auth?.user}/>
+        </div>
+        </div>
       )}
   </div>
   )
