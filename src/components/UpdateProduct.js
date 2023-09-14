@@ -69,6 +69,21 @@ const UpdateProduct = () => {
 
   const [error, setError] = useState(false)
   const [errMsg, setErrMsg] = useState()
+
+  const [comparar, setComparar] = useState('');
+
+  const [isChecked, setIsChecked] = useState(false);
+  const [descuento, setDescuento] = useState(0);
+  
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setPictures(imageList);
+  };
   
 
   const [quantity, setQuantity] = useState({
@@ -149,6 +164,14 @@ const UpdateProduct = () => {
 
   const handlePrecioAlMayorChange = (e) => {
     setPrecioAlMayor(e.target.value);
+  };
+
+  const handleDescuentoChange = (e) => {
+    setDescuento(e.target.value);
+  };
+
+  const handleCompararChange = (e) => {
+    setComparar(e.target.value);
   };
 
   const restart = () => {
@@ -470,6 +493,9 @@ useEffect(() => {
     setCodigo(products?.codigo)
     setTipo(products?.tipo)
     setSexo(products?.sexo)
+    setIsChecked(products?.descuento)
+    setDescuento(products?.descuento_cantidad)
+    setComparar(products?.comparar)
     setQuantity(products?.tallas)
     setQuantityShoe(products?.tallas_zapatos)
     setMainUrl(products?.imagen)
@@ -501,7 +527,7 @@ useEffect(() =>{
         setError(false)
         setIsLoadingCreate(true)
         const response = await axiosPrivate.put(`products/${id}`,
-        JSON.stringify({ titulo, descripcion, precio, precioAlMayor, tipo, sexo, codigo, tallas_zapatos: quantityShoe, tallas: quantity, imagen: mainUrl, imagenes: urls}),
+        JSON.stringify({ titulo, descripcion, precio, precioAlMayor, tipo, sexo, comparar, descuento: isChecked, descuento_cantidad: descuento, codigo, tallas_zapatos: quantityShoe, tallas: quantity, imagen: mainUrl, imagenes: urls}),
     
     {
             signal: controller.signal
@@ -581,6 +607,19 @@ useEffect(() =>{
           required
         />
       </div>
+
+      <div className="input-container">
+        <p>Comparar:</p>
+        <label htmlFor="codigo"></label>
+        <input
+          type="number"
+          id="codigo"
+          value={comparar}
+          onChange={handleCompararChange}
+          className="input-descripcion"
+          required
+        />
+      </div>
       
       <div className="input-container">
         <p>Codigo:</p>
@@ -594,6 +633,28 @@ useEffect(() =>{
           required
         />
       </div>
+      <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        Descuento
+      </label>
+      {isChecked && 
+      
+       <input
+          type="number"
+          id="codigo"
+          value={descuento}
+          onChange={handleDescuentoChange}
+          className="input-descripcion"
+          
+        />
+      }
+      
+    </div>
 {urls &&   <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
       <p>Foto Primaria</p>
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>

@@ -74,6 +74,15 @@ const CreateProduct = () => {
   const [pictures, setPictures] = React.useState([]);
   const maxNumber = 69;
 
+  const [comparar, setComparar] = useState('');
+
+  const [isChecked, setIsChecked] = useState(false);
+  const [descuento, setDescuento] = useState(0);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
@@ -164,6 +173,15 @@ const CreateProduct = () => {
   const handleCodigoChange = (e) => {
     setCodigo(e.target.value);
   };
+
+  const handleDescuentoChange = (e) => {
+    setDescuento(e.target.value);
+  };
+
+  const handleCompararChange = (e) => {
+    setComparar(e.target.value);
+  };
+
 
   const restart = () => {
     setUrls([])
@@ -535,6 +553,10 @@ formData.append('precio_mayor', precioAlMayor);
 formData.append('codigo', codigo);
 formData.append('tipo', tipo);
 formData.append('sexo', sexo);
+formData.append('descuento', isChecked);
+formData.append('descuento_cantidad', descuento);
+formData.append('comparar', comparar);
+formData.append('sexo', sexo);
 formData.append('tallas', JSON.stringify(quantity));
 formData.append('tallas_zapatos', JSON.stringify(quantityShoe));
 formData.append('imagen', JSON.stringify(imagenPrimaria));
@@ -704,6 +726,19 @@ function reset (){
       </div>
       
       <div className="input-container">
+        <p>Comparar:</p>
+        <label htmlFor="codigo"></label>
+        <input
+          type="number"
+          id="codigo"
+          value={comparar}
+          onChange={handleCompararChange}
+          className="input-descripcion"
+          required
+        />
+      </div>
+      
+      <div className="input-container">
         <p>Codigo:</p>
         <label htmlFor="codigo"></label>
         <input
@@ -715,6 +750,28 @@ function reset (){
           required
         />
       </div>
+      <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        Descuento
+      </label>
+      {isChecked && 
+      
+       <input
+          type="number"
+          id="codigo"
+          value={descuento}
+          onChange={handleDescuentoChange}
+          className="input-descripcion"
+          
+        />
+      }
+      <p>Checkbox is {isChecked ? 'checked' : 'unchecked'}.</p>
+    </div>
       <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
         <p>Foto Primaria</p>
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>
