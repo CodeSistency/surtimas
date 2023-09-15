@@ -71,7 +71,7 @@ const CreateProduct = () => {
   const [error, setError] = useState(false)
   const [errMsg, setErrMsg] = useState()
 
-  const [pictures, setPictures] = React.useState([]);
+  const [pictures, setPictures] = useState([]);
   const maxNumber = 69;
 
   const [comparar, setComparar] = useState('');
@@ -79,13 +79,18 @@ const CreateProduct = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [descuento, setDescuento] = useState(0);
 
+
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
+
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
+
+
     setPictures(imageList);
   };
 
@@ -569,6 +574,7 @@ formData.append('imagenes', JSON.stringify(urls));
         setIsLoadingCreate(true)
         console.log(quantityShoe)
         console.log(quantity)
+        console.log(sexo)
           const response = await axiosPrivate.post('products', formData,
           // JSON.stringify({titulo, descripcion, precio, codigo, tallas: quantity, imagen}),
       
@@ -733,7 +739,7 @@ function reset (){
           id="codigo"
           value={comparar}
           onChange={handleCompararChange}
-          className="input-descripcion"
+          className="input-precio"
           required
         />
       </div>
@@ -750,8 +756,8 @@ function reset (){
           required
         />
       </div>
-      <div>
-      <label>
+      <div className="input-container" style={{marginTop: '10px'}}>
+      <label >
         <input
           type="checkbox"
           checked={isChecked}
@@ -766,11 +772,11 @@ function reset (){
           id="codigo"
           value={descuento}
           onChange={handleDescuentoChange}
-          className="input-descripcion"
+          className="input-precio"
           
         />
       }
-      <p>Checkbox is {isChecked ? 'checked' : 'unchecked'}.</p>
+      {/* <p>Checkbox is {isChecked ? 'checked' : 'unchecked'}.</p> */}
     </div>
       <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
         <p>Foto Primaria</p>

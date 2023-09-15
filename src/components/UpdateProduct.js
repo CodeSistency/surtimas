@@ -64,6 +64,8 @@ const UpdateProduct = () => {
   const [progress, setProgress] = useState([0, 0, 0, 0, 0]);
   const [uploadComplete, setUploadComplete] = useState(false);
 
+  const [pictures, setPictures] = useState([]);
+
   const [successUpload, setSuccessUpload] = useState(0)
   const [uploadStart, setUploadStart] = useState(false)
 
@@ -78,6 +80,7 @@ const UpdateProduct = () => {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
@@ -613,10 +616,10 @@ useEffect(() =>{
         <label htmlFor="codigo"></label>
         <input
           type="number"
-          id="codigo"
+          id="precio"
           value={comparar}
           onChange={handleCompararChange}
-          className="input-descripcion"
+          className="input-precio"
           required
         />
       </div>
@@ -633,7 +636,7 @@ useEffect(() =>{
           required
         />
       </div>
-      <div>
+      <div className="input-container" style={{marginTop: '10px'}}>
       <label>
         <input
           type="checkbox"
@@ -649,7 +652,7 @@ useEffect(() =>{
           id="codigo"
           value={descuento}
           onChange={handleDescuentoChange}
-          className="input-descripcion"
+          className="input-precio"
           
         />
       }
