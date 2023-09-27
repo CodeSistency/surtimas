@@ -125,7 +125,7 @@ const QRcodes = () => {
 
     return (
         
-        <article className='dashboard admin-container' ref={exportRef}>
+        <article className='dashboard admin-container' ref={ref}>
             <AdminNav />
             {products?.length
                 ? (
@@ -143,7 +143,7 @@ const QRcodes = () => {
              {size}
              {color.color}
              {product.codigo}
-           </p>
+           </p>              
          </li>
       
       // {color.quantity > 0 ? (
@@ -178,12 +178,12 @@ const QRcodes = () => {
                         {/* <button onClick={() => exportAsImage(exportRef.current, "test")}>
 Capture Image
 </button> */}
-                    {/* <ReactToPrint
+                    <ReactToPrint
                         trigger={() => <button>Print</button>}
                         content={() => ref.current}
                         pageStyle={pageStyle}
                         
-                    />  */}
+                    /> 
                     {/* <Webcam
     audio={false}
     height={720}

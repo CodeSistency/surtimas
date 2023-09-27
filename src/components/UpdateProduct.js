@@ -538,6 +538,7 @@ useEffect(() =>{
         console.log(JSON.stringify(response?.data));
         isMounted && setData(response.data);
         console.log(urls)
+        setSuccess(true)
         navigate("/admin", { state: {from: location}, replace: true });
         // navigate("/admin", { state: {from: location}, replace: true });
         // navigate(-1);

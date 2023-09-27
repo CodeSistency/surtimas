@@ -193,6 +193,8 @@ const Products = () => {
           return totalQuantity;
         };
 
+        //revisar
+
     return (
         <article className="admin-products">
             <div className="crear-producto-container">

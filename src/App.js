@@ -33,6 +33,7 @@ import { lazy } from 'react';
 
 const Register = lazy(() => import('./components/Register'));
 const Login = lazy(() => import('./components/Login'));
+const Sales = lazy(() => import('./components/Sales'));
 // const Home = lazy(() => import('./components/Home'));
 // const Layout = lazy(() => import('./components/Layout'));
 const Editor = lazy(() => import('./components/Editor'));
@@ -117,6 +118,7 @@ function App() {
             <Route path="admin/createProduct" element={<CreateProduct />} />
             <Route path="admin/products/:id" element={<UpdateProduct />} />
             <Route path="admin/qr" element={<QRcodes />} />
+            <Route path="admin/sales" element={<Sales />} />
             
 
           </Route>

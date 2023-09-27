@@ -11,6 +11,8 @@ import ModalComponent from "./Modal";
 import {LiaSearchSolid} from 'react-icons/lia'
 import React from 'react'
 import AdminNav from "./AdminNav";
+import SaleModal from "./SaleModal";
+import { tr } from "date-fns/locale";
 
 function Reader() {
     const [results, setResults] = useState([]);
@@ -27,6 +29,7 @@ function Reader() {
     const location = useLocation();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalSale, setIsModalSale] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null);
     
 
@@ -37,6 +40,10 @@ function Reader() {
   // if(windowWidth.current > 600){
   //   setAncho(true)
   // }
+
+  function modalSaleToggle(){
+    setIsModalSale(prev => !prev)
+  }
   
     useEffect(() => {
       let isMounted = true;
@@ -242,10 +249,14 @@ function Reader() {
             });
           });
         });
-        // setTotal(totalRevenue)
+        
         return totalRevenue;
         // setTotal(totalRevenue)
       };
+
+      useEffect(() => {
+        calculateTotalRevenue()
+      }, [onChange])
 
       const totalRevenue = calculateTotalRevenue()
       
@@ -322,6 +333,14 @@ function Reader() {
             <th key={`${product.codigo}-${size}`}>{size}</th>
           ))
         )}
+
+        {/* {results?.map((product) => 
+        Object.entries(product?.tallas).map(([size, colors])=>
+        colors.map((color, index) =>
+        color.quantity > 0 && 
+          <th>{size}</th>
+        ))
+        )} */}
       </tr>
     </thead>
     <tbody>
@@ -335,7 +354,37 @@ function Reader() {
                 setIsModalOpen(true);
               }}/></td>
           <td><MdDeleteForever fontSize={40} color="black" style={{padding: "0 5px", color: "black"}} onClick={() => removeItem(product.codigo)}/></td>
-          
+          {/* {results?.map((product) => 
+        Object.entries(product?.tallas).map(([size, colors])=>
+        colors.map((color, index) =>
+        color.quantity > 0 && 
+          <td>
+             <div className='lista-productos' key={color._id}>
+                  <div
+                    style={{
+                      backgroundColor: color.color,
+                      borderRadius: "50%",
+                      border: "1px solid black",
+                      height: "30px",
+                      width: "30px"
+                    }}
+                  ></div>
+                  <p style={{padding: '0 8px'}}>
+                    
+                    {`Cantidad: ${color.quantity - (parseInt(quantityChanges[`${product.codigo}-${size}-${index}`], 10) || 0)}`}
+                  </p>
+                  <input
+                    style={{ width: "60px", padding: ".9em" }}
+                    type="number"
+                    value={color.sold || 0}
+                    onChange={(e) =>
+                      onChange(product.codigo, size, index, e.target.value)
+                    }
+                  />
+                </div>
+          </td>
+        ))
+        )} */}
           {Object.entries(product.tallas).map(([size, colors]) => (
             <td key={`${product.codigo}-${size}`}>
               {colors.map((color, index) => (
@@ -382,11 +431,19 @@ function Reader() {
         />
       )}
 
+      
+{modalSale &&
+  <div className='modal-overlay'> 
+  <div className='modal-content'>
+  <SaleModal setResults={setResults} closeModal={modalSaleToggle} total={calculateTotalRevenue} newSale={newSale} productos={results}/>
+  </div>
+  </div>
+}
           
           {results.length ? <div className="add-producto">
             {/* <button onClick={handleApplyChanges}>Apply Changes</button> */}
             <p><strong>Total:</strong> {calculateTotalRevenue()}</p>
-            <button className="btn" style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={newSale}>Venta</button>
+            <button className="btn"  style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={modalSaleToggle}>Venta</button>
             
           </div>: <p></p>}
         </div>
