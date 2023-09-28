@@ -4,6 +4,8 @@ import ReactWhatsapp from 'react-whatsapp';
 const ModalDelete = (props) => {
   const { closeModal, product, user, handleDelete } = props;
 
+  console.log(product._id)
+
   return (
     <div className="modal-buy">
       <div className="modal-content-buy">
