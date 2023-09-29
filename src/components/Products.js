@@ -12,7 +12,7 @@ import GenderRadioFilter from "../pages/GenderFilter";
 import {AiOutlineDown} from 'react-icons/ai'
 import {LiaSearchSolid} from 'react-icons/lia'
 import Loader from "../pages/Loader";
-import ModalDelete from "../pages/ModalDelete";
+// import ModalDelete from "../pages/ModalDelete";
 
 
 const Products = () => {
@@ -89,13 +89,13 @@ const Products = () => {
     }
     
 
-    useEffect(() => {
+    // useEffect(() => {
         
 
-        getProducts();
+    //     getProducts();
 
         
-    }, [isDeleting])
+    // }, [isDeleting])
 
    
     const handleDelete = async (id) => {
@@ -117,7 +117,7 @@ const Products = () => {
             
             
           // closeModal()
-          setIsDeleting(true)
+          // setIsDeleting(true)
         } catch (err) {
             console.error(err);
             console.log(JSON.stringify(err));
@@ -370,7 +370,7 @@ const Products = () => {
     </div>
                 ) : <div class="lds-dual-ring"></div>
             } */}
-            {isDeleting && <Loader />}
+            {/* {isDeleting && <Loader />} */}
         </article>
     );
 };
