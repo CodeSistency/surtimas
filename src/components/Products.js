@@ -116,7 +116,7 @@ const Products = () => {
             // console.log(JSON.stringify(response?.data[4].imagenes[0]));
             
             
-          closeModal()
+          // closeModal()
           setIsDeleting(true)
         } catch (err) {
             console.error(err);
