@@ -257,7 +257,7 @@ const Products = () => {
                                 <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline fontSize={27} style={{marginTop:'7px'}}/></Link>
                                 </td>
                                 <td>
-                                {/* <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={() => handleDelete(product._id)}/> */}
+                                <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={handleDelete(product._id)}/>
                                 </td>
                                 </tr>
                             ))}
@@ -318,8 +318,8 @@ const Products = () => {
                                 <Link  to={`products/${product._id}`} style={{color: "black"}}><MdOutlineModeEditOutline fontSize={27} style={{marginTop:'7px'}}/></Link>
                                 </td>
                                 <td>
-                                {/* <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={handleDelete(product._id)}/> */}
-                                {/* <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={() => handleDelete(product._id)}/> */}
+                                <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={handleDelete(product._id)}/>
+
         
                                 </td>
                                 </tr>
