@@ -89,13 +89,13 @@ const Products = () => {
     }
     
 
-    // useEffect(() => {
+    useEffect(() => {
         
 
-    //     getProducts();
+        getProducts();
 
         
-    // }, [isDeleting])
+    }, [])
 
    
     const handleDelete = async (id) => {
