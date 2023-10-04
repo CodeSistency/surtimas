@@ -170,6 +170,7 @@ const Products = () => {
         
               return productMatchesTitle || productMatchesId;
             });
+            console.log(filteredProducts)
             setFilteredProducts(filteredProducts)
             return filteredProducts;
             

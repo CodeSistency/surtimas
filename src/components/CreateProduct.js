@@ -972,7 +972,7 @@ function reset (){
             <option value="blusa">Blusa</option>
             <option value="chaqueta">Chaqueta</option>
             <option value="blazer">Blazer</option>
-            <option value="camisa">Camisa</option>
+            {/* <option value="camisa">Camisa</option> */}
             <option value="vestido">Vestido</option>
             <option value="conjuntos">Conjuntos</option>
             <option value="set">Set</option>
