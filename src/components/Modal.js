@@ -66,6 +66,7 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
                     width: "30px",
                   }}
                 ></div>
+                <p>{color.color}</p>
                 <p>
                   Quantity:{" "}
                   {color.quantity -
