@@ -68,7 +68,7 @@ const ModalComponent = ({ product, onClose, handleApplyChanges, setQuantityChang
                 ></div>
                 <p>{color.color}</p>
                 <p>
-                  Quantity:{" "}
+                  Disponible:{" "}
                   {color.quantity -
                     (parseInt(quantityChangesModal[`${product.codigo}-${size}-${index}`], 10) || 0)}
                 </p>

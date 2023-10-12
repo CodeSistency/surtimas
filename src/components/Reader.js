@@ -227,8 +227,10 @@ function Reader() {
               if (!isNaN(intValue)) {
                 // If the input is a number, update the sold property
                 const newSoldValue = Math.max(0, intValue);
-                const quantityChange = newSoldValue - (colors[index].sold || 0); // Calculate the change in sold quantity
+                // const quantityChange = newSoldValue - (colors[index].sold || 0); // Calculate the change in sold quantity
+                const quantityChange = newSoldValue - (colors[index].deseo || 0);
                 colors[index].sold = intValue;
+                colors[index].deseo = intValue;
                 colors[index].quantity -= quantityChange; // Decrease the quantity
               }
             }
@@ -244,8 +246,9 @@ function Reader() {
           Object.values(product.tallas).forEach((colors) => {
             colors.forEach((color) => {
               const sold = parseInt(color.sold, 10) || 0;
+              const deseo = parseInt(color.deseo, 10) || 0;
               const precio = parseInt(product.precio, 10) || 0;
-              totalRevenue += sold * precio;
+              totalRevenue += deseo * precio;
             });
           });
         });
@@ -400,12 +403,12 @@ function Reader() {
                   ></div>
                   <p style={{padding: '0 8px'}}>
                     
-                    {`Cantidad: ${color.quantity - (parseInt(quantityChanges[`${product.codigo}-${size}-${index}`], 10) || 0)}`}
+                    {`Disponible: ${color.quantity - (parseInt(quantityChanges[`${product.codigo}-${size}-${index}`], 10) || 0)}`}
                   </p>
                   <input
                     style={{ width: "60px", padding: ".9em" }}
                     type="number"
-                    value={color.sold || 0}
+                    value={color.deseo || 0}
                     onChange={(e) =>
                       onChange(product.codigo, size, index, e.target.value)
                     }
@@ -442,7 +445,10 @@ function Reader() {
           
           {results.length ? <div className="add-producto">
             {/* <button onClick={handleApplyChanges}>Apply Changes</button> */}
-            <p><strong>Total:</strong> {calculateTotalRevenue()}</p>
+            <div>
+            <p><strong>Total de Ingreso:</strong> {calculateTotalRevenue()}</p>
+            <p><strong>Cantidad de Items:</strong> {results.length}</p>
+            </div>
             <button className="btn"  style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={modalSaleToggle}>Venta</button>
             
           </div>: <p></p>}

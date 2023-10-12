@@ -3,11 +3,13 @@ import { axiosPrivate } from '../api/axios';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function SaleModal({productos, closeModal, total, setResults}) {
+function SaleModal({productos, closeModal,  setResults}) {
 
     console.log(productos)
     const [metodo, setMetodo] = useState()
     const [referencia, setReferencia] = useState()
+
+  
 
     const [isLoading, setIsLoading] = useState(false)
   const [isLoadingCreate, setIsLoadingCreate] = useState(false)
@@ -40,7 +42,7 @@ function SaleModal({productos, closeModal, total, setResults}) {
             });
             console.log(JSON.stringify(response?.data));
             setSuccess(true)
-            setResults()
+            setResults([])
             closeModal()
             navigate("/admin/reader", { state: {from: location}, replace: true });
             
@@ -87,8 +89,15 @@ function SaleModal({productos, closeModal, total, setResults}) {
         <hr></hr>
         <div>
             <h3>Informacion venta:</h3>
-            <p>Total: {calculateTotalRevenue()}</p>
-            <p>Productos: {productos?.length}</p>
+            {!revenue &&<p>Total de Ingresos: {calculateTotalRevenue()}</p>}
+            <input 
+                    placeholder='Ingresar cantidad manual'
+                    type='number'
+                    className='input-descripcion'
+                    style={{padding: '7px'}}
+                    onChange={(e) => setRevenue(e.target.value)}
+                />
+            <p>Cantidad de Items: {productos?.length}</p>
         </div>
         <hr></hr>
         <div>

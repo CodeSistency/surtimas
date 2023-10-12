@@ -90,41 +90,41 @@ const UpdateProduct = () => {
   
 
   const [quantity, setQuantity] = useState({
-    'U': [{ color: "#fff", quantity: 0 }],
-    'XS': [{ color: "#fff", quantity: 0 }],
-    'S': [{ color: "#fff", quantity: 0 }],
-    'M': [{ color: "#fff", quantity: 0 }],
-    'L': [{ color: "#fff", quantity: 0 }],
-    'XL': [{ color: "#fff", quantity: 0 }],
-    '0XL': [{ color: "#fff", quantity: 0 }],
-    '1XL': [{ color: "#fff", quantity: 0 }],
-    '2XL': [{ color: "#fff", quantity: 0 }],
-    '3XL': [{ color: "#fff", quantity: 0 }],
-    '4XL': [{ color: "#fff", quantity: 0 }],
-    '5XL': [{ color: "#fff", quantity: 0 }],
-    'FIT': [{ color: "#fff", quantity: 0 }],
+    'U': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    'XS': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    'S': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    'M': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    'L': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    'XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '0XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '1XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '2XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '3XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '4XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '5XL': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    'FIT': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
   });
 
   const [quantityShoe, setQuantityShoe] = useState({
-    '25': [{ color: "#fff", quantity: 0 }],
-    '26': [{ color: "#fff", quantity: 0 }],
-    '27': [{ color: "#fff", quantity: 0 }],
-    '28': [{ color: "#fff", quantity: 0 }],
-    '29': [{ color: "#fff", quantity: 0 }],
-    '30': [{ color: "#fff", quantity: 0 }],
-    '31': [{ color: "#fff", quantity: 0 }],
-    '32': [{ color: "#fff", quantity: 0 }],
-    '33': [{ color: "#fff", quantity: 0 }],
-    '34': [{ color: "#fff", quantity: 0 }],
-    '35': [{ color: "#fff", quantity: 0 }],
-    '36': [{ color: "#fff", quantity: 0 }],
-    '37': [{ color: "#fff", quantity: 0 }],
-    '38': [{ color: "#fff", quantity: 0 }],
-    '39': [{ color: "#fff", quantity: 0 }],
-    '40': [{ color: "#fff", quantity: 0 }],
-    '42': [{ color: "#fff", quantity: 0 }],
-    '43': [{ color: "#fff", quantity: 0 }],
-    '44': [{ color: "#fff", quantity: 0 }],
+    '25': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '26': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '27': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '28': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '29': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '30': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '31': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '32': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '33': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '34': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '35': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '36': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '37': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '38': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '39': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '40': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '42': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '43': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
+    '44': [{ color: "#fff", quantity: 0, color_seleccionado: '' }],
     
   });
 
@@ -213,6 +213,17 @@ const UpdateProduct = () => {
   
     console.log(quantity)
   };
+
+  const handleQuantityColorSeleccionadoChange = (sizeIndex, colorIndex, event) => {
+    const { name, value } = event.target;
+    setQuantity((prevQuantity) => {
+      const updatedQuantity = { ...prevQuantity };
+      updatedQuantity[sizeIndex][colorIndex].color_seleccionado = value;
+      return updatedQuantity;
+    });
+  
+    console.log(quantity)
+  };
   
   const handleAddColor = () => {
     setQuantity((prevQuantity) => {
@@ -238,6 +249,16 @@ const UpdateProduct = () => {
     setQuantityShoe((prevQuantity) => {
       const updatedQuantity = { ...prevQuantity };
       updatedQuantity[sizeIndex][colorIndex].quantity = parseInt(value);
+      return updatedQuantity;
+    });
+  
+    console.log(quantityShoe)
+  };
+  const handleQuantityColorSeleccionadoShoeChange = (sizeIndex, colorIndex, event) => {
+    const { name, value } = event.target;
+    setQuantityShoe((prevQuantity) => {
+      const updatedQuantity = { ...prevQuantity };
+      updatedQuantity[sizeIndex][colorIndex].color_seleccionado = value;
       return updatedQuantity;
     });
   
@@ -890,6 +911,16 @@ useEffect(() =>{
                   className='input-cantidad'
                 />
               </label>
+              <label className='label' style={{display: 'flex', alignItems: 'center'}}>
+                Referencia Color:
+                <input
+                  type="text"
+                  name={`quantity-${selectedSize}-${colorIndex}`}
+                  value={item.color_seleccionado}
+                  onChange={(e) => handleQuantityColorSeleccionadoChange(selectedSize, colorIndex, e)}
+                  className='input-cantidad'
+                />
+              </label>
             </div>
           ))}
         </div>
@@ -940,6 +971,16 @@ useEffect(() =>{
                   name={`quantity-${selectedSizeShoe}-${colorIndex}`}
                   value={item.quantity}
                   onChange={(e) => handleQuantityChangeShoe(selectedSizeShoe, colorIndex, e)}
+                  className='input-cantidad'
+                />
+              </label>
+              <label className='label' style={{display: 'flex', alignItems: 'center'}}>
+                Referencia Color:
+                <input
+                  type="text"
+                  name={`quantity-${selectedSizeShoe}-${colorIndex}`}
+                  value={item.color_seleccionado}
+                  onChange={(e) => handleQuantityColorSeleccionadoShoeChange(selectedSizeShoe, colorIndex, e)}
                   className='input-cantidad'
                 />
               </label>

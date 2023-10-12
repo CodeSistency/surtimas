@@ -259,6 +259,7 @@ const Products = () => {
                                 </td>
                                 <td>
                                 {/* <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={handleDelete(product._id)}/> */}
+                                <MdDeleteForever fontSize={27} style={{marginTop:'7px', cursor: 'pointer'}} onClick={() => handleDelete(product._id)}/>
                                 </td>
                                 </tr>
                             ))}
