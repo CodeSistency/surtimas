@@ -118,6 +118,7 @@ const Products = () => {
             
           // closeModal()
           // setIsDeleting(true)
+          getProducts()
         } catch (err) {
             console.error(err);
             console.log(JSON.stringify(err));
@@ -329,7 +330,7 @@ const Products = () => {
                             </tbody>
                         </table>
                         </div>
-                    </div>
+                    </div>  
                     }
             
             {/* {products?.length

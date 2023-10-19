@@ -257,6 +257,21 @@ function Reader() {
         // setTotal(totalRevenue)
       };
 
+      const calculateTotalPrendas = () => {
+        let totalRevenue = 0;
+        results.forEach((product) => {
+          Object.values(product.tallas).forEach((colors) => {
+            colors.forEach((color) => {
+              const sold = parseInt(color.sold, 10) || 0;
+              totalRevenue += sold
+            });
+          });
+        });
+        
+        return totalRevenue;
+        // setTotal(totalRevenue)
+      };
+
       useEffect(() => {
         calculateTotalRevenue()
       }, [onChange])
@@ -447,6 +462,7 @@ function Reader() {
             {/* <button onClick={handleApplyChanges}>Apply Changes</button> */}
             <div>
             <p><strong>Total de Ingreso:</strong> {calculateTotalRevenue()}</p>
+            <p><strong>Total de Unidades:</strong> {calculateTotalPrendas()}</p>
             <p><strong>Cantidad de Items:</strong> {results.length}</p>
             </div>
             <button className="btn"  style={{fontWeight: "700", padding: "5px 30px", color:"black"}} onClick={modalSaleToggle}>Venta</button>

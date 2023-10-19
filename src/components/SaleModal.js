@@ -76,6 +76,21 @@ function SaleModal({productos, closeModal,  setResults}) {
         // setTotal(totalRevenue)
       };
 
+      const calculateTotalPrendas = () => {
+        let totalRevenue = 0;
+        productos.forEach((product) => {
+          Object.values(product.tallas).forEach((colors) => {
+            colors.forEach((color) => {
+              const sold = parseInt(color.sold, 10) || 0;
+              totalRevenue += sold
+            });
+          });
+        });
+        
+        return totalRevenue;
+        // setTotal(totalRevenue)
+      };
+
       
 
   return (
@@ -89,6 +104,7 @@ function SaleModal({productos, closeModal,  setResults}) {
         <hr></hr>
         <div>
             <h3>Informacion venta:</h3>
+            <p>Total de Unidades: {calculateTotalPrendas()}</p>
             {!revenue &&<p>Total de Ingresos: {calculateTotalRevenue()}</p>}
             <input 
                     placeholder='Ingresar cantidad manual'

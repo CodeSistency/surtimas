@@ -76,6 +76,7 @@ function Sales() {
             
           // closeModal()
           setIsDeleting(true)
+          getProducts()
         } catch (err) {
             console.error(err);
             console.log(JSON.stringify(err));
