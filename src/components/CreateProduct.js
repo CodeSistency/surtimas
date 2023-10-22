@@ -1002,7 +1002,7 @@ function reset (){
             <option value="set">Set</option>
             <option value="sueter">Sueter</option>
             <option value="body">Body</option>
-            <option value="crop top">Crop top</option>
+            <option value="croptop">Croptop</option>
             <option value="pantalon">Pantalon</option>
             <option value="short">Short</option>
             <option value="falda">Falda</option>
