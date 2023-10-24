@@ -680,6 +680,7 @@ useEffect(() =>{
       }
       
     </div>
+    
 {urls &&   <div className="input-container" style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
       <p>Foto Primaria</p>
         <div style={{fontSize: '12px',  display: 'flex', alignItems: 'center', gap: '3px'}}>

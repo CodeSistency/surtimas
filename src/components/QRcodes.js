@@ -150,62 +150,11 @@ const QRcodes = () => {
            </p>              
          </li>
       
-      // {color.quantity > 0 ? (
-      //   <div key={`${i}-${j}`}>
-      //     <li>
-      //       <QRcode id={product?.codigo} />
-      //       <p style={{ marginTop: '-5px', fontSize: '8px', maxWidth: '130px'}}>
-      //         {product.titulo}
-      //         {size}
-      //         {color.color}
-      //         {product.codigo}
-      //       </p>
-      //     </li>
-      //   </div>
-      // ) : null}
     )
   )
 )}
                         </ul>
-                        {/* <div className='pagination'>
-                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                            <button
-                                className={`page ${page === currentPage && 'page-selected'}`}
-                                key={page}
-                                onClick={() => handlePageChange(page)}
-                                disabled={page === currentPage}
-                            >
-                                {page}
-                            </button>
-                            ))}
-                        </div> */}
-                        {/* <button onClick={() => exportAsImage(exportRef.current, "test")}>
-Capture Image
-</button> */}
-                    {/* <ReactToPrint
-                        trigger={() => <button>Print</button>}
-                        content={() => ref.current}
-                        pageStyle={pageStyle}
                         
-                    />  */}
-                    <button onClick={handlePrint}>Print</button>
-                    {/* <Webcam
-    audio={false}
-    height={720}
-    screenshotFormat="image/jpeg"
-    width={1280}
-    videoConstraints={videoConstraints}
-  >
-    {({ getScreenshot }) => (
-      <button
-        onClick={() => {
-          const imageSrc = getScreenshot()
-        }}
-      >
-        Capture photo
-      </button>
-    )}
-  </Webcam> */}
                     </div> 
                 ) : 
                 

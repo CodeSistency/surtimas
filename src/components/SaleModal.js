@@ -81,7 +81,7 @@ function SaleModal({productos, closeModal,  setResults}) {
         productos.forEach((product) => {
           Object.values(product.tallas).forEach((colors) => {
             colors.forEach((color) => {
-              const sold = parseInt(color.sold, 10) || 0;
+              const sold = parseInt(color.deseo, 10) || 0;
               totalRevenue += sold
             });
           });
